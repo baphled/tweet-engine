@@ -27,17 +27,22 @@ describe "Navigation" do
     stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
       with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
       to_return(:status => 200, :body => fixture('search.json'), :headers => {})
+      
+    stub_request(:post, "https://api.twitter.com/1/friendships/create.json").
+      with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
+      to_return(:status => 200, :body => "", :headers => {})
+      
     visit "/tweet-stack"
     fill_in "Search for:", :with => "lemons"
     click_button "Search"
     
     #select all tweeple found
-    check "tweet_stack[1]"
+    check "killermelons"
     # press follow
     click_button "Follow"
     
     # should see a list of users that I am now following
-    page.should have_content "You are now following killermelons"
+    page.should have_content "You are now following 1 more person"
   end
   
   it "should be able to store a the found tweeple for later"

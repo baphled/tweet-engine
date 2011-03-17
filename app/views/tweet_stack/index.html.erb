@@ -1,5 +1,9 @@
 <h2>Tweet stack</h2>
 
+<% if notice %> 
+  <p id="notice"><%= notice %></p>
+<% end %>
+
 <%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>
   <%= label_tag(:q, "Search for:") %>
   <%= text_field_tag(:q) %>
@@ -12,7 +16,7 @@
     Tweeple talking about '<%= @term %>':<br />
     <ul>
     <% @results.each_with_index do |name, index| %>
-      <li><%= label_tag "tweet_stack[#{index}]", name %><%= check_box "tweet_stack", index, {}, name %></li>
+      <li><%= label_tag "followers[name][#{name}]", name %><%= check_box_tag "followers[name][#{name}]", name %></li>
     <% end %>
     </ul>
   <% end %>

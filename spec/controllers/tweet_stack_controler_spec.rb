@@ -24,4 +24,11 @@ describe TweetStackController do
       get :search, {:q => 'lemons'}
     end
   end
+  
+  describe "POST, follow" do
+    it "uses the twitter client" do
+      TweetStack.should_receive(:follow).exactly(2).times
+      post :follow, { :followers => { 'baphled' => 'baphled', 'acme_inc' => 'acme_inc' } }
+    end
+  end
 end
