@@ -14,7 +14,8 @@ describe TweetStack do
     end
     
     it "returns a list of tweeple" do
-      TweetStack.search('lemons').should == ["killermelons", "FelipeNoMore", "Je_eF", "TriceyTrice2U", "eternity4", "twittag", "twittag", "twittag", "ArcangelHak", "recycledhumor", "junitaaa", "twittag", "avexnews", "WildIvory92", "twittag"]
+      data = fixture('search.json')
+      TweetStack.search('lemons').should_not == []
     end
   end
   

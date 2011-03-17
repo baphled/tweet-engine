@@ -4,7 +4,8 @@
   <p id="notice"><%= notice %></p>
 <% end %>
 
-Currently following: <%= TweetStack.followers %> tweeple
+You currently have <%= TweetStack.followers %> followers<br />
+You are following <%= TweetStack.following %> tweeple
 <%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>
   <%= label_tag(:q, "Search for:") %>
   <%= text_field_tag(:q) %>
@@ -16,8 +17,11 @@ Currently following: <%= TweetStack.followers %> tweeple
   <%= form_tag(tweet_follow_path) do |f| %>
     Tweeple talking about '<%= @term %>':<br />
     <ul>
-    <% @results.each_with_index do |name, index| %>
-      <li><%= label_tag "followers[name][#{name}]", name %><%= check_box_tag "followers[name][#{name}]", name %></li>
+    <% @results.each_with_index do |tweeple, index| %>
+      <li>
+        <%= label_tag "followers[name][#{tweeple.from_user}]", tweeple.from_user %><%= check_box_tag "followers[name][#{tweeple.from_user}]", tweeple.from_user %><br />
+        <%= tweeple.text %>
+      </li>
     <% end %>
     </ul>
     <%= submit_tag("Follow") %>
