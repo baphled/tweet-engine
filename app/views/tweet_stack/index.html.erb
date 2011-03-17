@@ -1,1 +1,16 @@
 <h2>Tweet stack</h2>
+
+<%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<% if @results.present? %>
+  Tweeple talking about '<%= @term %>':<br />
+  <ul>
+  <% @results.each do |name| %>
+    <li><%= name %></li>
+  <% end %>
+  </ul>
+<% end %>
