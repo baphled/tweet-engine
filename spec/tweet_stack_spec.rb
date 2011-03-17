@@ -38,4 +38,16 @@ describe TweetStack do
       TweetStack.follow('baphled')
     end
   end
+
+  describe "#followers" do
+    it "returns the number of followers" do
+      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
+        with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
+        to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
+      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
+        with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
+        to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
+      TweetStack.followers.should == 200
+    end
+  end
 end

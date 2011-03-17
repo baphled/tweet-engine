@@ -39,3 +39,11 @@ end
 def fixture(file)
   File.read(File.expand_path("../fixtures", __FILE__) + '/' + file)
 end
+
+
+Twitter.configure do |config|
+  config.consumer_key = "CK"
+  config.consumer_secret = "CS"
+  config.oauth_token = "OT"
+  config.oauth_token_secret = "OTS"
+end

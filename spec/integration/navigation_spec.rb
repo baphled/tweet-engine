@@ -3,6 +3,10 @@ require 'spec_helper'
 describe "Navigation" do
   include Capybara
   
+  before(:each) do
+    TweetStack.stub!(:followers).and_return 10
+  end
+  
   it "should be a valid app" do
     ::Rails.application.should be_a(Dummy::Application)
   end
@@ -10,6 +14,8 @@ describe "Navigation" do
   it "should let me view tweet stack" do
     visit "/tweet-stack"
     page.should have_content "Tweet stack"
+    
+    page.should have_content "Currently following: "
   end
   
   it "should let me do a search based on a phrase" do
@@ -45,13 +51,14 @@ describe "Navigation" do
     page.should have_content "You are now following 1 more person"
   end
   
-  it "should be able to store a the found tweeple for later"
   it "tweeple I am following should be removed from the to add list"
+  
   it "it alls me to stack up tweets"
   it "allows me to schedule my tweets"
   it "allows me to reschedule tweets"
   it "displays a list of recent followers that I am following"
   it "allows me to unfollow people I am following"
+  it "should be able to store a the found tweeple for later"
   
   context "settings" do
     it "allows me to manage the amount of tweeple I can follow a day"
