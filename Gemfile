@@ -6,6 +6,9 @@ gem "sqlite3"
 gem 'mongoid', ">=2.0.0.beta.19"
 gem 'bson_ext'
 
+gem 'simple_form'
+gem 'jquery-rails', '>= 0.2.6'
+
 group :development, :test do
   gem "capybara", ">= 0.4.0"
   gem "rspec-rails", ">= 2.0.0.beta.20"

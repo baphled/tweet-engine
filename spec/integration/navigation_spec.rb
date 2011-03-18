@@ -70,12 +70,27 @@ describe "Navigation" do
   
   it "allows me to manage a tweet" do
     # I create a tweet
+    visit "/tweet-stack"
+    
+    fill_in "Enter Tweet", :with => "This is my new tweet"
+    click_button "Stack Tweet"
+    
+    page.should have_content "Added new tweet to the stack"
+    
     # I manage the tweet
+    click_link 'Edit'
+    
     # I change the message
+    fill_in "Message", :with => "My changed tweet"
+    
     # I change when it is sent out
+    fill_in "Send at", :with => "3000-12-12"
+    click_button 'Stack Tweet'
+    
+    # I should see the change
+    page.should have_content "Updated the tweet"
   end
-  it "allows me to schedule my tweets"
-  it "allows me to reschedule tweets"
+  
   it "displays a list of recent followers that I am following"
   it "allows me to unfollow people I am following"
   it "should be able to store a the found tweeple for later"

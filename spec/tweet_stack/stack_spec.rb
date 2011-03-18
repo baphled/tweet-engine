@@ -15,4 +15,9 @@ describe TweetStack::Stack do
     3.times { |int| TweetStack::Stack.create :message => "My message #{int}"}
     TweetStack::Stack.all.size.should_not == 0
   end
+  
+  context "validations" do
+    it "must have a message no less than 140 characters"
+    it "must have a valid send at date"
+  end
 end

@@ -2,6 +2,7 @@ class TweetStackController < ApplicationController
   include ActionView::Helpers::TextHelper
   
   before_filter :tweet_stack
+  before_filter :instantiate_stack
   
   def index
   end
@@ -30,5 +31,9 @@ class TweetStackController < ApplicationController
   private
   def tweet_stack
     @tweet_stack = TweetStack::Stack.all
+  end
+  
+  def instantiate_stack
+    @stack = TweetStack::Stack.new
   end
 end

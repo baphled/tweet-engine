@@ -35,7 +35,8 @@ module Dummy
 
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
-
+    default_js  = %w(https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js rails)
+    config.action_view.javascript_expansions[:defaults] = default_js
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
