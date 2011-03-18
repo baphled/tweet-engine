@@ -27,3 +27,19 @@ You are following <%= TweetStack.following %> tweeple
     <%= submit_tag("Follow") %>
   <% end %>
 <% end %>
+
+<% if @tweet_stack.empty? %>
+  No tweets stacked<br />
+<% else%>
+  Stacked tweets<br />
+  <ul>
+  <% @tweet_stack.each do |tweet| %>
+    <li><%= tweet.message %></li>
+  <% end %>
+  </ul>
+<% end %>
+<%= form_tag stack_tweet_path do %>
+  <%= label_tag :message, "Enter Tweet"%>
+  <%= text_field_tag :message %>
+  <%= submit_tag("Stack Tweet") %>
+<% end %>

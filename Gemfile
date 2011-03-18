@@ -3,6 +3,8 @@ gem 'twitter'
 
 gem "rails", "3.0.3"
 gem "sqlite3"
+gem 'mongoid', ">=2.0.0.beta.19"
+gem 'bson_ext'
 
 group :development, :test do
   gem "capybara", ">= 0.4.0"

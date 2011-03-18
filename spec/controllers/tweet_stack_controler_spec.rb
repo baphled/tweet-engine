@@ -31,4 +31,11 @@ describe TweetStackController do
       post :follow, { :followers => { 'baphled' => 'baphled', 'acme_inc' => 'acme_inc' } }
     end
   end
+  
+  describe "POST, stack" do
+    it "stacks the tweet" do
+      TweetStack.should_receive(:stack).with("This is my tweet")
+      post :stack, {:message => "This is my tweet"}
+    end
+  end
 end

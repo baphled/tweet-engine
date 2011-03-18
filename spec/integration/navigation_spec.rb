@@ -6,6 +6,7 @@ describe "Navigation" do
   before(:each) do
     TweetStack.stub!(:followers).and_return 10
     TweetStack.stub!(:following).and_return 20
+    TweetStack::Stack.destroy_all
   end
   
   it "should be a valid app" do
@@ -56,14 +57,14 @@ describe "Navigation" do
   
   it "it alls me to stack up tweets" do
     visit "/tweet-stack"
+    
     fill_in "Enter Tweet", :with => "This is my new tweet"
     click_button "Stack Tweet"
     
-    page.should have_content "No tweets stacked"
-    
+    page.should have_content "Added new tweet to the stack"
+    page.should have_content "Stacked tweets"
     page.should have_content "This is my new tweet"
-    page.should have_content "Stacked tweet"
-    page.should have_content "1 tweet stacked"
+    
   end
   
   it "allows me to schedule my tweets"

@@ -51,4 +51,11 @@ describe TweetStack do
       TweetStack.followers.should == 200
     end
   end
+  
+  describe "#stack" do
+    it "should add the tweet to the stack" do
+      TweetStack::Stack.should_receive(:create).with(:message => "This is my tweet")
+      TweetStack.stack("This is my tweet")
+    end
+  end
 end

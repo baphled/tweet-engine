@@ -1,6 +1,7 @@
 module TweetStack
   require 'tweet_stack/engine' if defined?(Rails)
-  
+  require 'tweet_stack/stack' if defined?(Rails)
+
   def self.search term
     names = []
     search = Twitter::Search.new
@@ -36,5 +37,9 @@ module TweetStack
       cursor_id = tweeple.next_cursor
     end
     following.count
+  end
+  
+  def self.stack message
+    TweetStack::Stack.create :message => message
   end
 end
