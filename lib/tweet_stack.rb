@@ -1,6 +1,6 @@
 module TweetStack
   require 'tweet_stack/engine' if defined?(Rails)
-  require 'tweet_stack/stack' if defined?(Rails)
+  require 'tweet_stack/stack'
 
   def self.search term
     names = []

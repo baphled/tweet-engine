@@ -67,6 +67,13 @@ describe "Navigation" do
     
   end
   
+  
+  it "allows me to manage a tweet" do
+    # I create a tweet
+    # I manage the tweet
+    # I change the message
+    # I change when it is sent out
+  end
   it "allows me to schedule my tweets"
   it "allows me to reschedule tweets"
   it "displays a list of recent followers that I am following"
@@ -74,6 +81,13 @@ describe "Navigation" do
   it "should be able to store a the found tweeple for later"
   
   context "settings" do
+    it "allows me to set a tweet interval" do
+      # i go to the setting page
+      # I fill in the default interval
+      # I go to the tweet stack
+      # I create a new tweet
+      # The tweet should display a when it will be sent out
+    end
     it "allows me to manage the amount of tweeple I can follow a day"
     it "allows me to manage the amount of tweets I send out a day"
   end

@@ -25,7 +25,7 @@ class TweetStackController < ApplicationController
   def stack
     TweetStack.stack params[:message]
     flash[:notice] = "Added new tweet to the stack"
-    render :index
+    redirect_to tweet_stack_path
   end
   
   private
