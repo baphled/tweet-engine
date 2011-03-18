@@ -34,11 +34,11 @@ You are following <%= TweetStack.following %> tweeple
   Stacked tweets<br />
   <ul>
   <% @tweet_stack.each do |tweet| %>
-    <li><%= tweet.message %></li>
+    <li><%= tweet.message %> - <%= link_to "delete", tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %></li>
   <% end %>
   </ul>
 <% end %>
-<%= form_tag stack_tweet_path do %>
+<%= form_tag tweet_index_path, :method => :post do %>
   <%= label_tag :message, "Enter Tweet"%>
   <%= text_field_tag :message %>
   <%= submit_tag("Stack Tweet") %>

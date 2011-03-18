@@ -1,4 +1,3 @@
-require 'twitter'
 class TweetStackController < ApplicationController
   include ActionView::Helpers::TextHelper
   
