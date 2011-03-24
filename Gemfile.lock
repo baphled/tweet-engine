@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/liveh2o/timecop.git
+  revision: 6d46a19336a0a375310e471e7e95a280bff8eb3d
+  specs:
+    timecop (0.3.6)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -174,5 +180,6 @@ DEPENDENCIES
   rspec-rails (>= 2.0.0.beta.20)
   simple_form
   sqlite3
+  timecop!
   twitter
   webmock (~> 1.6)
