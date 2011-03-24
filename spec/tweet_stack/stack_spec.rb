@@ -21,18 +21,18 @@ describe TweetStack::Stack do
     it "must have a valid send at date"
   end
   
-  describe "#scheduled?" do
+  describe "#sendable?" do
     before(:each) do
       @tweet = TweetStack::Stack.new :message => "Some message", :send_at => DateTime.current + 1.hour
     end
     
     it "false when the date is not pasted" do
-      @tweet.should_not be_scheduled
+      @tweet.should_not be_sendable
     end
     
     it "true when the date is past the send_at date" do
       Timecop.freeze(@tweet.send_at + 1.minute)
-      @tweet.should be_scheduled
+      @tweet.should be_sendable
     end
   end
   
@@ -44,7 +44,7 @@ describe TweetStack::Stack do
     context "tweet is scheduled" do
       before(:each) do
         Timecop.freeze(@tweet.send_at + 1.minute)
-        @tweet.stub(:scheduled?).and_return true
+        @tweet.stub(:sendable?).and_return true
       end
       
       it "sends the tweet" do

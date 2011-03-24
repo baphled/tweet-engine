@@ -6,12 +6,12 @@ module TweetStack
     field :send_at, :type => DateTime
     field :delivered, :default => false
     
-    def scheduled?
+    def sendable?
       self.send_at <= DateTime.current
     end
     
     def deliver
-      if self.scheduled?
+      if self.sendable?
         Twitter.update self.message
         self.update_attribute :delivered, true
         self.delivered
