@@ -67,4 +67,18 @@ describe TweetStack::Stack do
       end
     end
   end
+
+  describe "#to_deliver" do
+    
+    it "returns a list of tweets to send" do
+      TweetStack::Stack.create :message => "Some message", :send_at => DateTime.current
+      TweetStack::Stack.to_deliver.count == 1
+    end
+    
+    it "only returns tweets that are equal to the current time" do
+      3.times { |i| TweetStack::Stack.create :message => "Some message #{i}", :send_at => DateTime.current - i.to_i.hours }
+      TweetStack::Stack.create :message => "Some message", :send_at => DateTime.current
+      TweetStack::Stack.to_deliver.count == 1
+    end
+  end
 end

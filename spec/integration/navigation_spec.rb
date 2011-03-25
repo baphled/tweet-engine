@@ -54,10 +54,19 @@ describe "Navigation" do
       # should see a list of users that I am now following
       page.should have_content "You are now following 1 more person"
     end
+  
+    it "updates my list of potential followers on interval" do
+      pending 'Yet to implement'
+      # we have keywords we want to follow tweeple based on
+      # we follow 100 users based on our keywords search
+      # 1 hour goes by
+      # we follow another 100 users based on the same keywords
+    end
+    
   end
   
   context "stacking tweets" do
-    it "it alls me to stack up tweets" do
+    it "it allows me to stack up tweets" do
       visit "/tweet-stack"
     
       fill_in "Enter Tweet", :with => "This is my new tweet"
@@ -129,6 +138,18 @@ describe "Navigation" do
       visit "/tweet-stack"
       page.should_not have_content "My message - Sent"
     end
+  
+    it "automatically sends out scheduled tweets once they go past their due date" do
+      # start the stack daemon
+      # TweetStack::Daemon.new
+      tweet = TweetStack::Stack.create! :message => "My message", :send_at => DateTime.current + 1.hour
+      
+      tweet.delivered.should be_false
+      
+      # I should not see the tweet in the stack
+      visit "/tweet-stack"
+      page.should_not have_content "My message - Sent"
+    end
   end
   
   it "displays a list of recent followers that I am following"
@@ -138,8 +159,8 @@ describe "Navigation" do
   context "intelligent tweeting" do
     it "auto responds to people who mention one of our key phrases"
     it "allows us to send out a tweet depending on peoples comments"
-    
   end
+  
   context "settings" do
     it "allows me to set a tweet interval" do
       pending 'Add implementation later'
@@ -149,7 +170,9 @@ describe "Navigation" do
       # I create a new tweet
       # The tweet should display a when it will be sent out
     end
+    it "allows me to set my auto search interval"
     it "allows me to manage the amount of tweeple I can follow a day"
     it "allows me to manage the amount of tweets I send out a day"
+    it "allows me to set a average search time"
   end
 end
