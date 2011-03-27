@@ -3,11 +3,14 @@ gem 'twitter'
 
 gem "rails", "3.0.3"
 gem "sqlite3"
-gem 'mongoid', ">=2.0.0.beta.19"
+gem 'mongoid', :git => "https://github.com/mongoid/mongoid.git"
 gem 'bson_ext'
 
 gem 'simple_form'
 gem 'jquery-rails', '>= 0.2.6'
+
+gem 'delayed_job', '>= 2.1.4', :git => "https://github.com/collectiveidea/delayed_job"
+gem 'delayed_job_mongoid', :git => "https://github.com/collectiveidea/delayed_job_mongoid.git"
 
 group :development, :test do
   gem "capybara", ">= 0.4.0"
