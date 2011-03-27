@@ -1,5 +1,5 @@
 <%= simple_form_for @stack, :url => tweet_path, :method => :post do |f| %>
   <%= f.input :message, :as => :text %>
-  <%= f.input :send_at, :input_html => {:class => :datepicker} %>
+  <%= f.input :sending_at, :input_html => {:class => :datepicker} %>
   <%= f.submit("Stack Tweet") %>
 <% end %>

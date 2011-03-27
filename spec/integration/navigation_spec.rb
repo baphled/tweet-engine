@@ -58,8 +58,13 @@ describe "Navigation" do
     it "updates my list of potential followers on interval" do
       pending 'Yet to implement'
       # we have keywords we want to follow tweeple based on
-      # we follow 100 users based on our keywords search
-      # 1 hour goes by
+      TweetStack::Configuration.keyworks = 'rails, ruby'
+      # we find 100 users based on our keywords search
+      # 1 mins goes by
+      # another 25 mins goes by
+      # yet 45 mins goes by
+      # an hour has gone by
+
       # we follow another 100 users based on the same keywords
     end
     
@@ -94,7 +99,7 @@ describe "Navigation" do
       fill_in "Message", :with => "My changed tweet"
     
       # I change when it is sent out
-      fill_in "Send at", :with => "3000-12-12"
+      fill_in "Sending at", :with => "3000-12-12"
       click_button 'Stack Tweet'
     
       # I should see the change
@@ -110,28 +115,24 @@ describe "Navigation" do
     
     it "should send out a tweet that has pasted its scheduled delivery time" do
       # I create a schedule tweet
-      tweet = TweetStack::Stack.create! :message => "My message", :send_at => DateTime.current + 1.hour
-    
+      tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 2.hour
+      
       # The scheduled time passes
-      Timecop.freeze(tweet.send_at)
-      tweet.send_at.should eql DateTime.current
+      Timecop.travel(tweet.sending_at)
+      
+      # Delayed jobs are run
+      Delayed::Worker.new.work_off
+      
       # I should get a message stating the tweet has been sent
-      tweet.deliver
-    
-      tweet.delivered.should be_true
-    
-      # I should not see the tweet in the stack
       visit "/tweet-stack"
       page.should have_content "My message - Sent"
     end
-  
+    
     it "should not send out a tweet that has been scheduled but that time has not gone by yet" do
       # I create a schedule tweet
-      tweet = TweetStack::Stack.create! :message => "My message", :send_at => DateTime.current + 1.hour
+      tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
       
       # I should get a message stating the tweet has been sent
-      tweet.deliver
-      
       tweet.delivered.should be_false
       
       # I should not see the tweet in the stack
@@ -139,10 +140,8 @@ describe "Navigation" do
       page.should_not have_content "My message - Sent"
     end
   
-    it "automatically sends out scheduled tweets once they go past their due date" do
-      # start the stack daemon
-      # TweetStack::Daemon.new
-      tweet = TweetStack::Stack.create! :message => "My message", :send_at => DateTime.current + 1.hour
+    it "does not send out tweet if they are not ready to be sent out yet" do
+      tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
       
       tweet.delivered.should be_false
       
@@ -165,11 +164,23 @@ describe "Navigation" do
     it "allows me to set a tweet interval" do
       pending 'Add implementation later'
       # i go to the setting page
+      visit '/tweet-stack/settings'
       # I fill in the default interval
+      fill_in 'Auto-tweet interval', :with => "10 mins"
+      
       # I go to the tweet stack
-      # I create a new tweet
-      # The tweet should display a when it will be sent out
+      click_button "Update Settings"
+      
+      # I set up a tweet with no date
+      TweetStack::Stack.create :message => 'A new message'
+      
+      # 10 mins go by
+      Timecop.travel 10.mins
+      
+      # My tweet is sent
+      TweetStack::Stack.last.should be_delivered
     end
+    
     it "allows me to set my auto search interval"
     it "allows me to manage the amount of tweeple I can follow a day"
     it "allows me to manage the amount of tweets I send out a day"

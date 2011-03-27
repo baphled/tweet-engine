@@ -1,15 +1,16 @@
 module TweetStack
   class Stack
+    
     include Mongoid::Document
-  
+    
     field :message
-    field :send_at, :type => DateTime
+    field :sending_at, :type => Time, :default => Time.now
     field :delivered, :default => false
     
-    scope :to_deliver, where(:send_at.lte => DateTime.current)
+    scope :to_deliver, where(:sending_at.lte => Time.now)
     
     def sendable?
-      self.send_at <= DateTime.current
+      Time.now >= self.sending_at
     end
     
     def deliver
@@ -19,5 +20,7 @@ module TweetStack
         self.delivered
       end
     end
+    
+    handle_asynchronously :deliver, :run_at => Proc.new {|p| p.sending_at }
   end
 end

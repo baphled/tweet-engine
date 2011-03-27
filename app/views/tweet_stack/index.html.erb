@@ -36,10 +36,10 @@ You are following <%= TweetStack.following %> tweeple
   <% @tweet_stack.each do |tweet| %>
     <li><%= tweet.message %> - 
       <% if not tweet.delivered %>
-      <%= tweet.send_at.to_s %> - <%= link_to "Edit", edit_tweet_path(:id => tweet.id) %> - 
+      <%= tweet.sending_at.to_s %> - <%= link_to "Edit", edit_tweet_path(:id => tweet.id) %> - 
     <%= link_to "Delete", tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
       <% else %>
-      Sent at <%= tweet.send_at %>
+      Sent at <%= tweet.sending_at %>
       <% end %>
     </li>
   <% end %>
@@ -47,6 +47,6 @@ You are following <%= TweetStack.following %> tweeple
 <% end %>
 <%= simple_form_for @stack, :url => tweet_index_path, :method => :post do |f| %>
   <%= f.input :message, :as => :text, :label => "Enter Tweet" %>
-  <%= f.input :send_at, :input_html => {:class => "datepicker"} %>
+  <%= f.input :sending_at, :input_html => {:class => "datepicker"} %>
   <%= f.submit("Stack Tweet") %>
 <% end %>
