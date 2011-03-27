@@ -154,9 +154,9 @@ describe "Navigation" do
     end
   end
   
-  it "displays a list of recent followers that I am following"
   it "allows me to unfollow people I am following"
   it "should be able to store a the found tweeple for later"
+  it "displays a list of recent followers that I am following"
   
   context "intelligent tweeting" do
     it "auto responds to people who mention one of our key phrases"

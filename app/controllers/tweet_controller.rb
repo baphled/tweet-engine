@@ -2,8 +2,8 @@ class TweetController < ApplicationController
   
   def create
     @tweet = TweetStack::Stack.create params[:tweet_stack_stack]
-    flash[:notice] = "Added new tweet to the stack"
     @tweet.deliver
+    flash[:notice] = "Added new tweet to the stack"
     redirect_to tweet_stack_path
   end
   
