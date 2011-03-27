@@ -116,7 +116,7 @@ describe "Navigation" do
     it "should send out a tweet that has pasted its scheduled delivery time" do
       # I create a schedule tweet
       tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 2.hour
-      
+      tweet.deliver
       # The scheduled time passes
       Timecop.travel(tweet.sending_at)
       
@@ -131,7 +131,8 @@ describe "Navigation" do
     it "should not send out a tweet that has been scheduled but that time has not gone by yet" do
       # I create a schedule tweet
       tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
-      
+      tweet.deliver
+      Delayed::Worker.new.work_off
       # I should get a message stating the tweet has been sent
       tweet.delivered.should be_false
       
@@ -142,6 +143,8 @@ describe "Navigation" do
   
     it "does not send out tweet if they are not ready to be sent out yet" do
       tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
+      tweet.deliver
+      Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
       
