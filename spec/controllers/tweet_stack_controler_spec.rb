@@ -47,8 +47,8 @@ describe TweetStackController do
         to_return(:status => 200, :body => "", :headers => {})
     end
     it "makes a call for our follower" do
-      TweetStack.should_receive :followers
-      get :followers
+      TweetStack.should_receive :following
+      get :following
     end
   end
 end

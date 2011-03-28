@@ -29,7 +29,7 @@ class TweetStackController < ApplicationController
     redirect_to tweet_stack_path
   end
   
-  def followers
+  def following
     @followers = TweetStack.following
   end
   
