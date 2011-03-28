@@ -43,8 +43,8 @@ describe TweetStackController do
   
   describe "GET, followers" do
     before(:each) do
-      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
-        to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
+      stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").
+        to_return(:status => 200, :body => "", :headers => {})
     end
     it "makes a call for our follower" do
       TweetStack.should_receive :followers
