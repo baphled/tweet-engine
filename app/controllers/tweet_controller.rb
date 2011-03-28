@@ -1,3 +1,6 @@
+#
+# Controller used to manage our tweet stack
+#
 class TweetController < ApplicationController
   
   def create

@@ -1,0 +1,7 @@
+<ul>
+  <% @followers.each do |follower| %>
+  <li>
+    <%= follower %><%= button_to "Unfollow", tweet_stack_unfollow_path(:screen_name => follower)%>
+  </li>
+  <% end %>
+</ul>

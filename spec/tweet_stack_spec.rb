@@ -48,7 +48,7 @@ describe TweetStack do
       stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
-      TweetStack.followers.should == 200
+      TweetStack.followers.count.should == 200
     end
   end
   

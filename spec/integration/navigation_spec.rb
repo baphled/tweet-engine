@@ -159,27 +159,18 @@ describe "Navigation" do
     end
   end
   
-  it "displays a list of people that I am following" do
+  it "allows me to unfollow people I am following" do
+    stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=joelmahoney").
+      to_return(:status => 200, :body => "", :headers => {})
     # visit the stack
     visit "/tweet-stack"
     
     click_link "Followers"
-    save_and_open_page
     # follow the unfollow link
-    click_link 'Unfollow'
+    click_button 'Unfollow'
     
     # I should see a list of people I am following
-    
-  end
-  
-  it "allows me to unfollow people I am following" do
-    pending 'Yet to implement'
-    # visit the stack
-    # follow the unfollow link
-    # check a few users
-    # submit
-    # should see a flash message
-    # and those users should not be followered any more
+    page.should have_content "Unfollowing joelmahoney"
   end
   
   it "should be able to store the found tweeple for later"

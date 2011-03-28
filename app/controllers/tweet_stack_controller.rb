@@ -5,6 +5,7 @@ class TweetStackController < ApplicationController
   before_filter :instantiate_stack
   
   def index
+    @followers = TweetStack.followers
   end
   
   def search
@@ -25,6 +26,16 @@ class TweetStackController < ApplicationController
   def stack
     TweetStack.stack params[:message]
     flash[:notice] = "Added new tweet to the stack"
+    redirect_to tweet_stack_path
+  end
+  
+  def followers
+    @followers = TweetStack.following
+  end
+  
+  def unfollow
+    Twitter.unfollow params[:screen_name]
+    flash[:notice] = "Unfollowing #{params[:screen_name]}"
     redirect_to tweet_stack_path
   end
   
