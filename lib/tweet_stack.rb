@@ -24,7 +24,7 @@ module TweetStack
       tweeple.users.each { |person| followers << person.screen_name }
       cursor_id = tweeple.next_cursor
     end
-    followers.count
+    followers
   end
   
   def self.following
@@ -36,7 +36,7 @@ module TweetStack
       tweeple.users.each { |person| following << person.screen_name }
       cursor_id = tweeple.next_cursor
     end
-    following.count
+    following
   end
   
   def self.stack message

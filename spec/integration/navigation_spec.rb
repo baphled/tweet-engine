@@ -4,8 +4,14 @@ describe "Navigation" do
   include Capybara
   
   before(:each) do
-    TweetStack.stub!(:followers).and_return 10
-    TweetStack.stub!(:following).and_return 20
+    stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
+      to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
+    stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
+       to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
+    stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=1344637399602463196").
+      to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
+    stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").
+      to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
     TweetStack::Stack.destroy_all
   end
   
@@ -16,9 +22,8 @@ describe "Navigation" do
   it "should let me view tweet stack" do
     visit "/tweet-stack"
     page.should have_content "Tweet stack"
-    
-    page.should have_content "You currently have 10 followers"
-    page.should have_content "You are following 20 tweeple"
+    page.should have_content "You currently have 200 followers"
+    page.should have_content "You are following 100 tweeple"
   end
   
   context "searching for tweeple" do
@@ -154,8 +159,30 @@ describe "Navigation" do
     end
   end
   
-  it "allows me to unfollow people I am following"
-  it "should be able to store a the found tweeple for later"
+  it "displays a list of people that I am following" do
+    # visit the stack
+    visit "/tweet-stack"
+    
+    click_link "Followers"
+    save_and_open_page
+    # follow the unfollow link
+    click_link 'Unfollow'
+    
+    # I should see a list of people I am following
+    
+  end
+  
+  it "allows me to unfollow people I am following" do
+    pending 'Yet to implement'
+    # visit the stack
+    # follow the unfollow link
+    # check a few users
+    # submit
+    # should see a flash message
+    # and those users should not be followered any more
+  end
+  
+  it "should be able to store the found tweeple for later"
   it "displays a list of recent followers that I am following"
   
   context "intelligent tweeting" do
