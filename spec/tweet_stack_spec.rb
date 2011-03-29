@@ -5,7 +5,6 @@ describe TweetStack do
     TweetStack.should be_a(Module)
   end
   
-  
   describe "#search" do
     before(:each) do
       stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").

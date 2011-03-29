@@ -4,9 +4,11 @@
   <p id="notice"><%= notice %></p>
 <% end %>
 
+Auto-searching for <%= TweetStack.config['keywords'] %><br />
 You currently have <%= TweetStack.followers.count %> followers<br />
 You are following <%= TweetStack.following.count %> tweeple<br />
 
+Number of found potential users <%= TweetStack::PotentialFollower.all.count %>
 <%= link_to "Followers", tweet_stack_following_path %>
 
 <%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>

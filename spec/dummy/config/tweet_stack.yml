@@ -1,0 +1,9 @@
+production:
+  keywords: "rails, ruby"
+  search: true
+development:
+  keywords: "rails, ruby"
+  search: true
+test:
+  keywords: "rails, ruby"
+  search: true

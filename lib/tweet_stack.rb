@@ -1,7 +1,10 @@
 module TweetStack
   require 'tweet_stack/engine' if defined?(Rails)
   require 'tweet_stack/stack'
-
+  require 'tweet_stack/config'
+  require 'tweet_stack/search_job'
+  require 'tweet_stack/potential_follower'
+    
   def self.search term
     names = []
     search = Twitter::Search.new

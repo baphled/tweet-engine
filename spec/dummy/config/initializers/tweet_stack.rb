@@ -1,3 +1,9 @@
+TweetStack.config = YAML.load_file("#{Rails.root}/config/tweet_stack.yml")[Rails.env]
+
+if TweetStack.config['search']
+  TweetStack::SearchJob.new
+end
+
 Twitter.configure do |config|
   config.consumer_key = "YUefTaiTrw8Ql7k0I6JuKg"
   config.consumer_secret = "s9TPzJZq1GFq38M1vac0NRoFmTnDqLZppCsOwClg"

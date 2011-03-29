@@ -60,17 +60,15 @@ describe "Navigation" do
       page.should have_content "You are now following 1 more person"
     end
   
-    it "updates my list of potential followers on interval" do
-      pending 'Yet to implement'
+    it "updates my list of potential followers on 15 minute interval" do
       # we have keywords we want to follow tweeple based on
-      TweetStack::Configuration.keyworks = 'rails, ruby'
-      # we find 100 users based on our keywords search
-      # 1 mins goes by
-      # another 25 mins goes by
-      # yet 45 mins goes by
-      # an hour has gone by
-
-      # we follow another 100 users based on the same keywords
+      tweeple_found = TweetStack::PotentialFollower.all.count
+      tweeple_found.should_not be_empty
+      
+      TweetStack.config['keywords'].should == 'rails, ruby'
+      TweetStack.config['search'].should == true
+      Timecop.travel(Time.now + 15.minutes)
+      tweeple_found.should_not == TweetStack::PotentialFollower.all.count
     end
     
   end
