@@ -12,7 +12,7 @@ describe "Navigation" do
       to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
     stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").
       to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
-    TweetStack::Stack.destroy_all
+    TweetEngine::Stack.destroy_all
   end
   
   it "should be a valid app" do
@@ -20,7 +20,7 @@ describe "Navigation" do
   end
   
   it "should let me view tweet stack" do
-    visit "/tweet-stack"
+    visit "/tweet-engine"
     page.should have_content "Tweet stack"
     page.should have_content "You currently have 200 followers"
     page.should have_content "You are following 100 tweeple"
@@ -31,7 +31,7 @@ describe "Navigation" do
       stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
-      visit "/tweet-stack"
+      visit "/tweet-engine"
       page.should_not have_content "Tweeple talking about 'lemons':"
       fill_in "Search for:", :with => "lemons"
       click_button "Search"
@@ -47,7 +47,7 @@ describe "Navigation" do
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => "", :headers => {})
       
-      visit "/tweet-stack"
+      visit "/tweet-engine"
       fill_in "Search for:", :with => "lemons"
       click_button "Search"
     
@@ -67,13 +67,13 @@ describe "Navigation" do
       run "#{Rails.root}/script/tweet_stack_runner start"
       
       # we have keywords we want to follow tweeple based on
-      tweeple_found = TweetStack::PotentialFollower.all.to_a
+      tweeple_found = TweetEngine::PotentialFollower.all.to_a
       tweeple_found.should_not be_empty
       
-      TweetStack.config['keywords'].should == 'rails, ruby'
-      TweetStack.config['search'].should == true
+      TweetEngine.config['keywords'].should == 'rails, ruby'
+      TweetEngine.config['search'].should == true
       Timecop.travel(Time.now + 15.minutes)
-      tweeple_found.should_not == TweetStack::PotentialFollower.all.to_a
+      tweeple_found.should_not == TweetEngine::PotentialFollower.all.to_a
       run '#{Rails.root}/script/tweet_stack_runner --stop'
     end
     
@@ -81,7 +81,7 @@ describe "Navigation" do
   
   context "stacking tweets" do
     it "it allows me to stack up tweets" do
-      visit "/tweet-stack"
+      visit "/tweet-engine"
     
       fill_in "Enter Tweet", :with => "This is my new tweet"
       click_button "Stack Tweet"
@@ -94,7 +94,7 @@ describe "Navigation" do
   
     it "allows me to manage a tweet" do
       # I create a tweet
-      visit "/tweet-stack"
+      visit "/tweet-engine"
     
       fill_in "Enter Tweet", :with => "This is my new tweet"
       click_button "Stack Tweet"
@@ -124,7 +124,7 @@ describe "Navigation" do
     
     it "should send out a tweet that has pasted its scheduled delivery time" do
       # I create a schedule tweet
-      tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 2.hour
+      tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 2.hour
       tweet.deliver
       # The scheduled time passes
       Timecop.travel(tweet.sending_at)
@@ -133,32 +133,32 @@ describe "Navigation" do
       Delayed::Worker.new.work_off
       
       # I should get a message stating the tweet has been sent
-      visit "/tweet-stack"
+      visit "/tweet-engine"
       page.should have_content "My message - Sent"
     end
     
     it "should not send out a tweet that has been scheduled but that time has not gone by yet" do
       # I create a schedule tweet
-      tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
+      tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
       tweet.deliver
       Delayed::Worker.new.work_off
       # I should get a message stating the tweet has been sent
       tweet.delivered.should be_false
       
       # I should not see the tweet in the stack
-      visit "/tweet-stack"
+      visit "/tweet-engine"
       page.should_not have_content "My message - Sent"
     end
   
     it "does not send out tweet if they are not ready to be sent out yet" do
-      tweet = TweetStack::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
+      tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
       tweet.deliver
       Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
       
       # I should not see the tweet in the stack
-      visit "/tweet-stack"
+      visit "/tweet-engine"
       page.should_not have_content "My message - Sent"
     end
   end
@@ -167,7 +167,7 @@ describe "Navigation" do
     stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=joelmahoney").
       to_return(:status => 200, :body => "", :headers => {})
     # visit the stack
-    visit "/tweet-stack"
+    visit "/tweet-engine"
     
     click_link "Followers"
     # follow the unfollow link
@@ -177,7 +177,7 @@ describe "Navigation" do
     page.should have_content "Unfollowing joelmahoney"
   end
   
-  it "should be able to store the found tweeple for later"
+  it "should be able to follower tweeple I have found"
   it "displays a list of recent followers that I am following"
   
   context "intelligent tweeting" do
@@ -189,7 +189,7 @@ describe "Navigation" do
     it "allows me to set a tweet interval" do
       pending 'Add implementation later'
       # i go to the setting page
-      visit '/tweet-stack/settings'
+      visit '/tweet-engine/settings'
       # I fill in the default interval
       fill_in 'Auto-tweet interval', :with => "10 mins"
       
@@ -197,13 +197,13 @@ describe "Navigation" do
       click_button "Update Settings"
       
       # I set up a tweet with no date
-      TweetStack::Stack.create :message => 'A new message'
+      TweetEngine::Stack.create :message => 'A new message'
       
       # 10 mins go by
       Timecop.travel 10.mins
       
       # My tweet is sent
-      TweetStack::Stack.last.should be_delivered
+      TweetEngine::Stack.last.should be_delivered
     end
     
     it "allows me to set my auto search interval"

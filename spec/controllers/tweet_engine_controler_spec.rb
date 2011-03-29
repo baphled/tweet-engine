@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TweetStackController do
+describe TweetEngineController do
   describe "GET, index" do
     it "displays the index page" do
       stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
@@ -22,21 +22,21 @@ describe TweetStackController do
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
     end
     it "should do a search via twitter with the search params" do
-      TweetStack.should_receive(:search).with('lemons')
+      TweetEngine.should_receive(:search).with('lemons')
       get :search, {:q => 'lemons'}
     end
   end
   
   describe "POST, follow" do
     it "uses the twitter client" do
-      TweetStack.should_receive(:follow).exactly(2).times
+      TweetEngine.should_receive(:follow).exactly(2).times
       post :follow, { :followers => { 'baphled' => 'baphled', 'acme_inc' => 'acme_inc' } }
     end
   end
   
   describe "POST, stack" do
     it "stacks the tweet" do
-      TweetStack.should_receive(:stack).with("This is my tweet")
+      TweetEngine.should_receive(:stack).with("This is my tweet")
       post :stack, {:message => "This is my tweet"}
     end
   end
@@ -47,7 +47,7 @@ describe TweetStackController do
         to_return(:status => 200, :body => "", :headers => {})
     end
     it "makes a call for our follower" do
-      TweetStack.should_receive :following
+      TweetEngine.should_receive :following
       get :following
     end
   end

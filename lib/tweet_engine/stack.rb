@@ -1,4 +1,4 @@
-module TweetStack
+module TweetEngine
   class Stack
     
     include Mongoid::Document

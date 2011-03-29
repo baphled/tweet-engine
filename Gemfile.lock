@@ -82,6 +82,7 @@ GEM
     culerity (0.2.15)
     daemons (1.1.0)
     diff-lcs (1.1.2)
+    djinn (0.1.7)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faraday (0.5.7)
@@ -192,6 +193,7 @@ DEPENDENCIES
   capybara (>= 0.4.0)
   delayed_job (>= 2.1.4)!
   delayed_job_mongoid!
+  djinn
   growl
   guard
   guard-bundler

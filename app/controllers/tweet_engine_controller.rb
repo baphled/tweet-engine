@@ -1,15 +1,15 @@
-class TweetStackController < ApplicationController
+class TweetEngineController < ApplicationController
   include ActionView::Helpers::TextHelper
   
   before_filter :tweet_stack
   before_filter :instantiate_stack
   
   def index
-    @followers = TweetStack.followers
+    @followers = TweetEngine.followers
   end
   
   def search
-    @results = TweetStack.search params[:q]
+    @results = TweetEngine.search params[:q]
     @term = params[:q]
     render :index
   end
@@ -17,34 +17,34 @@ class TweetStackController < ApplicationController
   def follow
     @new_followers = []
     params[:followers].each do |screen_name|
-      @new_followers << TweetStack.follow(screen_name)
+      @new_followers << TweetEngine.follow(screen_name)
     end
     flash[:notice] = "You are now following #{pluralize(@new_followers.count, "more person")}"
     render :index
   end
   
   def stack
-    TweetStack.stack params[:message]
+    TweetEngine.stack params[:message]
     flash[:notice] = "Added new tweet to the stack"
-    redirect_to tweet_stack_path
+    redirect_to tweet_engine_path
   end
   
   def following
-    @followers = TweetStack.following
+    @followers = TweetEngine.following
   end
   
   def unfollow
     Twitter.unfollow params[:screen_name]
     flash[:notice] = "Unfollowing #{params[:screen_name]}"
-    redirect_to tweet_stack_path
+    redirect_to tweet_engine_path
   end
   
   private
   def tweet_stack
-    @tweet_stack = TweetStack::Stack.all
+    @tweet_stack = TweetEngine::Stack.all
   end
   
   def instantiate_stack
-    @stack = TweetStack::Stack.new
+    @stack = TweetEngine::Stack.new
   end
 end

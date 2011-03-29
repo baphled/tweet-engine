@@ -1,19 +1,19 @@
 require 'spec_helper'
 
-describe TweetStack::Stack do
+describe TweetEngine::Stack do
   it "has a message" do
-    stack = TweetStack::Stack.new :message => "My message"
+    stack = TweetEngine::Stack.new :message => "My message"
     stack.message.should == "My message"
   end
   
   it "should be able to save the message" do
-    stack = TweetStack::Stack.new :message => "My message"
+    stack = TweetEngine::Stack.new :message => "My message"
     stack.save.should == true
   end
   
   it "should be able to retrieve a list of all messages" do
-    3.times { |int| TweetStack::Stack.create :message => "My message #{int}"}
-    TweetStack::Stack.all.size.should_not == 0
+    3.times { |int| TweetEngine::Stack.create :message => "My message #{int}"}
+    TweetEngine::Stack.all.size.should_not == 0
   end
   
   context "validations" do
@@ -23,7 +23,7 @@ describe TweetStack::Stack do
   
   describe "#sendable?" do
     before(:each) do
-      @tweet = TweetStack::Stack.new :message => "Some message", :sending_at => Time.now + 1.hour
+      @tweet = TweetEngine::Stack.new :message => "Some message", :sending_at => Time.now + 1.hour
     end
     
     it "false when the date is not pasted" do
@@ -38,7 +38,7 @@ describe TweetStack::Stack do
   
   describe "#deliver" do
     before(:each) do
-      @tweet = TweetStack::Stack.create :message => "Some message", :sending_at => Time.now + 1.hour
+      @tweet = TweetEngine::Stack.create :message => "Some message", :sending_at => Time.now + 1.hour
       @tweet.deliver
     end
     
@@ -68,14 +68,14 @@ describe TweetStack::Stack do
   describe "#to_deliver" do
     
     it "returns a list of tweets to send" do
-      TweetStack::Stack.create :message => "Some message", :sending_at => Time.now
-      TweetStack::Stack.to_deliver.count == 1
+      TweetEngine::Stack.create :message => "Some message", :sending_at => Time.now
+      TweetEngine::Stack.to_deliver.count == 1
     end
     
     it "only returns tweets that are equal to the current time" do
-      3.times { |i| TweetStack::Stack.create :message => "Some message #{i}", :sending_at => Time.now - i.to_i.hours }
-      TweetStack::Stack.create :message => "Some message", :sending_at => Time.now
-      TweetStack::Stack.to_deliver.count == 1
+      3.times { |i| TweetEngine::Stack.create :message => "Some message #{i}", :sending_at => Time.now - i.to_i.hours }
+      TweetEngine::Stack.create :message => "Some message", :sending_at => Time.now
+      TweetEngine::Stack.to_deliver.count == 1
     end
   end
 end

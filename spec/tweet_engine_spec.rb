@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe TweetStack do
+describe TweetEngine do
   it "should be valid" do
-    TweetStack.should be_a(Module)
+    TweetEngine.should be_a(Module)
   end
   
   describe "#search" do
@@ -14,7 +14,7 @@ describe TweetStack do
     
     it "returns a list of tweeple" do
       data = fixture('search.json')
-      TweetStack.search('lemons').should_not == []
+      TweetEngine.search('lemons').should_not == []
     end
   end
   
@@ -30,12 +30,12 @@ describe TweetStack do
     
     it "tries uses the twitters API client" do
       Twitter::Client.should_receive :new
-      TweetStack.follow('baphled')
+      TweetEngine.follow('baphled')
     end
     
     it "follows the user" do
       @twitter.should_receive(:follow).with('baphled')
-      TweetStack.follow('baphled')
+      TweetEngine.follow('baphled')
     end
   end
 
@@ -47,14 +47,14 @@ describe TweetStack do
       stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
-      TweetStack.followers.count.should == 200
+      TweetEngine.followers.count.should == 200
     end
   end
   
   describe "#stack" do
     it "should add the tweet to the stack" do
-      TweetStack::Stack.should_receive(:create).with(:message => "This is my tweet")
-      TweetStack.stack("This is my tweet")
+      TweetEngine::Stack.should_receive(:create).with(:message => "This is my tweet")
+      TweetEngine.stack("This is my tweet")
     end
   end
 end

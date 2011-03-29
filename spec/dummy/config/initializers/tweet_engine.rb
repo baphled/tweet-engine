@@ -1,6 +1,3 @@
-# Add initialization content here
-require 'tweet_engine'
-
 TweetEngine.config = YAML.load_file("#{Rails.root}/config/tweet_engine.yml")[Rails.env]
 
 Twitter.configure do |config|

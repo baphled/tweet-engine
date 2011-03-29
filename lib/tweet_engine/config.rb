@@ -1,4 +1,4 @@
-module TweetStack
+module TweetEngine
   def self.config
     @@config ||= {}
   end

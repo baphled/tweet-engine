@@ -1,9 +1,9 @@
-module TweetStack
-  require 'tweet_stack/engine' if defined?(Rails)
-  require 'tweet_stack/stack'
-  require 'tweet_stack/config'
-  require 'tweet_stack/search_job'
-  require 'tweet_stack/potential_follower'
+module TweetEngine
+  require 'tweet_engine/engine' if defined?(Rails)
+  require 'tweet_engine/stack'
+  require 'tweet_engine/config'
+  require 'tweet_engine/search_job'
+  require 'tweet_engine/potential_follower'
     
   def self.search term
     names = []
@@ -43,6 +43,6 @@ module TweetStack
   end
   
   def self.stack message
-    TweetStack::Stack.create :message => message
+    TweetEngine::Stack.create :message => message
   end
 end

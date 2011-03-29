@@ -1,5 +1,7 @@
 # Add initialization content here
-TweetStack.config = YAML.load_file("#{Rails.root}/config/tweet_stack.yml")[Rails.env]
+require 'tweet_engine'
+
+TweetEngine.config = YAML.load_file("#{Rails.root}/config/tweet_engine.yml")[Rails.env]
 
 Twitter.configure do |config|
   config.consumer_key = "CK"

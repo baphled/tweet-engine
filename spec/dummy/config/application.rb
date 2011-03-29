@@ -7,7 +7,7 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 
 Bundler.require
-require "tweet_stack"
+require "tweet_engine"
 
 module Dummy
   class Application < Rails::Application
