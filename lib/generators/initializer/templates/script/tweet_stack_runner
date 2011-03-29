@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'djinn'
 
 require File.expand_path('../../config/application',  __FILE__)
 require File.expand_path('../../config/boot',  __FILE__)
 
 TweetStack.config = YAML.load_file("#{Rails.root}/config/tweet_stack.yml")[Rails.env]
+
 Mongoid.configure do |config|
   name = "dummy_#{Rails.env}"
   config.master = Mongo::Connection.new.db(name)
