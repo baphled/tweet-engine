@@ -61,14 +61,20 @@ describe "Navigation" do
     end
   
     it "updates my list of potential followers on 15 minute interval" do
+      pending 'Not quite sure how to test this'
+      
+      # run djinn
+      run "#{Rails.root}/script/tweet_stack_runner start"
+      
       # we have keywords we want to follow tweeple based on
-      tweeple_found = TweetStack::PotentialFollower.all.count
+      tweeple_found = TweetStack::PotentialFollower.all.to_a
       tweeple_found.should_not be_empty
       
       TweetStack.config['keywords'].should == 'rails, ruby'
       TweetStack.config['search'].should == true
       Timecop.travel(Time.now + 15.minutes)
-      tweeple_found.should_not == TweetStack::PotentialFollower.all.count
+      tweeple_found.should_not == TweetStack::PotentialFollower.all.to_a
+      run '#{Rails.root}/script/tweet_stack_runner --stop'
     end
     
   end

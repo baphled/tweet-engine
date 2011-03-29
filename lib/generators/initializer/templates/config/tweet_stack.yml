@@ -1,0 +1,9 @@
+production:
+  keyworks: "rails, ruby"
+  search: true
+development:
+  keyworks: "rails, ruby"
+  search: true
+test:
+  keyworks: "rails, ruby"
+  search: true

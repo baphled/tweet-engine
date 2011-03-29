@@ -3,6 +3,8 @@ require 'spec_helper'
 describe TweetStack::SearchJob do
   before(:each) do
     @search_job = TweetStack::SearchJob.new
+    stub_request(:get, "https://search.twitter.com/search.json?q=rails,%20ruby&rpp=100").
+      to_return(:status => 200, :body => fixture('search.json'), :headers => {})
   end
   
   it "should not call search before 15 minutes are up" do
@@ -19,11 +21,11 @@ describe TweetStack::SearchJob do
     Delayed::Worker.new.work_off
   end
   
-  it "should call search twice after 30 minutes" do
+  it "should increase the amount of potential followers" do
     @search_job.searching
     TweetStack::PotentialFollower.all.count.should == 0
-    TweetStack.should_receive(:search).exactly(2).times
-    Timecop.travel(Time.now + 30.minutes)
+    Timecop.travel(Time.now + 15.minutes)
     Delayed::Worker.new.work_off
+    TweetStack::PotentialFollower.all.count.should_not == 0
   end
 end
