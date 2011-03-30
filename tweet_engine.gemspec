@@ -3,10 +3,10 @@
 Gem::Specification.new do |s|
   s.name = "tweet_engine"
   s.platform = Gem::Platform::RUBY
-  s.summary = "Insert TweetEngine summary."
-  s.description = "Insert TweetEngine description."
+  s.summary = "Add a tweet engine to your app."
+  s.description = "Allows you to easily manage tweets and followers via an control panel."
   s.files = Dir["{app,lib,config}/**/*"] + ["MIT-LICENSE", "Rakefile", "Gemfile", "README.rdoc"]
-  s.version = "0.0.1"
+  s.version = "0.0.2"
   
   s.add_dependency('twitter')
   s.add_dependency('mongoid')
