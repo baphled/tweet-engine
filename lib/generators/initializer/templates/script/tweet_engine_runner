@@ -1,14 +1,17 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
+require 'djinn'
+require 'mongoid'
 
 require File.expand_path('../../config/application',  __FILE__)
 require File.expand_path('../../config/boot',  __FILE__)
 
 TweetEngine.config = YAML.load_file("#{Rails.root}/config/tweet_engine.yml")[Rails.env]
 
+# @TODO: Get database name from config file
 Mongoid.configure do |config|
-  name = "dummy_#{Rails.env}"
+  name = "tweet_engine_#{Rails.env}"
   config.master = Mongo::Connection.new.db(name)
   config.persist_in_safe_mode = false
 end
