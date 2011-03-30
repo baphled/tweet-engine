@@ -1,3 +1,5 @@
+require 'mongoid'
+
 module TweetEngine
   class PotentialFollower
     include Mongoid::Document
