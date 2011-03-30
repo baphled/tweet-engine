@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,lib,config}/**/*"] + ["MIT-LICENSE", "Rakefile", "Gemfile", "README.rdoc"]
   s.version = "0.0.1"
   
+  s.add_dependency('twitter')
   s.add_dependency('mongoid')
   s.add_dependency('bson_ext')
   s.add_dependency('simple_form')
