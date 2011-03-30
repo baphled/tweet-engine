@@ -1,4 +1,5 @@
 require 'mongoid'
+require 'delayed_job_mongoid'
 
 module TweetEngine
   class Stack
