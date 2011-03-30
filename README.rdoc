@@ -1,3 +1,8 @@
 = TweetEngine
 
 This project rocks and uses MIT-LICENSE.
+
+= Install
+
+gem 'tweet_engine'
+gem 'twitter'
