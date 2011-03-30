@@ -1,3 +1,5 @@
+require 'twitter'
+
 module TweetEngine
   require 'tweet_engine/engine' if defined?(Rails)
   require 'tweet_engine/stack'
