@@ -1,8 +1,49 @@
 = TweetEngine
 
-This project rocks and uses MIT-LICENSE.
+TweetEngine is a Rails Engine application which allows you to easily added tweeter management right into your application with little hassle.
 
-= Install
+= What is TweetEngine
 
-gem 'tweet_engine'
-gem 'twitter'
++ Its based on Rails Engine
++ Allows you to easily manage your tweet campaign without being spammy
++ Automatically finds potential people to follow
++ Allows you to send tweets now or in the future
+
+= What will be in TweetEngine
++ Automatically followers people of interest (based on keyword search result)
++ Allows you to easily manage who you are following
++ Find out which of your followers are the most influential (have the most users)
++ Automate the daemon process to be started automatically
+
+= What it isn't
+
++ It's not another twitter client!
++ Is not a stand alone application
+
+= Installing
+
+You can use the latest Rails 3 gem with the latest TweetEngine gem:
+
+  gem 'tweet_engine'
+  gem 'twitter'
+
+After the above to your Gemfile, you need to run the generator:
+
+  rails generate tweet_engine:install
+  
+This will create a an initializer file where you will need to add your twitter API credentials.
+
+The other file is the setting for TweetEngine itself. Here you can tell the engine whether you want it to do background searches for potentials people to follower and which keyword(s) to use for the search.
+
+Once these have been configured, all that is left is to start your engines!
+
+
+Once the server is started you will be able to view the TweetEngine's control panel. Which will allow you to manage your twitter campaign.
+
+http://127.0.0.1:/3000/tweet-engine
+
+= Notice
+
+TweetEngine is still in its alpha stage, expect the odd oil leakage, over use of fossil fuels and mass damage to the ozone layer.
+
+This app uses MIT-LICENSE.
