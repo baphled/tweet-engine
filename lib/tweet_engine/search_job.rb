@@ -1,3 +1,5 @@
+require 'delayed_job'
+
 module TweetEngine
   class SearchJob
     
