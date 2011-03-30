@@ -1,4 +1,5 @@
 require 'delayed_job'
+require 'delayed_job_mongoid'
 
 module TweetEngine
   class SearchJob
