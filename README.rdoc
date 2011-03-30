@@ -4,21 +4,22 @@ TweetEngine is a Rails Engine application which allows you to easily added tweet
 
 = What is TweetEngine
 
-+ Its based on Rails Engine
-+ Allows you to easily manage your tweet campaign without being spammy
-+ Automatically finds potential people to follow
-+ Allows you to send tweets now or in the future
+* Its based on Rails Engine
+* Allows you to easily manage your tweet campaign without being spammy
+* Automatically finds potential people to follow
+* Allows you to send tweets now or in the future
 
 = What will be in TweetEngine
-+ Automatically followers people of interest (based on keyword search result)
-+ Allows you to easily manage who you are following
-+ Find out which of your followers are the most influential (have the most users)
-+ Automate the daemon process to be started automatically
+
+* Automatically followers people of interest (based on keyword search result)
+* Allows you to easily manage who you are following
+* Find out which of your followers are the most influential (have the most users)
+* Automate the daemon process to be started automatically
 
 = What it isn't
 
-+ It's not another twitter client!
-+ Is not a stand alone application
+* It's not another twitter client!
+* Is not a stand alone application
 
 = Installing
 
