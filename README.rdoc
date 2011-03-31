@@ -15,11 +15,13 @@ TweetEngine is a Rails Engine application which allows you to easily added tweet
 * Allows you to easily manage who you are following
 * Find out which of your followers are the most influential (have the most users)
 * Automate the daemon process to be started automatically
+* Find out the peak times of that your followers tweet (experimental)
 
 = What it isn't
 
 * It's not another twitter client!
 * Is not a stand alone application
+* It is not a way to spam people on twitter
 
 = Installing
 
@@ -38,10 +40,19 @@ The other file is the setting for TweetEngine itself. Here you can tell the engi
 
 Once these have been configured, all that is left is to start your engines!
 
-
 Once the server is started you will be able to view the TweetEngine's control panel. Which will allow you to manage your twitter campaign.
 
 http://127.0.0.1:/3000/tweet-engine
+
+TweetEngine uses Delayed Job to handing its background processes, to start these jobs you will need to run the following rake task:
+
+rake jobs:work
+
+At present there is another background that will need to be run to generate the list of potential people to follow. This can be done by running the following script:
+
+ruby script/tweet_engine start
+
+This will create a daemon process in the back ground that will run every 15 minutes and collect a list of people talking that are using the keywords you are using.
 
 = Notice
 
