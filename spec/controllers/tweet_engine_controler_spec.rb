@@ -51,4 +51,11 @@ describe TweetEngineController do
       get :following
     end
   end
+
+  describe "GET, potential-followers" do
+    it "should get a list of all potential followers" do
+      TweetEngine::PotentialFollower.should_receive :all
+      get :potential_followers
+    end
+  end
 end

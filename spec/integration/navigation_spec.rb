@@ -29,7 +29,7 @@ describe "Navigation" do
     end
 
     it "displays when the account was created" do
-      page.should have_content "Your account was created at: "
+      page.should have_content "Your account was created at: Sat Mar 08 16:34:22 +0000 2008"
     end
     it "number of lists I am part of"
     it "displays my description"
@@ -200,7 +200,32 @@ describe "Navigation" do
   end
   
   context "following potentials followers" do
-    it "should be able to follower tweeple I have found"
+    it "should be able to follower tweeple I have found" do
+      stub_request(:post, "https://api.twitter.com/1/friendships/create.json").
+        to_return(:status => 200, :body => "", :headers => {})
+      3.times do |amount|
+        TweetEngine::PotentialFollower.create :screen_name => "Some name #{amount}"
+      end
+      
+      # pending 'Defining steps'
+      # we visit the dashboard
+      visit 'tweet-engine'
+      # we follow potential followers
+      click_link 'potential followers'
+      
+      page.should have_content "Potential Followers"
+      
+      # we click on 3 followers
+      three_users = TweetEngine::PotentialFollower.all.limit(3)
+      three_users.each do |user|
+        check "#{user.screen_name}"
+      end
+      click_button 'Follow tweeple'
+
+      # we are following 3 more people
+      page.should have_content "You are now following 3 more people"
+    end
+    
     it "displays a list of recent followers that I am following"
   end
   

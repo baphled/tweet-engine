@@ -38,6 +38,10 @@ class TweetEngineController < ApplicationController
     redirect_to tweet_engine_path
   end
   
+  def potential_followers
+    @potential_followers = TweetEngine::PotentialFollower.all.to_a
+  end
+  
   private
   def tweet_stack
     @tweet_stack = TweetEngine::Stack.all

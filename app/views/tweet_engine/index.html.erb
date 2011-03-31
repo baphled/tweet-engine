@@ -1,42 +1,58 @@
-Hi <%= TweetEngine.whats_my.user.screen_name %>,
+<p>
+  Hi <%= TweetEngine.whats_my.user.screen_name %>, this is your TweetEngine.<br/>
+  Your account was created at: <%= TweetEngine.whats_my.user.created_at %>
+</p>
 
-This is your TweetEngine.<br />
 <div id="tweet-stats">
-  Auto-searching for <%= TweetEngine.config['keywords'] %><br />
-  You currently have <%= TweetEngine.whats_my.user.followers_count %> followers<br />
-  You are following <%= TweetEngine.whats_my.user.friends_count %> tweeple<br />
-  <br />
-  Your last tweet was: <%= TweetEngine.whats_my.user.status.text %><br/>
-  Your account was created at: <%= TweetEngine.whats_my.user.created_at %><br/>
-  Number of found potential users <%= TweetEngine::PotentialFollower.all.count %><br/>
+<% if TweetEngine.config['search'] %>
+  <p>
+    Auto-searching for <%= TweetEngine.config['keywords'] %>
+  </p>
+<% end %>
+  
+  <p>
+    You currently have <%= TweetEngine.whats_my.user.followers_count %> followers<br />
+    You are following <%= TweetEngine.whats_my.user.friends_count %> tweeple<br />
+  </p>
+  
+  <p>Your last tweet was: <%= TweetEngine.whats_my.user.status.text %> @ <%= TweetEngine.whats_my.user.status.created_at%></p>
+  
+  Number of found <%= link_to "potential followers", tweet_engine_potential_followers_path %> <%= TweetEngine::PotentialFollower.all.count %><br/>
 </div>
 <%= link_to "Followers", tweet_engine_following_path %>
 
-<%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
-<% end %>
-
-<% if @results.present? %>
-  <%= form_tag(tweet_follow_path) do |f| %>
-    Tweeple talking about '<%= @term %>':<br />
-    <ul>
-    <% @results.each_with_index do |tweeple, index| %>
-      <li>
-        <%= label_tag "followers[name][#{tweeple.from_user}]", tweeple.from_user %><%= check_box_tag "followers[name][#{tweeple.from_user}]", tweeple.from_user %><br />
-        <%= tweeple.text %>
-      </li>
+<div id="tweet-engine-search">
+  <div class="search">
+    <%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>
+      <%= label_tag(:q, "Search for:") %>
+      <%= text_field_tag(:q) %>
+      <%= submit_tag("Search") %>
     <% end %>
-    </ul>
-    <%= submit_tag("Follow") %>
-  <% end %>
-<% end %>
+  </div>
 
+  <div class="results">
+    <% if @results.present? %>
+      <%= form_tag(tweet_follow_path) do |f| %>
+        Tweeple talking about '<%= @term %>':<br />
+        <ul>
+        <% @results.each_with_index do |tweeple, index| %>
+          <li>
+            <%= label_tag "followers[name][#{tweeple.from_user}]", tweeple.from_user %><%= check_box_tag "followers[name][#{tweeple.from_user}]", tweeple.from_user %><br />
+            <%= tweeple.text %>
+          </li>
+        <% end %>
+        </ul>
+        <%= submit_tag("Follow") %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div id="tweet-stack">
 <% if @tweet_stack.empty? %>
-  No tweets stacked<br />
+    No tweets stacked<br />
 <% else%>
-  Stacked tweets<br />
+  <h3>Stacked tweets</h3>
   <ul>
   <% @tweet_stack.each do |tweet| %>
     <li><%= tweet.message %> - 
@@ -50,12 +66,15 @@ This is your TweetEngine.<br />
   <% end %>
   </ul>
 <% end %>
+</div>
 
-<%= form_for @stack, :url => tweet_index_path, :method => :post do |f| %>
-  <p><%= f.label :message, "Enter Tweet" %>
-  <%= f.text_field :message %></p>
-  <p><%= f.label :sending_at, "Sending At" %>
-  <%= f.text_field :sending_at, :class =>'datepicker' %>
-  </p>
-  <%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...' %>
-<% end %>
+<div id="schedule-tweet">
+  <%= form_for @stack, :url => tweet_index_path, :method => :post do |f| %>
+    <p><%= f.label :message, "Enter Tweet" %>
+    <%= f.text_field :message %></p>
+    <p><%= f.label :sending_at, "Sending At" %>
+    <%= f.text_field :sending_at, :class =>'datepicker' %>
+    </p>
+    <%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...' %>
+  <% end %>
+</div>
