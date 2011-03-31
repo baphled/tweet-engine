@@ -19,6 +19,7 @@ module TweetEngine
     #
     def searching
       users = TweetEngine.search TweetEngine.config['keywords']
+      p gather_potentials(users)
       store_search gather_potentials(users)
     end
     
@@ -33,7 +34,7 @@ module TweetEngine
       names = []
       all_users = TweetEngine::PotentialFollower.all.to_a
       users.each { |user| names << user.from_user unless all_users.include? user.from_user }
-      names
+      names.uniq!
     end
     
     #

@@ -12,13 +12,14 @@ describe TweetEngine::SearchJob do
   end
   
   it "should not call search before 15 minutes are up" do
+    @search_job.searching
     TweetEngine.should_not_receive :search
     Timecop.travel(Time.now + 14.minutes)
     Delayed::Worker.new.work_off
   end
   
   it "should call search every 15 minutes" do
-    @search_job.searching
+    @search_job.searching 
     TweetEngine::PotentialFollower.all.count.should == 0
     TweetEngine.should_receive :search
     Timecop.travel(Time.now + 15.minutes)
