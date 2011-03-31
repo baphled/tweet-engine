@@ -8,6 +8,9 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+<% if notice %> 
+  <p id="notice"><%= notice %></p>
+<% end %>
 
 <%= yield %>
 

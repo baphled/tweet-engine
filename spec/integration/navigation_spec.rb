@@ -4,6 +4,10 @@ describe "Navigation" do
   include Capybara
   
   before(:each) do
+    stub_request(:get, "https://api.twitter.com/1/account/verify_credentials.json").
+      to_return(:status => 200, :body => fixture('user.json'), :headers => {})
+    stub_request(:get, "https://api.twitter.com/1/users/show.json?screen_name=pengwynn").
+      to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
     stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
       to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
     stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
@@ -19,11 +23,13 @@ describe "Navigation" do
     ::Rails.application.should be_a(Dummy::Application)
   end
   
-  it "should let me view tweet stack" do
-    visit "/tweet-engine"
-    page.should have_content "Tweet stack"
-    page.should have_content "You currently have 200 followers"
-    page.should have_content "You are following 100 tweeple"
+  context "User information and statistics" do
+    it "should let me view tweet stack" do
+      visit "/tweet-engine"
+      save_and_open_page
+      page.should have_content "You currently have 3199 followers"
+      page.should have_content "You are following 2106 tweeple"
+    end
   end
   
   context "searching for tweeple" do

@@ -6,7 +6,16 @@ module TweetEngine
   require 'tweet_engine/config'
   require 'tweet_engine/search_job'
   require 'tweet_engine/potential_follower'
-    
+  
+  #
+  # Wrapper for Twitter::CLient
+  #
+  # Basically some syntactic sugar to make calls to the client read cleanly
+  #
+  def self.whats_my
+    Twitter::Client.new
+  end
+  
   def self.search term
     names = []
     search = Twitter::Search.new
