@@ -6,7 +6,6 @@ gem "sqlite3"
 gem 'mongoid', :git => "https://github.com/mongoid/mongoid.git"
 gem 'bson_ext'
 
-gem 'simple_form'
 gem 'jquery-rails', '>= 0.2.6'
 
 gem 'delayed_job', '>= 2.1.4', :git => "https://github.com/collectiveidea/delayed_job"
