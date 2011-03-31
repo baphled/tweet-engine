@@ -60,6 +60,4 @@ module TweetEngine
   def self.stack message
     TweetEngine::Stack.create :message => message
   end
-  
-  
 end

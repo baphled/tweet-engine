@@ -19,7 +19,6 @@ module TweetEngine
     #
     def searching
       users = TweetEngine.search TweetEngine.config['keywords']
-      p gather_potentials(users)
       store_search gather_potentials(users)
     end
     
