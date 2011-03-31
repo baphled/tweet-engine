@@ -2,10 +2,10 @@
 <h2>Potential Followers</h2>
 <ul id="potential-followers">
   <%= form_tag(:action => "follow") do %>
-    <% @potential_followers.each do |user| %>
+    <% @potential_followers.each_with_index do |user, index| %>
     
   <li>
-    <%= label_tag "followers[]", "#{user.screen_name}" %><%= check_box_tag "followers[]", user.screen_name %>
+    <%= label_tag "followers[#{index}]", "#{user.screen_name}" %><%= check_box_tag "followers[#{index}]", user.screen_name %><br />
   </li>
     <% end -%>
     

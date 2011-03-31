@@ -191,11 +191,14 @@ describe "Navigation" do
       visit "/tweet-engine"
     
       click_link "Followers"
+      
       # follow the unfollow link
-      click_button 'Unfollow'
-    
+      check 'timoreilly'
+      
+      click_button "Unfollow tweeple"
+      
       # I should see a list of people I am following
-      page.should have_content "Unfollowing timoreilly"
+      page.should have_content "Unfollowed 1 tweeple"
     end
   end
   

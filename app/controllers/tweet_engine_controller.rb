@@ -16,6 +16,7 @@ class TweetEngineController < ApplicationController
   def follow
     @new_followers = []
     params[:followers].each do |screen_name|
+      screen_name = screen_name.last
       @new_followers << TweetEngine.follow(screen_name)
       TweetEngine::PotentialFollower.delete_all(:conditions => { :screen_name => screen_name })
     end
@@ -34,8 +35,11 @@ class TweetEngineController < ApplicationController
   end
   
   def unfollow
-    Twitter.unfollow params[:screen_name]
-    flash[:notice] = "Unfollowing #{params[:screen_name]}"
+    @unfollowed = []
+    params[:unfollow].each do |screen_name|
+      @unfollowed << Twitter.unfollow(screen_name.last)
+    end
+    flash[:notice] = "Unfollowed #{@unfollowed.count} tweeple"
     redirect_to tweet_engine_path
   end
   
