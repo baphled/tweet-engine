@@ -12,6 +12,9 @@ module TweetEngine
   #
   # Basically some syntactic sugar to make calls to the client read cleanly
   #
+  # This gives us full access to the twitter client API instead of creating duplicating functionality already tested
+  # some where else
+  #
   def self.whats_my
     Twitter::Client.new
   end
@@ -29,6 +32,10 @@ module TweetEngine
     client.follow screen_name
   end
   
+  #
+  # Wrapper method to get a list of all followers instead of getting the page by page
+  #
+  #
   def self.followers
     client = Twitter::Client.new
     followers = []
