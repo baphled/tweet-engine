@@ -1,12 +1,15 @@
 Hi <%= TweetEngine.whats_my.user.screen_name %>,
 
 This is your TweetEngine.<br />
-
-Auto-searching for <%= TweetEngine.config['keywords'] %><br />
-You currently have <%= TweetEngine.whats_my.user.followers_count %> followers<br />
-You are following <%= TweetEngine.whats_my.user.friends_count %> tweeple<br />
-
-Number of found potential users <%= TweetEngine::PotentialFollower.all.count %>
+<div id="tweet-stats">
+  Auto-searching for <%= TweetEngine.config['keywords'] %><br />
+  You currently have <%= TweetEngine.whats_my.user.followers_count %> followers<br />
+  You are following <%= TweetEngine.whats_my.user.friends_count %> tweeple<br />
+  <br />
+  Your last tweet was: <%= TweetEngine.whats_my.user.status.text %><br/>
+  Your account was created at: <%= TweetEngine.whats_my.user.created_at %><br/>
+  Number of found potential users <%= TweetEngine::PotentialFollower.all.count %><br/>
+</div>
 <%= link_to "Followers", tweet_engine_following_path %>
 
 <%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>
@@ -14,7 +17,6 @@ Number of found potential users <%= TweetEngine::PotentialFollower.all.count %>
   <%= text_field_tag(:q) %>
   <%= submit_tag("Search") %>
 <% end %>
-
 
 <% if @results.present? %>
   <%= form_tag(tweet_follow_path) do |f| %>

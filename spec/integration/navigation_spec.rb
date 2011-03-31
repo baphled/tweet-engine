@@ -16,11 +16,32 @@ describe "Navigation" do
   end
   
   context "User information and statistics" do
-    it "should let me view tweet stack" do
+    before(:each) do
       visit "/tweet-engine"
+    end
+    
+    it "displays my name" do
+      page.should have_content "Hi pengwynn,"
+    end
+    
+    it "displays my last update" do
+      page.should have_content "Your last tweet was: {{! Mustache Playground }} from @pvande http://wynn.fm/ce"
+    end
+
+    it "displays when the account was created" do
+      page.should have_content "Your account was created at: "
+    end
+    it "number of lists I am part of"
+    it "displays my description"
+    
+    it "displays the the total amount of followers" do
       page.should have_content "You currently have 3199 followers"
+    end
+    
+    it "displays the the total amount of people I am following" do
       page.should have_content "You are following 2106 tweeple"
     end
+    
   end
   
   context "searching for tweeple" do
@@ -160,24 +181,28 @@ describe "Navigation" do
     end
   end
   
-  it "allows me to unfollow people I am following" do
-    stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").
-      to_return(:status => 200, :body => fixture('friends.json'), :headers => {})
-    stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=timoreilly").
-      to_return(:status => 200, :body => "", :headers => {})
-    # visit the stack
-    visit "/tweet-engine"
+  context "unfollowing a user" do
+    it "allows me to unfollow people I am following" do
+      stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").
+        to_return(:status => 200, :body => fixture('friends.json'), :headers => {})
+      stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=timoreilly").
+        to_return(:status => 200, :body => "", :headers => {})
+      # visit the stack
+      visit "/tweet-engine"
     
-    click_link "Followers"
-    # follow the unfollow link
-    click_button 'Unfollow'
+      click_link "Followers"
+      # follow the unfollow link
+      click_button 'Unfollow'
     
-    # I should see a list of people I am following
-    page.should have_content "Unfollowing timoreilly"
+      # I should see a list of people I am following
+      page.should have_content "Unfollowing timoreilly"
+    end
   end
   
-  it "should be able to follower tweeple I have found"
-  it "displays a list of recent followers that I am following"
+  context "following potentials followers" do
+    it "should be able to follower tweeple I have found"
+    it "displays a list of recent followers that I am following"
+  end
   
   context "intelligent tweeting" do
     it "auto responds to people who mention one of our key phrases"
