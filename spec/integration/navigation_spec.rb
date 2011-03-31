@@ -221,10 +221,15 @@ describe "Navigation" do
         check "#{user.screen_name}"
       end
       click_button 'Follow tweeple'
-
+      
+      # we are redirected back to the dashboard
+      save_and_open_page
+      
       # we are following 3 more people
       page.should have_content "You are now following 3 more people"
     end
+    
+    it "removes the potential users that we are now following"
     
     it "displays a list of recent followers that I am following"
   end
