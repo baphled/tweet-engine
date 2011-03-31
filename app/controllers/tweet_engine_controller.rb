@@ -5,7 +5,6 @@ class TweetEngineController < ApplicationController
   before_filter :instantiate_stack
   
   def index
-    @followers = TweetEngine.followers
   end
   
   def search

@@ -8,14 +8,6 @@ describe "Navigation" do
       to_return(:status => 200, :body => fixture('user.json'), :headers => {})
     stub_request(:get, "https://api.twitter.com/1/users/show.json?screen_name=pengwynn").
       to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
-    stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
-      to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
-    stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
-       to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
-    stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=1344637399602463196").
-      to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
-    stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").
-      to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
     TweetEngine::Stack.destroy_all
   end
   
@@ -26,7 +18,6 @@ describe "Navigation" do
   context "User information and statistics" do
     it "should let me view tweet stack" do
       visit "/tweet-engine"
-      save_and_open_page
       page.should have_content "You currently have 3199 followers"
       page.should have_content "You are following 2106 tweeple"
     end
@@ -170,7 +161,9 @@ describe "Navigation" do
   end
   
   it "allows me to unfollow people I am following" do
-    stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=joelmahoney").
+    stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").
+      to_return(:status => 200, :body => fixture('friends.json'), :headers => {})
+    stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=timoreilly").
       to_return(:status => 200, :body => "", :headers => {})
     # visit the stack
     visit "/tweet-engine"
@@ -180,7 +173,7 @@ describe "Navigation" do
     click_button 'Unfollow'
     
     # I should see a list of people I am following
-    page.should have_content "Unfollowing joelmahoney"
+    page.should have_content "Unfollowing timoreilly"
   end
   
   it "should be able to follower tweeple I have found"
