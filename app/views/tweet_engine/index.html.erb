@@ -50,8 +50,12 @@ Number of found potential users <%= TweetEngine::PotentialFollower.all.count %>
   <% end %>
   </ul>
 <% end %>
-<%= simple_form_for @stack, :url => tweet_index_path, :method => :post do |f| %>
-  <%= f.input :message, :as => :text, :label => "Enter Tweet" %>
-  <%= f.input :sending_at, :input_html => {:class => "datepicker"} %>
-  <%= f.submit("Stack Tweet") %>
+
+<%= form_for @stack, :url => tweet_index_path, :method => :post do |f| %>
+  <p><%= f.label :message, "Enter Tweet" %>
+  <%= f.text_field :message %></p>
+  <p><%= f.label :sending_at, "Sending At" %>
+  <%= f.text_field :sending_at, :class =>'datepicker' %>
+  </p>
+  <%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...' %>
 <% end %>
