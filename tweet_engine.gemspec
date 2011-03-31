@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.add_dependency('twitter')
   s.add_dependency('mongoid')
   s.add_dependency('bson_ext')
-  s.add_dependency('simple_form')
   s.add_dependency('delayed_job')
   s.add_dependency('delayed_job_mongoid')
   s.add_dependency('djinn')
