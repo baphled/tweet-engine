@@ -190,7 +190,7 @@ describe "Navigation" do
       # visit the stack
       visit "/tweet-engine"
     
-      click_link "Followers"
+      click_link "following"
       
       # follow the unfollow link
       check 'timoreilly'

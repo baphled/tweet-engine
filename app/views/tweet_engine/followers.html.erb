@@ -1,6 +1,6 @@
 <ul id="followers">
   <%= form_tag(:action => "unfollow") do %>
-    <% @following.each_with_index do |user,index| %>
+    <% @followers.each_with_index do |user,index| %>
     
   <li>
     <%= label_tag "unfollow[#{index}]", "#{user.screen_name}" %>

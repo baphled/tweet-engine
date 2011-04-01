@@ -31,7 +31,11 @@ class TweetEngineController < ApplicationController
   end
   
   def following
-    @followers = TweetEngine.following
+    @following = TweetEngine.following
+  end
+  
+  def followers
+    @followers = TweetEngine.followers
   end
   
   def unfollow
