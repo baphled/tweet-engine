@@ -6,6 +6,7 @@
     
   <li>
     <%= label_tag "followers[#{index}]", "#{user.screen_name}" %><%= check_box_tag "followers[#{index}]", user.screen_name %><br />
+  <p><%= user.tweet['text'] %></p>
   </li>
     <% end -%>
     

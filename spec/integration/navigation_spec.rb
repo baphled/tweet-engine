@@ -207,7 +207,8 @@ describe "Navigation" do
       stub_request(:post, "https://api.twitter.com/1/friendships/create.json").
         to_return(:status => 200, :body => "", :headers => {})
       3.times do |amount|
-        TweetEngine::PotentialFollower.create :screen_name => "Some name #{amount}"
+        search_result = fixture('search.json')
+        TweetEngine::PotentialFollower.create :screen_name => "Some name #{amount}", :tweet => search_result[amount]
       end
       
       # pending 'Defining steps'
