@@ -29,8 +29,8 @@ describe TweetEngineController do
   
   describe "POST, follow" do
     before(:each) do
-      TweetEngine::PotentialFollower.create(:screen_name => "baphled")
-      TweetEngine::PotentialFollower.create(:screen_name => "acme_inc")
+      TweetEngine::SearchResult.create(:screen_name => "baphled")
+      TweetEngine::SearchResult.create(:screen_name => "acme_inc")
       stub_request(:post, "https://api.twitter.com/1/friendships/create.json").
         to_return(:status => 200, :body => "", :headers => {})
     end
@@ -40,7 +40,7 @@ describe TweetEngineController do
     end
     
     it "removes the users from the potential followers list once they have been followed" do
-      TweetEngine::PotentialFollower.should_receive(:delete_all).exactly(2).times
+      TweetEngine::SearchResult.should_receive(:delete_all).exactly(2).times
       post :follow, { :followers => { 'baphled' => 'baphled', 'acme_inc' => 'acme_inc' } }
     end
     
@@ -68,12 +68,12 @@ describe TweetEngineController do
     before(:each) do
       @potential_users = []
       3.times do |amount|
-        @potential_users << TweetEngine::PotentialFollower.create(:screen_name => "Screen name #{amount}")
+        @potential_users << TweetEngine::SearchResult.create(:screen_name => "Screen name #{amount}")
       end
     end
     
     it "should get a list of all potential followers" do
-      TweetEngine::PotentialFollower.should_receive :all
+      TweetEngine::SearchResult.should_receive :all
       get :potential_followers, :followers => @potential_users
     end
   end

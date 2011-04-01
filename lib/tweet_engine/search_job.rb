@@ -31,10 +31,10 @@ module TweetEngine
     #
     def gather_potentials users
       names = []
-      all_users = TweetEngine::PotentialFollower.all.to_a
+      all_users = TweetEngine::SearchResult.all.to_a
       users.each do |user|
         unless all_users.include? user
-          TweetEngine::PotentialFollower.create!(:screen_name => user.from_user, :tweet => user)
+          TweetEngine::SearchResult.create!(:screen_name => user.from_user, :tweet => user)
           names << user.from_user
         end
       end

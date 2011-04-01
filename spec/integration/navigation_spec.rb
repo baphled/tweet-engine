@@ -85,13 +85,13 @@ describe "Navigation" do
       run "#{Rails.root}/script/tweet_stack_runner start"
       
       # we have keywords we want to follow tweeple based on
-      tweeple_found = TweetEngine::PotentialFollower.all.to_a
+      tweeple_found = TweetEngine::SearchResult.all.to_a
       tweeple_found.should_not be_empty
       
       TweetEngine.config['keywords'].should == 'rails, ruby'
       TweetEngine.config['search'].should == true
       Timecop.travel(Time.now + 15.minutes)
-      tweeple_found.should_not == TweetEngine::PotentialFollower.all.to_a
+      tweeple_found.should_not == TweetEngine::SearchResult.all.to_a
       run '#{Rails.root}/script/tweet_stack_runner --stop'
     end
     
@@ -208,7 +208,7 @@ describe "Navigation" do
         to_return(:status => 200, :body => "", :headers => {})
       3.times do |amount|
         search_result = fixture('search.json')
-        TweetEngine::PotentialFollower.create :screen_name => "Some name #{amount}", :tweet => search_result[amount]
+        TweetEngine::SearchResult.create :screen_name => "Some name #{amount}", :tweet => search_result[amount]
       end
       
       # pending 'Defining steps'
@@ -220,7 +220,7 @@ describe "Navigation" do
       page.should have_content "Potential Followers"
       
       # we click on 3 followers
-      three_users = TweetEngine::PotentialFollower.all.limit(3)
+      three_users = TweetEngine::SearchResult.all.limit(3)
       three_users.each do |user|
         check "#{user.screen_name}"
       end

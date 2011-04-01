@@ -18,7 +18,7 @@ class TweetEngineController < ApplicationController
     params[:followers].each do |screen_name|
       screen_name = screen_name.last
       @new_followers << TweetEngine.follow(screen_name)
-      TweetEngine::PotentialFollower.delete_all(:conditions => { :screen_name => screen_name })
+      TweetEngine::SearchResult.delete_all(:conditions => { :screen_name => screen_name })
     end
     flash[:notice] = "You are now following #{pluralize(@new_followers.count, "more person")}"
     render :index
@@ -44,7 +44,7 @@ class TweetEngineController < ApplicationController
   end
   
   def potential_followers
-    @potential_followers = TweetEngine::PotentialFollower.all.to_a
+    @potential_followers = TweetEngine::SearchResult.all.to_a
   end
   
   private
