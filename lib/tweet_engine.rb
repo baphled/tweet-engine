@@ -5,7 +5,6 @@ module TweetEngine
   require 'tweet_engine/stack'
   require 'tweet_engine/config'
   require 'tweet_engine/search_job'
-  require 'tweet_engine/potential_follower'
   require 'tweet_engine/search_result'
   
   class << self
