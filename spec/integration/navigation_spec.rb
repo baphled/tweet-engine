@@ -200,6 +200,28 @@ describe "Navigation" do
       # I should see a list of people I am following
       page.should have_content "Unfollowed 1 tweeple"
     end
+    
+    it "allows me to unfollow people that follow me" do
+      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
+        to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
+      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
+        to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
+      stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=chachasikes").
+        to_return(:status => 200, :body => "", :headers => {})
+      
+      # visit the stack
+      visit "/tweet-engine"
+    
+      click_link "followers"
+      
+      # follow the unfollow link
+      check 'chachasikes'
+      
+      click_button "Unfollow tweeple"
+      
+      # I should see a list of people I am following
+      page.should have_content "Unfollowed 1 tweeple"
+    end
   end
   
   context "following potentials followers" do
