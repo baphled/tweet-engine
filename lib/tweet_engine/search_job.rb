@@ -31,7 +31,8 @@ module TweetEngine
     #
     def gather_potentials users
       names = []
-      all_users = TweetEngine::SearchResult.all.to_a
+      all_users = []
+      TweetEngine::SearchResult.all.to_a.each { |u| all_users << u.screen_name }
       users.each do |user|
         unless all_users.include? user
           TweetEngine::SearchResult.create!(:screen_name => user.from_user, :tweet => user)
