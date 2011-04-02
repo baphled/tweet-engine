@@ -59,20 +59,29 @@ describe TweetEngine::Stack do
     
     context "tweets that are repeated" do
       before(:each) do
+        time = Time.now
+        Timecop.freeze(time)
         stub_request(:post, "https://api.twitter.com/1/statuses/update.json").to_return(:status => 200, :body => "", :headers => {})
         @tweet = TweetEngine::Stack.create(
           :message => "Some message",
-          :sending_at => Time.now + 1.hour,
+          :sending_at => Time.now.utc,
           :repeat => true,
           :every => '10 minutes'
         )
         @tweet.deliver
-        Timecop.travel(@tweet.sending_at + 1.minute)
       end
       
       it "should be able to create a new tweet if the on being delivered is set to be repeated" do
+        Timecop.travel(@tweet.sending_at + 1.minute)
         Delayed::Worker.new.work_off
         TweetEngine::Stack.where(:message => "Some message").count.should == 2
+      end
+      
+      it "should create a new message that is roughly the right amount of time away from the original" do
+        Timecop.travel(@tweet.sending_at)
+        Delayed::Worker.new.work_off
+        tweet = TweetEngine::Stack.where(:message => "Some message").last
+        tweet.sending_at.should == @tweet.sending_at + 10.minutes
       end
     end
   end

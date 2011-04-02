@@ -213,16 +213,23 @@ describe "Navigation" do
       click_button "Stack Tweet"
       
       page.should have_content "Added new tweet to the stack"
+      Delayed::Worker.new.work_off
+      
+      time = Time.now.utc
+      p time
       
       # times goes on
-      Timecop.travel(2.hours)
+      time += 2.hours
+      Timecop.travel(time)
+      p time
       
       # message is sent
       visit "/tweet-engine"
-      page.should have_content "My message - Sent"
-      
+
+      page.should have_content "This is my new tweet - Sent"
+
       # a new message is created with the same contents
-      page.should have_content "My message - Sending at"
+      page.should have_content "This is my new tweet - Sending at"
       # we can see the rescheduled tweet in the stack
     end
   end
