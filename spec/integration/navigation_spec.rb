@@ -179,6 +179,31 @@ describe "Navigation" do
       visit "/tweet-engine"
       page.should_not have_content "My message - Sent"
     end
+  
+    it "a canceled tweet should not be sent out" do
+      tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
+      tweet.deliver
+      Delayed::Worker.new.work_off
+      
+      tweet.delivered.should be_false
+      
+      # I should not see the tweet in the stack
+      visit "/tweet-engine"
+      page.should_not have_content "My message - Sent"
+      
+      # we cancel the tweet
+      click_link "Cancel"
+      
+      tweet.deliver
+      Delayed::Worker.new.work_off
+      
+      tweet.delivered.should be_false
+      
+      # I should not see the tweet in the stack
+      visit "/tweet-engine"
+      page.should_not have_content "My message - Sent"
+    end
+    it "allows us to send a tweet out repeatedly"
   end
   
   context "unfollowing a user" do
@@ -253,6 +278,8 @@ describe "Navigation" do
       # we are following 3 more people
       page.should have_content "You are now following 3 more people"
     end
+    
+    it "automatically followers potential followers"
     
     it "displays a list of recent followers that I am following"
   end
