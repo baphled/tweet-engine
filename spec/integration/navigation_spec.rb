@@ -203,7 +203,28 @@ describe "Navigation" do
       visit "/tweet-engine"
       page.should_not have_content "My message - Sent"
     end
-    it "allows us to send a tweet out repeatedly"
+    
+    it "allows us to send a tweet out repeatedly" do
+      visit "/tweet-engine"
+      
+      fill_in "Enter Tweet", :with => "This is my new tweet"
+      check 'Repeat'
+      fill_in "Every", :with => "2 hours"
+      click_button "Stack Tweet"
+      
+      page.should have_content "Added new tweet to the stack"
+      
+      # times goes on
+      Timecop.travel(2.hours)
+      
+      # message is sent
+      visit "/tweet-engine"
+      page.should have_content "My message - Sent"
+      
+      # a new message is created with the same contents
+      page.should have_content "My message - Sending at"
+      # we can see the rescheduled tweet in the stack
+    end
   end
   
   context "unfollowing a user" do
