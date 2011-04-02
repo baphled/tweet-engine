@@ -37,30 +37,42 @@ describe TweetEngine::Stack do
   end
   
   describe "#deliver" do
-    before(:each) do
-      @tweet = TweetEngine::Stack.create :message => "Some message", :sending_at => Time.now + 1.hour
-      @tweet.deliver
-    end
-    
     context "tweet is scheduled" do
       before(:each) do
+        stub_request(:post, "https://api.twitter.com/1/statuses/update.json").to_return(:status => 200, :body => "", :headers => {})
+        @tweet = TweetEngine::Stack.create :message => "Some message", :sending_at => Time.now + 1.hour
+        @tweet.deliver
         Timecop.travel(@tweet.sending_at + 1.minute)
       end
       
       it "is then set to delivered" do
-        pending 'not sure why this is failing' do
-          stub_request(:post, "https://api.twitter.com/1/statuses/update.json").to_return(:status => 200, :body => "", :headers => {})
-          Delayed::Worker.new.work_off
-          @tweet.delivered.should be_true
-        end
+        Delayed::Worker.new.work_off
+        @tweet.reload
+        @tweet.delivered.should be_true
+      end
+      
+      it "is not set to delivered is the scheduled time is not up yet" do
+        @tweet.deliver
+        @tweet.delivered.should be_false
       end
     end
     
-    context "tweet that is not supposed to be sent out yet" do
-      it "is not set to delivered is the scheduled time is not up yet" do
+    context "tweets that are repeated" do
+      before(:each) do
         stub_request(:post, "https://api.twitter.com/1/statuses/update.json").to_return(:status => 200, :body => "", :headers => {})
+        @tweet = TweetEngine::Stack.create(
+          :message => "Some message",
+          :sending_at => Time.now + 1.hour,
+          :repeat => true,
+          :every => '10 minutes'
+        )
         @tweet.deliver
-        @tweet.delivered.should be_false
+        Timecop.travel(@tweet.sending_at + 1.minute)
+      end
+      
+      it "should be able to create a new tweet if the on being delivered is set to be repeated" do
+        Delayed::Worker.new.work_off
+        TweetEngine::Stack.where(:message => "Some message").count.should == 2
       end
     end
   end
