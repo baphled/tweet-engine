@@ -7,10 +7,6 @@ module TweetEngine
         template "initializer.rb", "config/initializers/tweet_engine.rb"
       end
       
-      def copy_script
-        copy_file "script/tweet_engine_runner", "script/tweet_engine"
-      end
-      
       def copy_config
         copy_file "config/tweet_engine.yml", "config/tweet_engine.yml"
       end

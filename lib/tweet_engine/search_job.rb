@@ -7,7 +7,7 @@ module TweetEngine
   # A Searching process to help people to find potential followers
   #
   #
-  class SearchJob
+  class SearchJob < Object
     
     #
     # Searches for potential people to follow

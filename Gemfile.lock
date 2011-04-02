@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/baphled/djinn.git
+  revision: e575df1ee7f029fa2ad49d529213e3de1b2ed903
+  branch: without_active_resource_in_rails
+  specs:
+    djinn (0.1.7)
+
+GIT
   remote: https://github.com/collectiveidea/delayed_job
   revision: cdae1d256ed1fd206de1fb6ac86b838d93a4b883
   specs:
@@ -82,7 +89,6 @@ GEM
     culerity (0.2.15)
     daemons (1.1.0)
     diff-lcs (1.1.2)
-    djinn (0.1.7)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faraday (0.5.7)
@@ -192,7 +198,7 @@ DEPENDENCIES
   capybara (>= 0.4.0)
   delayed_job (>= 2.1.4)!
   delayed_job_mongoid!
-  djinn
+  djinn!
   growl
   guard
   guard-bundler
