@@ -1,4 +1,4 @@
-class TweetEngineController < ApplicationController
+class TweetEngine::EngineController < ApplicationController
   include ActionView::Helpers::TextHelper
   
   before_filter :tweet_stack

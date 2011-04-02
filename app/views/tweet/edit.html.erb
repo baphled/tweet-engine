@@ -1,9 +1,0 @@
-<%= form_for @stack, :url => tweet_path, :method => :post do |f| %>
-  <p><%= f.label :message, "Message" %>
-  <%= f.text_field :message %></p>
-  <p>
-    <%= f.label :sending_at, "Sending at" %>
-    <%= f.text_field :sending_at, :class => :datepicker %>
-  </p>
-  <%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...' %>
-<% end %>

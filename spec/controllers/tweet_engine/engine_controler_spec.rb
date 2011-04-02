@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TweetEngineController do
+describe TweetEngine::EngineController do
   describe "GET, index" do
     it "displays the index page" do
       stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").

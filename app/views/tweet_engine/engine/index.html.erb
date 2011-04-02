@@ -22,7 +22,7 @@
 
 <div id="tweet-engine-search">
   <div class="search">
-    <%= form_tag(tweet_search_phrase_path, :method => :get) do |f| %>
+    <%= form_tag(tweet_engine_search_path, :method => :get) do |f| %>
       <%= label_tag(:q, "Search for:") %>
       <%= text_field_tag(:q) %>
       <%= submit_tag("Search") %>
@@ -31,7 +31,7 @@
 
   <div class="results">
     <% if @results.present? %>
-      <%= form_tag(tweet_follow_path) do |f| %>
+      <%= form_tag(tweet_engine_follow_path) do |f| %>
         Tweeple talking about '<%= @term %>':<br />
         <ul>
         <% @results.each_with_index do |tweeple, index| %>
@@ -56,8 +56,14 @@
   <% @tweet_stack.each do |tweet| %>
     <li><%= tweet.message %> - 
       <% if not tweet.delivered %>
-      <%= tweet.sending_at.to_s %> - <%= link_to "Edit", edit_tweet_path(:id => tweet.id) %> - 
-    <%= link_to "Cancel", tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
+      Sending at <%= tweet.sending_at.to_s %>
+      <% if tweet.repeat %>
+      Repeated every <%= tweet.every.to_s %>
+      <% end %>
+      <div class="tweet-menu">
+        <%= link_to "Edit", edit_tweet_engine_tweet_path(:id => tweet.id) %><br/>
+        <%= link_to "Cancel", tweet_engine_tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
+      </div>
       <% else %>
       Sent at <%= tweet.sending_at %>
       <% end %>
@@ -68,12 +74,7 @@
 </div>
 
 <div id="schedule-tweet">
-  <%= form_for @stack, :url => tweet_index_path, :method => :post do |f| %>
-    <p><%= f.label :message, "Enter Tweet" %>
-    <%= f.text_field :message %></p>
-    <p><%= f.label :sending_at, "Sending At" %>
-    <%= f.text_field :sending_at, :class =>'datepicker' %>
-    </p>
-    <%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...' %>
+  <%= form_for @stack, :url => tweet_engine_tweet_path, :method => :post do |f| %>
+    <%= render :partial => 'shared/tweet_form', :locals => {:f => f} %>
   <% end %>
 </div>

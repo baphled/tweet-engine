@@ -123,10 +123,10 @@ describe "Navigation" do
       click_link 'Edit'
     
       # I change the message
-      fill_in "Message", :with => "My changed tweet"
+      fill_in "Enter Tweet", :with => "My changed tweet"
     
       # I change when it is sent out
-      fill_in "Sending at", :with => "3000-12-12"
+      fill_in "Sending At", :with => "3000-12-12"
       click_button 'Stack Tweet'
     
       # I should see the change

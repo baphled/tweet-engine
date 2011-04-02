@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TweetController do
+describe TweetEngine::TweetsController do
   describe "POST, create" do
     before(:each) do
       @time = Time.now
