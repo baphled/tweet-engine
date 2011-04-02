@@ -85,13 +85,13 @@ describe "Navigation" do
       run "#{Rails.root}/script/tweet_stack_runner start"
       
       # we have keywords we want to follow tweeple based on
-      tweeple_found = TweetEngine::PotentialFollower.all.to_a
+      tweeple_found = TweetEngine::SearchResult.all.to_a
       tweeple_found.should_not be_empty
       
       TweetEngine.config['keywords'].should == 'rails, ruby'
       TweetEngine.config['search'].should == true
       Timecop.travel(Time.now + 15.minutes)
-      tweeple_found.should_not == TweetEngine::PotentialFollower.all.to_a
+      tweeple_found.should_not == TweetEngine::SearchResult.all.to_a
       run '#{Rails.root}/script/tweet_stack_runner --stop'
     end
     
@@ -190,12 +190,37 @@ describe "Navigation" do
       # visit the stack
       visit "/tweet-engine"
     
-      click_link "Followers"
+      click_link "following"
+      
       # follow the unfollow link
-      click_button 'Unfollow'
-    
+      check 'timoreilly'
+      
+      click_button "Unfollow tweeple"
+      
       # I should see a list of people I am following
-      page.should have_content "Unfollowing timoreilly"
+      page.should have_content "Unfollowed 1 tweeple"
+    end
+    
+    it "allows me to unfollow people that follow me" do
+      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
+        to_return(:status => 200, :body => fixture('followers.json'), :headers => {})
+      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=1344637399602463196").
+        to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
+      stub_request(:delete, "https://api.twitter.com/1/friendships/destroy.json?screen_name=chachasikes").
+        to_return(:status => 200, :body => "", :headers => {})
+      
+      # visit the stack
+      visit "/tweet-engine"
+    
+      click_link "followers"
+      
+      # follow the unfollow link
+      check 'chachasikes'
+      
+      click_button "Unfollow tweeple"
+      
+      # I should see a list of people I am following
+      page.should have_content "Unfollowed 1 tweeple"
     end
   end
   
@@ -204,7 +229,8 @@ describe "Navigation" do
       stub_request(:post, "https://api.twitter.com/1/friendships/create.json").
         to_return(:status => 200, :body => "", :headers => {})
       3.times do |amount|
-        TweetEngine::PotentialFollower.create :screen_name => "Some name #{amount}"
+        search_result = fixture('search.json')
+        TweetEngine::SearchResult.create :screen_name => "Some name #{amount}", :tweet => search_result[amount]
       end
       
       # pending 'Defining steps'
@@ -216,7 +242,7 @@ describe "Navigation" do
       page.should have_content "Potential Followers"
       
       # we click on 3 followers
-      three_users = TweetEngine::PotentialFollower.all.limit(3)
+      three_users = TweetEngine::SearchResult.all.limit(3)
       three_users.each do |user|
         check "#{user.screen_name}"
       end

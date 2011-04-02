@@ -10,7 +10,7 @@ gem 'jquery-rails', '>= 0.2.6'
 
 gem 'delayed_job', '>= 2.1.4', :git => "https://github.com/collectiveidea/delayed_job"
 gem 'delayed_job_mongoid', :git => "https://github.com/collectiveidea/delayed_job_mongoid.git"
-gem 'djinn'
+gem 'djinn', :git => "https://github.com/baphled/djinn.git", :branch => "without_active_resource_in_rails"
 
 group :development, :test do
   gem "capybara", ">= 0.4.0"

@@ -1,9 +1,10 @@
 require 'mongoid'
 
 module TweetEngine
-  class PotentialFollower
+  class SearchResult
     include Mongoid::Document
     
     field :screen_name
+    field :tweet
   end
 end

@@ -20,7 +20,7 @@ describe TweetEngine::SearchJob do
   
   it "should call search every 15 minutes" do
     @search_job.searching 
-    TweetEngine::PotentialFollower.all.count.should == 0
+    TweetEngine::SearchResult.all.count.should == 0
     TweetEngine.should_receive :search
     Timecop.travel(Time.now + 15.minutes)
     Delayed::Worker.new.work_off
@@ -28,9 +28,9 @@ describe TweetEngine::SearchJob do
   
   it "should increase the amount of potential followers" do
     @search_job.searching
-    TweetEngine::PotentialFollower.all.count.should == 0
+    TweetEngine::SearchResult.all.count.should == 0
     Timecop.travel(Time.now + 15.minutes)
     Delayed::Worker.new.work_off
-    TweetEngine::PotentialFollower.all.count.should_not == 0
+    TweetEngine::SearchResult.all.count.should_not == 0
   end
 end

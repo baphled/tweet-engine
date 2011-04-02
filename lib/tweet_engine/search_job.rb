@@ -7,7 +7,7 @@ module TweetEngine
   # A Searching process to help people to find potential followers
   #
   #
-  class SearchJob
+  class SearchJob < Object
     
     #
     # Searches for potential people to follow
@@ -19,8 +19,7 @@ module TweetEngine
     #
     def searching
       users = TweetEngine.search TweetEngine.config['keywords']
-      p gather_potentials(users)
-      store_search gather_potentials(users)
+      gather_potentials(users)
     end
     
     handle_asynchronously :searching
@@ -32,19 +31,15 @@ module TweetEngine
     #
     def gather_potentials users
       names = []
-      all_users = TweetEngine::PotentialFollower.all.to_a
-      users.each { |user| names << user.from_user unless all_users.include? user.from_user }
-      names.uniq!
-    end
-    
-    #
-    # Stores the list of potential followers
-    #
-    def store_search names
-      all_users = TweetEngine::PotentialFollower.all.to_a
-      names.each do |user|
-        TweetEngine::PotentialFollower.create!(:screen_name => user) unless all_users.include? user
+      all_users = []
+      TweetEngine::SearchResult.all.to_a.each { |u| all_users << u.screen_name }
+      users.each do |user|
+        unless all_users.include? user
+          TweetEngine::SearchResult.create!(:screen_name => user.from_user, :tweet => user)
+          names << user.from_user
+        end
       end
+      names.uniq!
     end
   end
 end

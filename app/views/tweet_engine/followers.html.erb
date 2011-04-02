@@ -1,0 +1,24 @@
+<ul id="followers">
+  <%= form_tag(:action => "unfollow") do %>
+    <% @followers.each_with_index do |user,index| %>
+    
+  <li>
+      <% if user.following %>
+        <%= label_tag "unfollow[#{index}]", "#{user.screen_name}" %>
+        <%= check_box_tag "unfollow[#{index}]", user.screen_name %><br />
+      <% else %>
+        <%= user.screen_name %>
+      <% end %>
+    <p>
+      Following: <%= user.friends_count %><br />
+      Followers: <%= user.followers_count %><br />
+    </p>
+    <p>
+      Description: <%= user.description %>
+    </p>
+  </li>
+    
+    <% end -%>  
+  <%= submit_tag "Unfollow tweeple", :disable_with => 'Unfollowing tweeple...' %>
+  <% end -%>
+</ul>
