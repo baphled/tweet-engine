@@ -6,6 +6,5 @@ namespace :tweet_engine do
   desc "Start a tweet_engine and delayed_job daemon."
   task :runner do
     TweetEngine::Runner.djinnify_rails
-    Delayed::Worker.new(:min_priority => ENV['MIN_PRIORITY'], :max_priority => ENV['MAX_PRIORITY']).start
   end
 end
