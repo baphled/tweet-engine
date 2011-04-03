@@ -1,12 +1,6 @@
 require 'djinn/rails'
 require 'mongoid'
 
-Mongoid.configure do |config|
-  name = "tweet_engine_#{Rails.env}"
-  config.master = Mongo::Connection.new.db(name)
-  config.persist_in_safe_mode = false
-end
-
 module TweetEngine
   
   class Runner
