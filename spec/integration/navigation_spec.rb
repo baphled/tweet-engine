@@ -228,11 +228,11 @@ describe "Navigation" do
       visit "/tweet-engine"
 
       page.should have_content "This is my new tweet"
-      page.should have_content "this was sent at about 4 hours"
+      save_and_open_page
+      page.should have_content "this was sent"
 
       # a new message is created with the same contents
       page.should have_content "This is my new tweet"
-      
       # we can see the rescheduled tweet in the stack
       page.should have_content "Sending in less than a minute this will be repeated every 2 hours"
     end
