@@ -25,12 +25,9 @@ describe "Navigation" do
     end
     
     it "displays my last update" do
-      page.should have_content "Your last tweet was: {{! Mustache Playground }} from @pvande http://wynn.fm/ce"
+      page.should have_content "{{! Mustache Playground }} from @pvande http://wynn.fm/ce"
     end
-
-    it "displays when the account was created" do
-      page.should have_content "Your account was created at: Sat Mar 08 16:34:22 +0000 2008"
-    end
+    
     it "number of lists I am part of"
     it "displays my description"
     
@@ -42,6 +39,10 @@ describe "Navigation" do
       page.should have_content "You are following 2106 tweeple"
     end
     
+    it "should be able to get an avg of new followers per week"
+    it "should display the avg amount of tweet your send out a day"
+    it "should display the avg amount of tweet your send out a week"
+    it "should display the avg amount of tweet your send out a month"
   end
   
   context "searching for tweeple" do
@@ -305,7 +306,11 @@ describe "Navigation" do
       page.should have_content "You are now following 3 more people"
     end
     
-    it "automatically followers potential followers"
+    it "automatically followers potential followers" do
+      # There are some people to follow
+      # Some times goes by
+      # we should now be following those people
+    end
     
     it "displays a list of recent followers that I am following"
   end
@@ -313,6 +318,7 @@ describe "Navigation" do
   context "intelligent tweeting" do
     it "auto responds to people who mention one of our key phrases"
     it "allows us to send out a tweet depending on peoples comments"
+    it "tracks conversations based on keywords"
   end
   
   context "settings" do
