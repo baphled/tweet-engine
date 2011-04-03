@@ -216,12 +216,10 @@ describe "Navigation" do
       Delayed::Worker.new.work_off
       
       time = Time.now.utc
-      p time
       
       # times goes on
       time += 2.hours
       Timecop.travel(time)
-      p time
       
       # message is sent
       visit "/tweet-engine"
@@ -229,7 +227,7 @@ describe "Navigation" do
       page.should have_content "This is my new tweet - Sent"
 
       # a new message is created with the same contents
-      page.should have_content "This is my new tweet - Sending at"
+      page.should have_content "This is my new tweet - Sending at #{time}"
       # we can see the rescheduled tweet in the stack
     end
   end
