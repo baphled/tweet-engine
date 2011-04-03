@@ -22,8 +22,6 @@ module TweetEngine
       gather_potentials(users)
     end
     
-    handle_asynchronously :searching
-    
     protected
     
     #
