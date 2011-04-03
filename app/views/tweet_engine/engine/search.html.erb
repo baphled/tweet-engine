@@ -1,0 +1,18 @@
+<%= render :partial => 'search' %>
+
+<div class="results">
+  <% if @results.present? %>
+    <%= form_tag(tweet_engine_follow_path) do |f| %>
+      Tweeple talking about '<%= @term %>':<br />
+      <ul>
+      <% @results.each_with_index do |tweeple, index| %>
+        <li>
+          <%= label_tag "followers[#{index}]", tweeple.from_user %><%= check_box_tag "followers[#{index}]", tweeple.from_user %><br />
+          <%= tweeple.text %>
+        </li>
+      <% end %>
+      </ul>
+      <%= submit_tag("Follow") %>
+    <% end %>
+  <% end %>
+</div>

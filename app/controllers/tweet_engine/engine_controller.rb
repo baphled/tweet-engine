@@ -1,8 +1,8 @@
 class TweetEngine::EngineController < ApplicationController
   include ActionView::Helpers::TextHelper
   
-  before_filter :tweet_stack
-  before_filter :instantiate_stack
+  before_filter :tweet_stack, :only => [:index]
+  before_filter :instantiate_stack, :only => [:index]
   
   def index
   end
@@ -10,7 +10,6 @@ class TweetEngine::EngineController < ApplicationController
   def search
     @results = TweetEngine.search params[:q]
     @term = params[:q]
-    render :index
   end
   
   def follow
@@ -21,7 +20,7 @@ class TweetEngine::EngineController < ApplicationController
       TweetEngine::SearchResult.delete_all(:conditions => { :screen_name => screen_name })
     end
     flash[:notice] = "You are now following #{pluralize(@new_followers.count, "more person")}"
-    render :index
+    redirect_to tweet_engine_path
   end
   
   def stack

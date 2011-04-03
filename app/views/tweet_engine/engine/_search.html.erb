@@ -1,0 +1,9 @@
+<div id="tweet-engine-search">
+  <div class="search">
+    <%= form_tag(tweet_engine_search_path, :method => :get) do |f| %>
+      <%= label_tag(:q, "Search for:") %>
+      <%= text_field_tag(:q) %>
+      <%= submit_tag("Search") %>
+    <% end %>
+  </div>
+</div>
