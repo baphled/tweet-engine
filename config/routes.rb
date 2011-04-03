@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     post :unfollow
     get 'potential-followers' => "engine#potential_followers", :as => :potential_followers
     post :stack
-    resource :tweet, :except => [:index]
+    resources :tweet, :except => [:index]
   end
   
   match '/tweet-engine' => "tweet_engine/engine#index", :as => :tweet_engine

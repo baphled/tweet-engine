@@ -1,0 +1,3 @@
+<%= form_for @stack, :url => tweet_engine_tweet_path(@stack), :method => :put do |f| %>
+  <%= render :partial => 'shared/tweet_form', :locals => {:f => f} %>
+<% end %>

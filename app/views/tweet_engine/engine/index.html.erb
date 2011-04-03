@@ -74,7 +74,7 @@
 </div>
 
 <div id="schedule-tweet">
-  <%= form_for @stack, :url => tweet_engine_tweet_path, :method => :post do |f| %>
+  <%= form_for @stack, :url => tweet_engine_tweet_index_path, :method => :post do |f| %>
     <%= render :partial => 'shared/tweet_form', :locals => {:f => f} %>
   <% end %>
 </div>

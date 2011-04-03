@@ -1,7 +1,7 @@
 #
 # Controller used to manage our tweet stack
 #
-class TweetEngine::TweetsController < ApplicationController
+class TweetEngine::TweetController < ApplicationController
   
   def create
     @tweet = TweetEngine::Stack.create params[:tweet_engine_stack]
