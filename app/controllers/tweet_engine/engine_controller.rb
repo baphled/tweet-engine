@@ -46,11 +46,12 @@ class TweetEngine::EngineController < ApplicationController
     redirect_to tweet_engine_path
   end
   
+  protected
+  
   def potential_followers
     @potential_followers = TweetEngine::SearchResult.all.to_a
   end
   
-  private
   def tweet_stack
     @tweet_stack = TweetEngine::Stack.all
   end

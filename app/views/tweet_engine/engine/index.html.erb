@@ -1,6 +1,6 @@
 <section id="info">
   <p>
-    Hi <%= TweetEngine.whats_my.user.screen_name %>, this is your TweetEngine. Your account was created <%= distance_of_time_in_words Time.now, TweetEngine.whats_my.user.created_at %>
+    Hi <%= TweetEngine.whats_my.user.screen_name %>, this is your TweetEngine. Your account was created <%= time_ago_in_words TweetEngine.whats_my.user.created_at %>
   </p>
   <% if TweetEngine.config['search'] %>
   <p>Auto-searching for <%= TweetEngine.config['keywords'] %></p>
