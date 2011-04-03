@@ -1,9 +1,12 @@
 production:
   keywords: "rails, ruby"
   search: true
+  interval: 900
 development:
   keywords: "rails, ruby"
   search: true
+  interval: 900
 test:
   keywords: "rails, ruby"
   search: true
+  interval: 900

@@ -18,7 +18,7 @@ module TweetEngine
           log "Searching for more tweeple"
           @tweeple_search.searching
           log "Now have #{TweetEngine::SearchResult.all.count} potential followers"
-          sleep 15.minutes.to_i
+          sleep TweetEngine.config['interval']
         end
       end
 
