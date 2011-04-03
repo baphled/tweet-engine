@@ -228,9 +228,8 @@ describe "Navigation" do
       visit "/tweet-engine"
 
       page.should have_content "This is my new tweet"
-      save_and_open_page
       page.should have_content "this was sent"
-
+      
       # a new message is created with the same contents
       page.should have_content "This is my new tweet"
       # we can see the rescheduled tweet in the stack
