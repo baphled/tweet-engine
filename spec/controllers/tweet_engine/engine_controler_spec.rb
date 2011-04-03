@@ -3,8 +3,10 @@ require "spec_helper"
 describe TweetEngine::EngineController do
   describe "GET, index" do
     it "displays the index page" do
-      stub_request(:get, "https://api.twitter.com/1/statuses/followers.json?cursor=-1").
-        to_return(:status => 200, :body => fixture('followers2.json'), :headers => {})
+      stub_request(:get, "https://api.twitter.com/1/account/verify_credentials.json").
+        to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
+      stub_request(:get, "https://api.twitter.com/1/users/show.json?screen_name=pengwynn").
+        to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
       get :index
       response.status.should == 200
     end

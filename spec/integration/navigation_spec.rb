@@ -153,7 +153,9 @@ describe "Navigation" do
       
       # I should get a message stating the tweet has been sent
       visit "/tweet-engine"
-      page.should have_content "My message - Sent"
+      
+      page.should have_content "My message"
+      page.should have_content "this was sent at less than a minute"
     end
     
     it "should not send out a tweet that has been scheduled but that time has not gone by yet" do
@@ -225,11 +227,14 @@ describe "Navigation" do
       # message is sent
       visit "/tweet-engine"
 
-      page.should have_content "This is my new tweet - Sent"
+      page.should have_content "This is my new tweet"
+      page.should have_content "this was sent at about 4 hours"
 
       # a new message is created with the same contents
-      page.should have_content "This is my new tweet - Sending at #{time}"
+      page.should have_content "This is my new tweet"
+      
       # we can see the rescheduled tweet in the stack
+      page.should have_content "Sending in less than a minute this will be repeated every 2 hours"
     end
   end
   
