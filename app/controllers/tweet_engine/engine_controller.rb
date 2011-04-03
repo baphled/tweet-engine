@@ -5,6 +5,7 @@ class TweetEngine::EngineController < ApplicationController
   before_filter :instantiate_stack, :only => [:index]
   
   def index
+    @user = TweetEngine.whats_my.user
   end
   
   def search
@@ -46,11 +47,11 @@ class TweetEngine::EngineController < ApplicationController
     redirect_to tweet_engine_path
   end
   
-  protected
-  
   def potential_followers
     @potential_followers = TweetEngine::SearchResult.all.to_a
   end
+  protected
+  
   
   def tweet_stack
     @tweet_stack = TweetEngine::Stack.all
