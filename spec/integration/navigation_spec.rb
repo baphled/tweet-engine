@@ -311,6 +311,7 @@ describe "Navigation" do
     end
     
     it "automatically followers potential followers" do
+      pending 'Not implemented yet'
       # There are some people to follow
       # Some times goes by
       # we should now be following those people
@@ -320,7 +321,44 @@ describe "Navigation" do
   end
   
   context "intelligent tweeting" do
-    it "auto responds to people who mention one of our key phrases"
+    context "auto-response" do
+      
+      it "allow us to add auto responses to the system" do
+        # we are on the new auto-response page
+        visit 'tweet-engine'
+        
+        click_link 'new auto-response'
+        
+        # we fill in the key phrase
+        fill_in :key_phrases, :with => "Cut my hair, need a trim"
+        
+        # we fill in the response
+        fill_in :response, :with => "We cut hair like Sweeney Todd"
+        # we submit the new response
+        
+        click_button "Add auto-response"
+        
+        page.should have_content "Added new auto-response"
+      end
+      
+      it "auto responds to people who mention one of our key phrases" do
+        pending 'Not implemented yet'
+        # A key-phrase and response has been added
+        # Someone sends out a tweet with the key-phrase
+        # All users found using the key-phrase are stored
+        # Each user is sent the response message
+      end
+      
+      it "should not send out response one after the other" do
+        pending 'Not implemented yet'
+        # A key-phrase and response has been added
+        # Someone sends out a tweet with the key-phrase
+        # All users found using the key-phrase are stored
+        # The first user is sent a response
+        # The second user does not get sent a response for at least another minute
+      end
+    end
+    
     it "allows us to send out a tweet depending on peoples comments"
     it "tracks conversations based on keywords"
   end
