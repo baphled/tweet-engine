@@ -327,7 +327,7 @@ describe "Navigation" do
         # we are on the new auto-response page
         visit 'tweet-engine'
         
-        click_link 'new auto-response'
+        click_link 'New auto-response'
         
         # we fill in the key phrase
         fill_in :key_phrases, :with => "Cut my hair, need a trim"

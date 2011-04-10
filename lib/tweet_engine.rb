@@ -6,6 +6,7 @@ module TweetEngine
   require 'tweet_engine/config'
   require 'tweet_engine/search_job'
   require 'tweet_engine/search_result'
+  require 'tweet_engine/auto_response'
   require 'tweet_engine/runner'
   
   if defined?(Rails::Plugins)
