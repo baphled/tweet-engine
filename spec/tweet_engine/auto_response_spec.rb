@@ -24,7 +24,7 @@ describe TweetEngine::AutoResponse do
     end
     
     it "sends the response to each unique person found" do
-      TweetEngine.should_receive(:stack).exactly(11).times
+      TweetEngine::Stack.should_receive(:create!).exactly(11).times
       TweetEngine::AutoResponse.respond
     end
     

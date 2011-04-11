@@ -41,7 +41,7 @@ describe TweetEngine::Stack do
       before(:each) do
         stub_request(:post, "https://api.twitter.com/1/statuses/update.json").to_return(:status => 200, :body => "", :headers => {})
         @tweet = TweetEngine::Stack.create :message => "Some message", :sending_at => Time.now + 1.hour
-        @tweet.deliver
+        @result = @tweet.deliver
         Timecop.travel(@tweet.sending_at + 1.minute)
       end
       
@@ -54,6 +54,11 @@ describe TweetEngine::Stack do
       it "is not set to delivered is the scheduled time is not up yet" do
         @tweet.deliver
         @tweet.delivered.should be_false
+      end
+      
+      it "returns true if is has been delivered" do
+        Delayed::Worker.new.work_off
+        @result.should be_true
       end
     end
     
@@ -68,7 +73,6 @@ describe TweetEngine::Stack do
           :repeat => true,
           :every => '10 minutes'
         )
-        @tweet.deliver
       end
       
       it "should be able to create a new tweet if the on being delivered is set to be repeated" do

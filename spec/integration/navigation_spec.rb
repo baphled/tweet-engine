@@ -144,7 +144,6 @@ describe "Navigation" do
     it "should send out a tweet that has pasted its scheduled delivery time" do
       # I create a schedule tweet
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 2.hour
-      tweet.deliver
       # The scheduled time passes
       Timecop.travel(tweet.sending_at)
       
@@ -161,7 +160,7 @@ describe "Navigation" do
     it "should not send out a tweet that has been scheduled but that time has not gone by yet" do
       # I create a schedule tweet
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
-      tweet.deliver
+
       Delayed::Worker.new.work_off
       # I should get a message stating the tweet has been sent
       tweet.delivered.should be_false
@@ -173,7 +172,6 @@ describe "Navigation" do
   
     it "does not send out tweet if they are not ready to be sent out yet" do
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
-      tweet.deliver
       Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
@@ -185,7 +183,6 @@ describe "Navigation" do
   
     it "a canceled tweet should not be sent out" do
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
-      tweet.deliver
       Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
@@ -197,7 +194,6 @@ describe "Navigation" do
       # we cancel the tweet
       click_link "Cancel"
       
-      tweet.deliver
       Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
@@ -350,12 +346,17 @@ describe "Navigation" do
         stub_request(:get, "https://search.twitter.com/search.json?q=Twitter&rpp=100").
           to_return(:status => 200, :body => fixture('search.json'), :headers => {})
         
+        # Tweets are stacked
+        TweetEngine::Stack.should_receive(:create!).exactly(11).times
         # All users found using the key-phrase are stored
         found = TweetEngine::AutoResponse.respond
         
         # All users should be stored as sent
         auto_response.reload
         auto_response.sent_to.should_not be_empty
+        
+        # Responses are sent out as background jobs
+        Delayed::Worker.new.work_off
       end
       
       it "should not send out response one after the other" do

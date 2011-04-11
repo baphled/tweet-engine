@@ -14,6 +14,8 @@ module TweetEngine
     
     scope :to_deliver, where(:sending_at.lte => Time.now)
     
+    after_create :deliver
+    
     def sendable?
       Time.now >= self.sending_at
     end

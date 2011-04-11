@@ -13,9 +13,9 @@ module TweetEngine
         items = self.all.to_a
         items.each do |item|
           tweets = TweetEngine.search item.key_phrases
-          tweets.each do |tweet|
+          tweets.each_with_index do |tweet, minutes_from|
             unless item.sent_to.include? tweet.from_user
-              TweetEngine.stack "@#{tweet.from_user} #{item.response}"
+              TweetEngine::Stack.create! :message => "@#{tweet.from_user} #{item.response}", :sending_at => Time.now + minutes_from.minutes
               item.sent_to << tweet.from_user
             end
           end
