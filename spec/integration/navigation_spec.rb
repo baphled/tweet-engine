@@ -342,11 +342,20 @@ describe "Navigation" do
       end
       
       it "auto responds to people who mention one of our key phrases" do
-        pending 'Not implemented yet'
         # A key-phrase and response has been added
+        auto_response = TweetEngine::AutoResponse.create!(:key_phrases => "Twitter", :response => "Twitter is cool")
+        auto_response.sent_to.should be_empty
+        
         # Someone sends out a tweet with the key-phrase
+        stub_request(:get, "https://search.twitter.com/search.json?q=Twitter&rpp=100").
+          to_return(:status => 200, :body => fixture('search.json'), :headers => {})
+        
         # All users found using the key-phrase are stored
-        # Each user is sent the response message
+        found = TweetEngine::AutoResponse.respond
+        
+        # All users should be stored as sent
+        auto_response.reload
+        auto_response.sent_to.should_not be_empty
       end
       
       it "should not send out response one after the other" do
