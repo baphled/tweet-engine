@@ -47,7 +47,7 @@ describe "Navigation" do
   
   context "searching for tweeple" do
     it "should let me do a search based on a phrase" do
-      stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
+      stub_request(:get, "https://search.twitter.com/search.json?q=lemons").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
       visit "/tweet-engine"
@@ -58,7 +58,7 @@ describe "Navigation" do
     end
   
     it "allows me to follow a batch of tweeples" do
-      stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
+      stub_request(:get, "https://search.twitter.com/search.json?q=lemons").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
       
@@ -144,7 +144,6 @@ describe "Navigation" do
     it "should send out a tweet that has pasted its scheduled delivery time" do
       # I create a schedule tweet
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 2.hour
-      tweet.deliver
       # The scheduled time passes
       Timecop.travel(tweet.sending_at)
       
@@ -161,7 +160,7 @@ describe "Navigation" do
     it "should not send out a tweet that has been scheduled but that time has not gone by yet" do
       # I create a schedule tweet
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
-      tweet.deliver
+
       Delayed::Worker.new.work_off
       # I should get a message stating the tweet has been sent
       tweet.delivered.should be_false
@@ -173,7 +172,6 @@ describe "Navigation" do
   
     it "does not send out tweet if they are not ready to be sent out yet" do
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
-      tweet.deliver
       Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
@@ -185,7 +183,6 @@ describe "Navigation" do
   
     it "a canceled tweet should not be sent out" do
       tweet = TweetEngine::Stack.create! :message => "My message", :sending_at => Time.now + 1.hour
-      tweet.deliver
       Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
@@ -197,7 +194,6 @@ describe "Navigation" do
       # we cancel the tweet
       click_link "Cancel"
       
-      tweet.deliver
       Delayed::Worker.new.work_off
       
       tweet.delivered.should be_false
@@ -311,6 +307,7 @@ describe "Navigation" do
     end
     
     it "automatically followers potential followers" do
+      pending 'Not implemented yet'
       # There are some people to follow
       # Some times goes by
       # we should now be following those people
@@ -320,7 +317,61 @@ describe "Navigation" do
   end
   
   context "intelligent tweeting" do
-    it "auto responds to people who mention one of our key phrases"
+    context "auto-response" do
+      
+      it "allow us to add auto responses to the system" do
+        # we are on the new auto-response page
+        visit 'tweet-engine'
+        
+        click_link 'New auto-response'
+        
+        # we fill in the key phrase
+        fill_in 'Key Phrases', :with => "Cut my hair, need a trim"
+        
+        # we fill in the response
+        fill_in "Response", :with => "We cut hair like Sweeney Todd"
+        
+        # we submit the new response
+        click_button "Add auto-response"
+        
+        page.should have_content "Added new auto-response"
+      end
+      
+      it "auto responds to people who mention one of our key phrases" do
+        # A key-phrase and response has been added
+        auto_response = TweetEngine::Responder.create!(:key_phrases => "Twitter", :response => "Twitter is cool")
+        auto_response.sent_to.should be_empty
+        
+        # Someone sends out a tweet with the key-phrase
+        stub_request(:get, "https://search.twitter.com/search.json?q=Twitter").
+          to_return(:status => 200, :body => fixture('search.json'), :headers => {})
+        
+        # Tweets are stacked
+        found = TweetEngine::Responder.respond
+        
+        # All users should be stored as sent
+        auto_response.reload
+        auto_response.sent_to.should_not be_empty
+        
+        # Send out messages
+        Delayed::Worker.new.work_off
+        
+        visit 'tweet-engine'
+        # save_and_open_page
+        
+        page.should have_content "11 messages stacked"
+      end
+      
+      it "should not send out response one after the other" do
+        pending 'Not implemented yet'
+        # A key-phrase and response has been added
+        # Someone sends out a tweet with the key-phrase
+        # All users found using the key-phrase are stored
+        # The first user is sent a response
+        # The second user does not get sent a response for at least another minute
+      end
+    end
+    
     it "allows us to send out a tweet depending on peoples comments"
     it "tracks conversations based on keywords"
   end

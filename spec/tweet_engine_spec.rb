@@ -7,12 +7,20 @@ describe TweetEngine do
   
   describe "#search" do
     before(:each) do
-      stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
-        with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
-        to_return(:status => 200, :body => fixture('search.json'), :headers => {})
     end
     
     it "returns a list of tweeple" do
+      stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
+        with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
+        to_return(:status => 200, :body => fixture('search.json'), :headers => {})
+      data = fixture('search.json')
+      TweetEngine.search('lemons', 100).should_not == []
+    end
+    
+    it "uses the default value if no amount is given" do
+      stub_request(:get, "https://search.twitter.com/search.json?q=lemons").
+        with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
+        to_return(:status => 200, :body => fixture('search.json'), :headers => {})
       data = fixture('search.json')
       TweetEngine.search('lemons').should_not == []
     end

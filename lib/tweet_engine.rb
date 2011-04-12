@@ -6,7 +6,9 @@ module TweetEngine
   require 'tweet_engine/config'
   require 'tweet_engine/search_job'
   require 'tweet_engine/search_result'
+  require 'tweet_engine/responder'
   require 'tweet_engine/runner'
+  require 'tweet_engine/auto_respond'
   
   if defined?(Rails::Plugins)
     Merb::Plugins.add_rakefiles File.dirname(__FILE__) / '..' / 'tasks' / 'tasks'
@@ -25,10 +27,11 @@ module TweetEngine
       Twitter::Client.new
     end
   
-    def search term
+    def search term, items = nil
       names = []
       search = Twitter::Search.new
-      tweets = search.containing(term).per_page 100
+      tweets = search.containing(term).per_page items unless items.nil?
+      tweets = search.containing(term) if items.nil?
       tweets.each { |tweeple| names << tweeple }
       names
     end

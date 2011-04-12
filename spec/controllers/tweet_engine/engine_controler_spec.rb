@@ -10,6 +10,15 @@ describe TweetEngine::EngineController do
       get :index
       response.status.should == 200
     end
+    
+    it "gets all items in the stack" do
+      stub_request(:get, "https://api.twitter.com/1/account/verify_credentials.json").
+        to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
+      stub_request(:get, "https://api.twitter.com/1/users/show.json?screen_name=pengwynn").
+        to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
+      TweetEngine::Stack.should_receive :all
+      get :index
+    end
   end
   
   describe "GET, search" do

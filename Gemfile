@@ -17,6 +17,7 @@ gem 'djinn', :git => "https://github.com/baphled/djinn.git", :branch => "without
 group :development, :test do
   gem "capybara", ">= 0.4.0"
   gem "rspec-rails", ">= 2.0.0.beta.20"
+  gem 'cover_me'
   gem 'webmock', "~> 1.6"
   gem 'timecop', :git => "https://github.com/liveh2o/timecop.git"
   

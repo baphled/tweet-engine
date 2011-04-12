@@ -13,6 +13,11 @@
   <p>Your last tweet was @ <%= distance_of_time_in_words Time.now, @user.status.created_at%>: <%= @user.status.text %></p>
 </section>
 
+<menu>
+  <ul>
+    <li><%= link_to "New auto-response", new_tweet_engine_auto_response_path %></li>
+  </ul>
+</menu>
 <hr/>
 <%= render :partial => 'search', :locals => {:term => @term, :results => @results} %>
 

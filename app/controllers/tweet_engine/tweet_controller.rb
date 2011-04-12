@@ -5,7 +5,6 @@ class TweetEngine::TweetController < ApplicationController
   
   def create
     @tweet = TweetEngine::Stack.create params[:tweet_engine_stack]
-    @tweet.deliver
     flash[:notice] = "Added new tweet to the stack"
     redirect_to tweet_engine_path
   end
