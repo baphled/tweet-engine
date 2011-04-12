@@ -15,7 +15,7 @@ describe TweetEngine::Responder do
   describe "#respond" do
     before(:each) do
       @auto_response = TweetEngine::Responder.create! :key_phrases => "Twitter", :response => "Twitter is cool"
-      stub_request(:get, "https://search.twitter.com/search.json?q=Twitter&rpp=100").
+      stub_request(:get, "https://search.twitter.com/search.json?q=Twitter").
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
     end
     

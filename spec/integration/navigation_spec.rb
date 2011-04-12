@@ -47,7 +47,7 @@ describe "Navigation" do
   
   context "searching for tweeple" do
     it "should let me do a search based on a phrase" do
-      stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
+      stub_request(:get, "https://search.twitter.com/search.json?q=lemons").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
       visit "/tweet-engine"
@@ -58,7 +58,7 @@ describe "Navigation" do
     end
   
     it "allows me to follow a batch of tweeples" do
-      stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
+      stub_request(:get, "https://search.twitter.com/search.json?q=lemons").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
       
