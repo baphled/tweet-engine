@@ -326,12 +326,12 @@ describe "Navigation" do
         click_link 'New auto-response'
         
         # we fill in the key phrase
-        fill_in :key_phrases, :with => "Cut my hair, need a trim"
+        fill_in 'Key Phrases', :with => "Cut my hair, need a trim"
         
         # we fill in the response
-        fill_in :response, :with => "We cut hair like Sweeney Todd"
-        # we submit the new response
+        fill_in "Response", :with => "We cut hair like Sweeney Todd"
         
+        # we submit the new response
         click_button "Add auto-response"
         
         page.should have_content "Added new auto-response"
