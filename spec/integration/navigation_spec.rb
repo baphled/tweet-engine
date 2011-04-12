@@ -343,7 +343,7 @@ describe "Navigation" do
         auto_response.sent_to.should be_empty
         
         # Someone sends out a tweet with the key-phrase
-        stub_request(:get, "https://search.twitter.com/search.json?q=Twitter&rpp=100").
+        stub_request(:get, "https://search.twitter.com/search.json?q=Twitter").
           to_return(:status => 200, :body => fixture('search.json'), :headers => {})
         
         # Tweets are stacked

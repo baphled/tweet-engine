@@ -27,10 +27,11 @@ module TweetEngine
       Twitter::Client.new
     end
   
-    def search term
+    def search term, items = nil
       names = []
       search = Twitter::Search.new
-      tweets = search.containing(term).per_page 100
+      tweets = search.containing(term).per_page items unless items.nil?
+      tweets = search.containing(term) if items.nil?
       tweets.each { |tweeple| names << tweeple }
       names
     end
