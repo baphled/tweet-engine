@@ -8,6 +8,7 @@ module TweetEngine
   require 'tweet_engine/search_result'
   require 'tweet_engine/responder'
   require 'tweet_engine/runner'
+  require 'tweet_engine/auto_respond'
   
   if defined?(Rails::Plugins)
     Merb::Plugins.add_rakefiles File.dirname(__FILE__) / '..' / 'tasks' / 'tasks'
