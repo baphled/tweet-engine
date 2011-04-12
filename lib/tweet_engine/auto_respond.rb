@@ -16,7 +16,7 @@ module TweetEngine
         loop do
           log "Searching for more tweeple"
           sent_to = TweetEngine::Responder.respond
-          log "Now have #{sent_to.count} people"
+          log "Stacking responses for #{sent_to.count} people"
           sleep TweetEngine.config['interval']
         end
       end
