@@ -17,7 +17,12 @@ describe TweetEngine::AutoResponseController do
     
     it "instantiates a new response" do
       TweetEngine::Responder.should_receive :new
-      post :create, { :tweet_engine_auto_response => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
+      post :create, { :tweet_engine_responder => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
+    end
+    
+    it "saves the response" do
+      @auto_response.should_receive(:save).and_return true
+      post :create, { :tweet_engine_responder => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
     end
     
     context "successful" do
@@ -28,11 +33,11 @@ describe TweetEngine::AutoResponseController do
       
       it "saves the response" do
         @auto_response.should_receive(:save).and_return true
-        post :create, { :tweet_engine_auto_response => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
+        post :create, { :tweet_engine_responder => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
       end
       
       it "redirects to the tweet-engine" do
-        post :create, { :tweet_engine_auto_response => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
+        post :create, { :tweet_engine_responder => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
         response.should redirect_to tweet_engine_path
       end
     end
