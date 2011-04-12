@@ -339,7 +339,7 @@ describe "Navigation" do
       
       it "auto responds to people who mention one of our key phrases" do
         # A key-phrase and response has been added
-        auto_response = TweetEngine::AutoResponse.create!(:key_phrases => "Twitter", :response => "Twitter is cool")
+        auto_response = TweetEngine::Responder.create!(:key_phrases => "Twitter", :response => "Twitter is cool")
         auto_response.sent_to.should be_empty
         
         # Someone sends out a tweet with the key-phrase
@@ -347,16 +347,19 @@ describe "Navigation" do
           to_return(:status => 200, :body => fixture('search.json'), :headers => {})
         
         # Tweets are stacked
-        TweetEngine::Stack.should_receive(:create!).exactly(11).times
-        # All users found using the key-phrase are stored
-        found = TweetEngine::AutoResponse.respond
+        found = TweetEngine::Responder.respond
         
         # All users should be stored as sent
         auto_response.reload
         auto_response.sent_to.should_not be_empty
         
-        # Responses are sent out as background jobs
+        # Send out messages
         Delayed::Worker.new.work_off
+        
+        visit 'tweet-engine'
+        # save_and_open_page
+        
+        page.should have_content "11 messages stacked"
       end
       
       it "should not send out response one after the other" do

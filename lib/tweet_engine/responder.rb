@@ -1,7 +1,7 @@
 require 'mongoid'
 
 module TweetEngine
-  class AutoResponse
+  class Responder
     include Mongoid::Document
     field :key_phrases
     field :response
@@ -13,9 +13,9 @@ module TweetEngine
         items = self.all.to_a
         items.each do |item|
           tweets = TweetEngine.search item.key_phrases
-          tweets.each_with_index do |tweet, minutes_from|
+          tweets.each do |tweet|
             unless item.sent_to.include? tweet.from_user
-              TweetEngine::Stack.create! :message => "@#{tweet.from_user} #{item.response}", :sending_at => Time.now + minutes_from.minutes
+              TweetEngine::Stack.create! :message => "@#{tweet.from_user} #{item.response}"
               item.sent_to << tweet.from_user
             end
           end

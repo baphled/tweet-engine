@@ -4,26 +4,26 @@ describe TweetEngine::AutoResponseController do
 
   describe "GET, new" do
     it "instantiates a new response" do
-      TweetEngine::AutoResponse.should_receive :new
+      TweetEngine::Responder.should_receive :new
       get :new
     end
   end
   
   describe "POST, create" do
     before(:each) do
-      @auto_response = TweetEngine::AutoResponse.new(:key_phrases => "Rails, Ruby", :response => 'Rails 3 is very cool')
-      TweetEngine::AutoResponse.stub!(:new).and_return @auto_response
+      @auto_response = TweetEngine::Responder.new(:key_phrases => "Rails, Ruby", :response => 'Rails 3 is very cool')
+      TweetEngine::Responder.stub!(:new).and_return @auto_response
     end
     
     it "instantiates a new response" do
-      TweetEngine::AutoResponse.should_receive :new
+      TweetEngine::Responder.should_receive :new
       post :create, { :tweet_engine_auto_response => { :key_phrases => "Rails, Ruby", :response => "Rails 3 is very cool"} }
     end
     
     context "successful" do
       before(:each) do
         @auto_response.stub!(:save).and_return true
-        TweetEngine::AutoResponse.stub!(:new).and_return @auto_response
+        TweetEngine::Responder.stub!(:new).and_return @auto_response
       end
       
       it "saves the response" do

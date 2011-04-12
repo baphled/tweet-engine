@@ -3,6 +3,9 @@
     No tweets stacked<br />
 <% else%>
   <h3>Stacked tweets</h3>
+  <p>
+    <%= pluralize tweet_stack.count, "message stacked", "messages stacked" %>
+  </p>
   <ul>
   <% tweet_stack.each do |tweet| %>
     <li>

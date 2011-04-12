@@ -1,11 +1,11 @@
 class TweetEngine::AutoResponseController < ApplicationController
   
   def new
-    @auto_response = TweetEngine::AutoResponse.new
+    @auto_response = TweetEngine::Responder.new
   end
   
   def create
-    @auto_response = TweetEngine::AutoResponse.new params[:tweet_engine_auto_response]
+    @auto_response = TweetEngine::Responder.new params[:tweet_engine_auto_response]
     if @auto_response.save
       flash[:notice] = 'Added new auto-response'
       redirect_to tweet_engine_path

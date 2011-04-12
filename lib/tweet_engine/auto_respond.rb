@@ -12,10 +12,10 @@ module TweetEngine
       start do
         log "Responding to auto-response"
 
-        @responder = TweetEngine::AutoResponse.new
+        @responder = TweetEngine::Responder.new
         loop do
           log "Searching for more tweeple"
-          sent_to = TweetEngine::AutoResponse.respond
+          sent_to = TweetEngine::Responder.respond
           log "Now have #{sent_to.count} people"
           sleep TweetEngine.config['interval']
         end
