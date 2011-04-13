@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/baphled/djinn.git
-  revision: e575df1ee7f029fa2ad49d529213e3de1b2ed903
+  revision: 85c81573a42ce31bbcd801424dc9844a9af47957
   branch: without_active_resource_in_rails
   specs:
     djinn (0.1.7)
