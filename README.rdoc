@@ -1,6 +1,6 @@
 = TweetEngine
 
-TweetEngine is a Rails Engine application which allows you to easily added tweeter management right into your application with little hassle.
+TweetEngine is a Rails Engine application which allows you to easily added Twitter management right into your application with little hassle.
 
 = What is TweetEngine
 
@@ -8,11 +8,12 @@ TweetEngine is a Rails Engine application which allows you to easily added tweet
 * Allows you to easily manage your tweet campaign without being spammy
 * Automatically finds potential people to follow
 * Allows you to send tweets now or in the future
+* Allows you to easily manage who you are following
+* Automatically respond to people based on key phrases
 
 = What will be in TweetEngine
 
 * Automatically followers people of interest (based on keyword search result)
-* Allows you to easily manage who you are following
 * Find out which of your followers are the most influential (have the most users)
 * Automate the daemon process to be started automatically
 * Find out the peak times of that your followers tweet (experimental)
@@ -38,6 +39,12 @@ This will create a an initializer file where you will need to add your twitter A
 
 The other file is the setting for TweetEngine itself. Here you can tell the engine whether you want it to do background searches for potentials people to follower and which keyword(s) to use for the search.
 
+As TweetEngine is a Rails Engine, views and controllers are fully customisable. Having said this we have taken the time to put together a basic interface to get you started.
+
+  rails g tweet_engine:assets
+  
+This will generate the necessary layout, CSS and JS to give you a slick little interface (instructions on customising this will come later).
+
 Once these have been configured, all that is left is to start your engines!
 
 Once the server is started you will be able to view the TweetEngine's control panel. Which will allow you to manage your twitter campaign.
@@ -50,9 +57,23 @@ rake jobs:work
 
 At present there is another background that will need to be run to generate the list of potential people to follow. This can be done by running the following script:
 
-ruby script/tweet_engine start
+  rake tweet_engine::runner
 
 This will create a daemon process in the back ground that will run every 15 minutes and collect a list of people talking that are using the keywords you are using.
+
+There is one more daemon to run, this is for automatically responding to users based on key pharses, to get this running you have to run the following rake task.
+
+  rake tweet_engine:auto_respond
+  
+Once this is running and you have setup a auto-response or two. The daemon will search for people using your key phrases and put them on a DelayedJob, which will process them them in the background for you.
+
+= Disclaimer
+
+To from spamming people auto responses are set to a 30 second interval. Having said this if DelayedJobs is not running you may get a backlog of processes that will trigger one after the other when next started. The only way around this at present is to clear the jobs from DJ using:
+
+  rake jobs:clear
+  
+We are currently looking for a way around this but it is not a main focus for the time being.
 
 = Notice
 
