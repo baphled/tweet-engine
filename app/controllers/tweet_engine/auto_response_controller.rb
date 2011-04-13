@@ -1,6 +1,9 @@
 class TweetEngine::AutoResponseController < ApplicationController
   before_filter :find_user
   
+  def index
+    @auto_responses = TweetEngine::Responder.all
+  end
   
   def new
     @user = TweetEngine.whats_my.user
@@ -20,6 +23,17 @@ class TweetEngine::AutoResponseController < ApplicationController
   def edit
     @auto_response = TweetEngine::Responder.find params[:id]
   end
+  
+  def update
+    @auto_response = TweetEngine::Responder.find params[:id]
+    if @auto_response.update_attributes params[:tweet_engine_responder]
+      flash[:notice] = 'Updated auto-response'
+      redirect_to tweet_engine_path
+    else
+      render :edit
+    end
+  end
+  
   protected
   
   def find_user

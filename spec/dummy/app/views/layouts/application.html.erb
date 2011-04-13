@@ -19,7 +19,7 @@
 </head>
 <body id="homepage">
 	<div id="header">
-    	<a href="" title=""><img src="img/cp_logo.png" alt="Control Panel" class="logo" /></a>
+    	<a href="" title=""><img src="/img/cp_logo.png" alt="Control Panel" class="logo" /></a>
     	<div id="searcharea">
     	  <%= render :partial => 'shared/search', :locals => {:term => @term, :results => @results} %>
       </div>
@@ -45,27 +45,25 @@
             <p class="userbtn"><a href="#" title="">Log out</a></p>
         </div>
         
-        <!-- 
         <div class="notifications">
-        	<p class="notifycount"><a href="" title="" class="notifypop">10</a></p>
-            <p><a href="" title="" class="notifypop">New Notifications</a></p>
-            <p class="smltxt">(Click to open notifications)</p>
+        	<p class="notifycount"><a href="" title="" class="notifypop"><%= TweetEngine::SearchResult.all.count %></a></p>
+            <p><a href="" title="" class="notifypop">Potential followers</a></p>
+            <p class="smltxt">(Click to view)</p>
         </div>
-        -->
         
         <ul id="nav">
         	<li>
                 <ul class="navigation">
                     <li class="heading"><%= link_to "Dashboard", tweet_engine_path %></li>
-                    <li><%= link_to "Following", tweet_engine_following_path %></li>
-                    <li><%= link_to "Followers", tweet_engine_followers_path %></li>
-                    <li><%= link_to "Potential Followers", tweet_engine_potential_followers_path %></li>
+                    <li class="heading"><%= link_to "Following", tweet_engine_following_path %></li>
+                    <li class="heading"><%= link_to "Followers", tweet_engine_followers_path %></li>
                 </ul>
             </li>
             <li>
                 <a class="expanded heading">Auto-response</a>
                  <ul class="navigation">
                     <li><%= link_to "New auto-response", new_tweet_engine_auto_response_path %></li>
+                    <li><%= link_to "Auto-responses", tweet_engine_auto_response_index_path %></li>
                 </ul>
             </li>
         </ul>
@@ -74,40 +72,16 @@
     
     <!-- Notifications Box/Pop-Up Start --> 
     <div id="notificationsbox">
-        <h4>Notifications</h4>
+        <h4>Potential Followers</h4>
         <ul>
+          <% TweetEngine::SearchResult.all.each do |result| %>
             <li>
-            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
-            	<h5><a href="#" title="">New member registration</a></h5>
-                <p>Admin eve joined on 18.12.2010</p>
+            	<h5><a href="#" title=""><%= result.screen_name %></a></h5>
+                <p><%= result.tweet['text'] %></p>
             </li>
-            <li>
-            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
-            	<h5><a href="#" title="">New member registration</a></h5>
-                <p>Jackson Michael joined on 16.12.2010</p>
-            </li>
-            <li>
-            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
-                <h5><a href="#" title="">New blog post created</a></h5>
-                <p>New post created on 15.12.2010</p>
-            </li>
-            <li>
-            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
-            	<h5><a href="#" title="">New group created</a></h5>
-                <p>“Web Design” group created on 12.12.2010</p>
-            </li>
-            <li>
-            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
-            	<h5><a href="#" title="">1 new private message</a></h5>
-                <p>New message from Joe sent on 21.11.2010</p>
-            </li>
-            <li>
-            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
-            	<h5><a href="#" title="">New member registration</a></h5>
-                <p>Graham joined on 20.11.2010</p>
-            </li>
+           <% end %>
         </ul>
-        <p class="loadmore"><a href="#" title="">Load more notifications</a></p>
+        <p class="loadmore"><%= link_to "Potential Followers", tweet_engine_potential_followers_path %></p>
     </div>
     <!-- Notifications Box/Pop-Up End --> 
 </body>

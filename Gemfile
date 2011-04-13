@@ -7,9 +7,8 @@ gem 'mongoid', :git => "https://github.com/mongoid/mongoid.git"
 gem 'bson_ext'
 
 gem 'jquery-rails', '>= 0.2.6'
-gem 'compass'
-gem 'compass-960-plugin'
 
+gem 'will_paginate'
 gem 'delayed_job', '>= 2.1.4', :git => "https://github.com/collectiveidea/delayed_job"
 gem 'delayed_job_mongoid', :git => "https://github.com/collectiveidea/delayed_job_mongoid.git"
 gem 'djinn', :git => "https://github.com/baphled/djinn.git", :branch => "without_active_resource_in_rails"

@@ -19,8 +19,8 @@
 	
 	/* Pagination */
 	
-	ul.pagination li.page a {background: #00789F url(/img/bg_buttons.png) repeat-x top; border: 1px solid #0D87AE;}
-		ul.pagination li.page a:hover {background: #00789F url(/img/bg_buttons.png) 0 -50px; border: 1px solid #005977;}
+	.pagination em {background: #00789F url(/img/bg_buttons.png) repeat-x top; border: 1px solid #0D87AE;}
+	.pagination em:hover {background: #00789F url(/img/bg_buttons.png) 0 -50px; border: 1px solid #005977;}
 	
 	/* Button Styling */
 	

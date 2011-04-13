@@ -15,7 +15,7 @@ describe TweetEngine::EngineController do
     end
     
     it "gets all items in the stack" do
-      TweetEngine::Stack.should_receive :all
+      TweetEngine::Stack.should_receive :paginate
       get :index
     end
   end

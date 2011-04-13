@@ -25,11 +25,11 @@ return this.each(function(){if(!c.data("bPopup")){o.modal&&n.css(u()).appendTo(o
 // Notifications Pop-Up functionality
 
 	$(document).ready(function(){
-	   		$("a.notifypop").bind('click', function(){
-		 	 $("#notificationsbox").bPopup();
-		  	 return false
-			});
-		});
+    $("a.notifypop").bind('click', function(){
+       $("#notificationsbox").bPopup();
+       return false
+    });
+	});
 	
 // Charting script
 

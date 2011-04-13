@@ -81,15 +81,15 @@ body {height: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 13px; 
 		.ui-tabs .ui-tabs-nav li.ui-tabs-selected a {background: #fff; color: #666; top: 1px; outline: none;}
 		.ui-tabs .ui-tabs-hide {display: none;}
 		.ui-tabs .ui-tabs-panel {background-image: none;}
-			
-		ul.pagination {float: right; font-size: 11px; clear: both;}
-			ul.pagination li {float: left; padding-right: 5px;}
-				ul.pagination li a {padding: 3px 7px; border: 1px solid #ccc; text-decoration: none; border-radius: 5px; -moz-border-radius: 5px; display: block; background: #fff url(../img/bg_fade_up.png) repeat-x bottom;}
-				ul.pagination li.page a {color: #fff; font-weight: 700;}
-					ul.pagination li.page a:hover {color: #fff;}
-				ul.pagination li.text a {border: none; text-decoration: underline; padding: 0 5px 0 0;}
-				ul.pagination li.text {line-height: 2em;}
-			
+		
+    .pagination {float: right; font-size: 11px; clear: both;}
+    .pagination a, .pagination span, .pagination em {float: left; padding-right: 5px;}
+    .pagination a, .pagination em {padding: 3px 7px; margin: 2px; border: 1px solid #ccc; text-decoration: none; border-radius: 5px; -moz-border-radius: 5px; display: block; background: #fff url(../img/bg_fade_up.png) repeat-x bottom;}
+    .pagination a.next_page, .pagination a.previous_page {font-weight: 700; }
+    .pagination a.next_page:hover, .pagination a.previous_page:hover {color: #fff;}
+    .pagination a.next_page, .pagination a.previous_page {border: none; text-decoration: underline; padding: 0 5px 0 0;}
+    .pagination a.next_page, .pagination a.previous_page {line-height: 2em;}
+      
 	/* Notice Boxes */
 	
 	.noticebox, .noticeboxalt {border: 1px solid #FDD845; background: #FFE082 url(../img/bg_noticebox_yellow.png) repeat-x top; width: 267px; margin: 0 15px 15px 0; float: left; text-shadow: 1px 1px 1px #fff;}

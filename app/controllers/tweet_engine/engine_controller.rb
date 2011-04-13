@@ -9,7 +9,7 @@ class TweetEngine::EngineController < ApplicationController
   # This is the main dashboard
   #
   def index
-    @tweet_stack = TweetEngine::Stack.all
+    @tweet_stack = TweetEngine::Stack.paginate :page => params[:page], :per_page => 10
     @stack = TweetEngine::Stack.new
     @user = TweetEngine.whats_my.user
   end
@@ -108,5 +108,4 @@ class TweetEngine::EngineController < ApplicationController
   def find_user
     @user = TweetEngine.whats_my.user
   end
-  
 end
