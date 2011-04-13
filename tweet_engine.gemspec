@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.summary = "Add a tweet engine to your app."
   s.description = "Allows you to easily manage tweets and followers via an control panel."
   s.files = Dir["{app,lib,config}/**/*"] + ["MIT-LICENSE", "Rakefile", "Gemfile", "README.rdoc"]
-  s.version = "0.0.2"
+  s.version = "0.0.4"
   
   s.add_dependency('twitter')
   s.add_dependency('mongoid')
