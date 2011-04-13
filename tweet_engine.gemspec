@@ -13,5 +13,6 @@ Gem::Specification.new do |s|
   s.add_dependency('bson_ext')
   s.add_dependency('delayed_job')
   s.add_dependency('delayed_job_mongoid')
-  s.add_dependency('djinn')
+  s.add_dependency('djinn') 
+  s.add_dependency('will_paginate')
 end
