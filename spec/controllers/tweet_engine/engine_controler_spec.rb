@@ -83,7 +83,7 @@ describe TweetEngine::EngineController do
     end
     
     it "should get a list of all potential followers" do
-      TweetEngine::SearchResult.should_receive :all
+      TweetEngine::SearchResult.should_receive(:paginate).exactly(2).times
       get :potential_followers, :followers => @potential_users
     end
   end

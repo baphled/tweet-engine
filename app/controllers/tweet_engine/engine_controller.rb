@@ -1,5 +1,8 @@
 class TweetEngine::EngineController < ApplicationController
   before_filter :find_user
+  before_filter :find_search_results
+  
+  layout 'tweet_engine'
   
   include ActionView::Helpers::TextHelper
   
@@ -63,6 +66,7 @@ class TweetEngine::EngineController < ApplicationController
   #
   def following
     @following = TweetEngine.following
+    @following = TweetEngine.following.paginate :per_page => 10, :page => params[:page] unless @following.nil?
   end
   
   #
@@ -75,7 +79,7 @@ class TweetEngine::EngineController < ApplicationController
   # @TODO We should add information about a person to help to decide whether to unfollow someone or not
   #
   def followers
-    @followers = TweetEngine.followers
+    @followers = TweetEngine.followers.paginate :per_page => 10, :page => params[:page]
   end
   
   # POST /tweet-engine/unfollow
@@ -100,7 +104,7 @@ class TweetEngine::EngineController < ApplicationController
   # doing our background searches. Here we can manually follow these users.
   #
   def potential_followers
-    @potential_followers = TweetEngine::SearchResult.all.to_a
+    @potential_followers = TweetEngine::SearchResult.paginate :per_page => 10, :page => params[:page]
   end
   
   protected
@@ -108,4 +112,9 @@ class TweetEngine::EngineController < ApplicationController
   def find_user
     @user = TweetEngine.whats_my.user
   end
+  
+  def find_search_results
+    @latest_search_results = TweetEngine::SearchResult.paginate :per_page => 5, :page => 1
+  end
+  
 end
