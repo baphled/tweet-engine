@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe TweetEngine::TweetController do
+  before(:each) do
+    stub_request(:get, "https://api.twitter.com/1/account/verify_credentials.json").
+      to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
+    stub_request(:get, "https://api.twitter.com/1/users/show.json?screen_name=pengwynn").
+      to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
+  end
   describe "POST, create" do
     before(:each) do
       @time = Time.now

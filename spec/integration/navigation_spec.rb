@@ -197,7 +197,7 @@ describe "Navigation" do
       page.should_not have_content "My message - Sent"
       
       # we cancel the tweet
-      click_link "Cancel"
+      click_link "Delete"
       
       Delayed::Worker.new.work_off
       
@@ -250,7 +250,7 @@ describe "Navigation" do
       click_link "following"
       
       # follow the unfollow link
-      check 'timoreilly'
+      check 'unfollow_0'
       
       click_button "Unfollow tweeple"
       
@@ -272,7 +272,7 @@ describe "Navigation" do
       click_link "followers"
       
       # follow the unfollow link
-      check 'chachasikes'
+      check 'unfollow_1'
       
       click_button "Unfollow tweeple"
       
@@ -287,7 +287,7 @@ describe "Navigation" do
         to_return(:status => 200, :body => "", :headers => {})
       3.times do |amount|
         search_result = fixture('search.json')
-        TweetEngine::SearchResult.create :screen_name => "Some name #{amount}", :tweet => search_result[amount]
+        TweetEngine::SearchResult.create :screen_name => "Some name #{amount}", :tweet => 'Something about nothing'
       end
       
       # pending 'Defining steps'
@@ -299,9 +299,8 @@ describe "Navigation" do
       page.should have_content "Potential Followers"
       
       # we click on 3 followers
-      three_users = TweetEngine::SearchResult.all.limit(3)
-      three_users.each do |user|
-        check "#{user.screen_name}"
+      3.times do |number|
+        check "followers_#{number}"
       end
       click_button 'Follow tweeple'
       
@@ -361,10 +360,7 @@ describe "Navigation" do
         # Send out messages
         Delayed::Worker.new.work_off
         
-        visit 'tweet-engine'
-        # save_and_open_page
-        
-        page.should have_content "11 messages stacked"
+        TweetEngine::Stack.all.count.should == 11
       end
       
       it "should not send out response one after the other" do

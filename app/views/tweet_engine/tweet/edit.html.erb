@@ -1,3 +1,26 @@
-<%= form_for @stack, :url => tweet_engine_tweet_path(@stack), :method => :put do |f| %>
-  <%= render :partial => 'shared/tweet_form', :locals => {:f => f} %>
-<% end %>
+<div class="contentcontainer med left">
+ <div class="headings alt">
+   <h2>Edit tweet</h2>
+ </div>
+ <div class="contentbox">
+   <%= form_for @stack, :url => tweet_engine_tweet_path(@stack), :method => :put do |f| %>
+    <p>
+      <%= f.label :message, "Enter Tweet" %>
+      <%= f.text_field :message, :class => "inputbox" %>
+    </p>
+    <p>
+      <%= f.label :repeat, "Repeat" %>
+      <%= f.check_box :repeat %>
+    </p>
+    <p>
+      <%= f.label :every, "Every" %>
+      <%= f.text_field :every, :class => "inputbox" %>
+    </p>
+    <p>
+      <%= f.label :sending_at, "Sending At" %>
+      <%= f.text_field :sending_at, :class =>'datepicker inputbox' %>
+    </p>
+    <%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...', :class => "btn" %>
+   <% end %>
+ </div>
+</div>
