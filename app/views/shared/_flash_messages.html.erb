@@ -26,11 +26,11 @@
     <!-- Green Status Bar End -->
   <% end %>
   
-  <% if flash[:info] %>
+  <% if flash[:notice] %>
     <!-- Blue Status Bar Start -->
     <div class="status info">
     	<p class="closestatus"><a href="" title="Close">x</a></p>
-    	<p><img src="img/icons/icon_info.png" alt="Information" /><span>Information:</span><%= flash[:info] %></p>
+    	<p><img src="img/icons/icon_info.png" alt="Information" /><span>Information:</span><%= flash[:notice] %></p>
     </div>
   <% end %>
   <!-- Blue Status Bar End -->

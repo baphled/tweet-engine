@@ -21,7 +21,8 @@ describe "Navigation" do
     end
     
     it "displays my name" do
-      page.should have_content "Hi pengwynn,"
+      page.should have_content "Using twitter account:"
+      page.should have_content "pengwynn"
     end
     
     it "displays my last update" do
@@ -52,7 +53,8 @@ describe "Navigation" do
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
       visit "/tweet-engine"
       page.should_not have_content "Tweeple talking about 'lemons':"
-      fill_in "Search for:", :with => "lemons"
+      find('.searchbox').set('lemons')
+      # fill_in :q, :with => "lemons"
       click_button "Search"
       page.should have_content "Tweeple talking about 'lemons':"
     end
@@ -67,7 +69,10 @@ describe "Navigation" do
         to_return(:status => 200, :body => "", :headers => {})
       
       visit "/tweet-engine"
-      fill_in "Search for:", :with => "lemons"
+      
+      find('.searchbox').visible?
+      find('.searchbox').set('lemons')
+      # fill_in :q, :with => "lemons"
       click_button "Search"
     
       #select all tweeple found
@@ -104,9 +109,9 @@ describe "Navigation" do
     
       fill_in "Enter Tweet", :with => "This is my new tweet"
       click_button "Stack Tweet"
-    
+      
       page.should have_content "Added new tweet to the stack"
-      page.should have_content "Stacked tweets"
+      page.should have_content "Stacked Tweets"
       page.should have_content "This is my new tweet"
     
     end
