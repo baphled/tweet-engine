@@ -9,6 +9,7 @@ module TweetEngine
       
       def copy_config
         copy_file "config/tweet_engine.yml", "config/tweet_engine.yml"
+        copy_file "log/tweet_engine/runner.log", "log/tweet_engine/runner.log"
       end
     end
   end
