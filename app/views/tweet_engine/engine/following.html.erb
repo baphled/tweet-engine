@@ -1,20 +1,58 @@
-<ul id="following">
-  <%= form_tag(:action => "unfollow") do %>
-    <% @following.each_with_index do |user,index| %>
-    
-  <li>
-    <%= label_tag "unfollow[#{index}]", "#{user.screen_name}" %>
-    <%= check_box_tag "unfollow[#{index}]", user.screen_name %><br />
-    <p>
-      Following: <%= user.friends_count %><br />
-      Followers: <%= user.followers_count %><br />
-    </p>
-    <p>
-      Description: <%= user.description %>
-    </p>
-  </li>
-    <% end -%>
-    
-    <%= submit_tag "Unfollow tweeple", :disable_with => 'Unfollowing tweeple...' %>
-  <% end -%>
-</ul>
+<!-- TweetStack Content Box Start -->
+<div class="contentcontainer">
+  
+  <div class="headings altheading">
+    <h2>People following</h2>
+  </div>
+  <div class="contentbox">
+    <%= form_tag(:action => "unfollow") do %>
+  	<table width="100%">
+    	<thead>
+        <tr>
+          <th>Screen name</th>
+          <th>Description</th>
+          <th>Followers</th>
+          <th>Following</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @following.each_with_index do |user,index| %>
+      	<tr>
+          <td><%= user.screen_name %></td>
+          <td><%= user.description %></td>
+          <td><%= user.followers_count %></td>
+          <td><%= user.friends_count %></td>
+          <td>
+            <% if user.following %>
+              <%= check_box_tag "unfollow[#{index}]", user.screen_name %>
+            <% else %>
+            &nbsp;
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+      <div class="extrabottom">
+      	<ul>
+          	<li><img src="img/icons/icon_edit.png" alt="Edit" /> Edit</li>
+              <li><img src="img/icons/icon_delete.png" alt="Delete" /> Remove</li>
+          </ul>
+          <div class="bulkactions">
+            <%= submit_tag "Unfollow tweeple", :disable_with => 'Unfollowing tweeple...', :class => "btn" %>
+          </div>
+      </div>
+    <% end %>
+      <ul class="pagination">
+      	<li class="text">Previous</li>
+          <li class="page"><a href="#" title="">1</a></li>
+          <li><a href="#" title="">2</a></li>
+          <li><a href="#" title="">3</a></li>
+          <li><a href="#" title="">4</a></li>
+          <li class="text"><a href="#" title="">Next</a></li>
+      </ul>
+      <div style="clear: both;"></div>
+  </div>
+</div>
+<!-- TweetStack Content Box End -->

@@ -2,6 +2,7 @@
 # Controller used to manage our tweet stack
 #
 class TweetEngine::TweetController < ApplicationController
+  before_filter :find_user
   
   def create
     @tweet = TweetEngine::Stack.create params[:tweet_engine_stack]
@@ -26,4 +27,11 @@ class TweetEngine::TweetController < ApplicationController
     flash[:notice] = "Removed the tweet from the stack"
     redirect_to tweet_engine_path
   end
+  
+  protected
+  
+  def find_user
+    @user = TweetEngine.whats_my.user
+  end
+  
 end

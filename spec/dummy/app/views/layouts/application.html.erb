@@ -3,16 +3,111 @@
 <head>
   <title>Dummy</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag :defaults, 'jquery.wysiwyg', "visualize.jQuery", "functions" %>
+  <%= javascript_include_tag "http://dwpe.googlecode.com/svn/trunk/_shared/EnhanceJS/enhance.js" %>
+  <%= javascript_include_tag "http://dwpe.googlecode.com/svn/trunk/charting/js/excanvas.js" %>
+
+  <!--[if IE 6]>
+  <%= javascript_include_tag "png_fix" %>
+  <script type='text/javascript'>
+  DD_belatedPNG.fix('img, .notifycount, .selected');
+  </script>
+  <![endif]--> 
+
   <%= javascript_include_tag 'jquery.ui.timepicker.js' %>
   <%= csrf_meta_tag %>
 </head>
-<body>
-<% if notice %> 
-  <p id="notice"><%= notice %></p>
-<% end %>
+<body id="homepage">
+	<div id="header">
+    	<a href="" title=""><img src="img/cp_logo.png" alt="Control Panel" class="logo" /></a>
+    	<div id="searcharea">
+    	  <%= render :partial => 'shared/search', :locals => {:term => @term, :results => @results} %>
+      </div>
+    </div>
+    <!-- Right Side/Main Content Start -->
+    <div id="rightside">
+    <%= yield %>
+    <div id="footer">
+    &copy; Copyright 2011 Boodah.net
+    </div> 
 
-<%= yield %>
-
+    </div>
+    <!-- Right Side/Main Content End -->
+    
+        <!-- Left Dark Bar Start -->
+    <div id="leftside">
+    	<div class="user">
+        	<img src="<%= @user.profile_image_url %>" width="44" height="44" class="hoverimg" alt="Avatar" />
+            <p>Using twitter account:</p>
+            <p class="username"><%= @user.screen_name %></p>
+            <p class="userbtn"><a href="#" title="">Profile</a></p>
+            <p class="userbtn"><a href="#" title="">Log out</a></p>
+        </div>
+        
+        <!-- 
+        <div class="notifications">
+        	<p class="notifycount"><a href="" title="" class="notifypop">10</a></p>
+            <p><a href="" title="" class="notifypop">New Notifications</a></p>
+            <p class="smltxt">(Click to open notifications)</p>
+        </div>
+        -->
+        
+        <ul id="nav">
+        	<li>
+                <ul class="navigation">
+                    <li class="heading selected">Dashboard</li>
+                    <li><%= link_to "Following", tweet_engine_following_path %></li>
+                    <li><%= link_to "Followers", tweet_engine_followers_path %></li>
+                    <li><%= link_to "Potential Followers", tweet_engine_potential_followers_path %></li>
+                </ul>
+            </li>
+            <li>
+                <a class="expanded heading">Auto-response</a>
+                 <ul class="navigation">
+                    <li><%= link_to "New auto-response", new_tweet_engine_auto_response_path %></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- Left Dark Bar End --> 
+    
+    <!-- Notifications Box/Pop-Up Start --> 
+    <div id="notificationsbox">
+        <h4>Notifications</h4>
+        <ul>
+            <li>
+            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
+            	<h5><a href="#" title="">New member registration</a></h5>
+                <p>Admin eve joined on 18.12.2010</p>
+            </li>
+            <li>
+            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
+            	<h5><a href="#" title="">New member registration</a></h5>
+                <p>Jackson Michael joined on 16.12.2010</p>
+            </li>
+            <li>
+            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
+                <h5><a href="#" title="">New blog post created</a></h5>
+                <p>New post created on 15.12.2010</p>
+            </li>
+            <li>
+            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
+            	<h5><a href="#" title="">New group created</a></h5>
+                <p>“Web Design” group created on 12.12.2010</p>
+            </li>
+            <li>
+            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
+            	<h5><a href="#" title="">1 new private message</a></h5>
+                <p>New message from Joe sent on 21.11.2010</p>
+            </li>
+            <li>
+            	<a href="#" title=""><img src="img/icons/icon_square_close.png" alt="Close" class="closenot" /></a>
+            	<h5><a href="#" title="">New member registration</a></h5>
+                <p>Graham joined on 20.11.2010</p>
+            </li>
+        </ul>
+        <p class="loadmore"><a href="#" title="">Load more notifications</a></p>
+    </div>
+    <!-- Notifications Box/Pop-Up End --> 
 </body>
 </html>

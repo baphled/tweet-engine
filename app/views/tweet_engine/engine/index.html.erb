@@ -1,30 +1,8 @@
-<section id="info">
-  <p>
-    Hi <%= @user.screen_name %>, this is your TweetEngine. Your account was created <%= time_ago_in_words @user.created_at %>
-  </p>
-  <% if TweetEngine.config['search'] %>
-  <p>Auto-searching for <%= TweetEngine.config['keywords'] %></p>
-  <% end %>
-  <p>
-    You currently have <%= TweetEngine.whats_my.user.followers_count %> <%= link_to "followers", tweet_engine_followers_path %><br />
-    You are <%= link_to "following", tweet_engine_following_path %> <%= @user.friends_count %> tweeple<br />
-    Number of found <%= link_to "potential followers", tweet_engine_potential_followers_path %> <%= TweetEngine::SearchResult.all.count %><br/>
-  </p>
-  <p>Your last tweet was @ <%= distance_of_time_in_words Time.now, @user.status.created_at%>: <%= @user.status.text %></p>
-</section>
+<%= render :partial => 'shared/flash_messages' %>
+<%= render :partial => 'shared/tweet_form', :locals => {:stack => @stack} %>
+    
 
-<menu>
-  <ul>
-    <li><%= link_to "New auto-response", new_tweet_engine_auto_response_path %></li>
-  </ul>
-</menu>
-<hr/>
-<%= render :partial => 'search', :locals => {:term => @term, :results => @results} %>
+<%= render :partial => 'notices' %>
 
-<hr/>
-<section id="schedule-tweet">
-  <%= form_for @stack, :url => tweet_engine_tweet_index_path, :method => :post do |f| %>
-    <%= render :partial => 'shared/tweet_form', :locals => {:f => f} %>
-  <% end %>
-</section>
-<%= render :partial => 'stack', :locals => {:tweet_stack => @tweet_stack} %>
+<div style="clear: both;"></div>
+<%= render :partial => "stack", :locals => {:tweet_stack => @tweet_stack}%>

@@ -1,31 +1,67 @@
-<div id="tweet-stack">
 <% if tweet_stack.empty? %>
     No tweets stacked<br />
 <% else%>
-  <h3>Stacked tweets</h3>
-  <p>
-    <%= pluralize tweet_stack.count, "message stacked", "messages stacked" %>
-  </p>
-  <ul>
-  <% tweet_stack.each do |tweet| %>
-    <li>
-      <section>
-        <%= tweet.message %><br/>
-        <% if not tweet.delivered %>
-        Sending in <%= time_ago_in_words tweet.sending_at %>
-        <% if tweet.repeat %>
-        this will be repeated every <%= tweet.every.to_s %>
+<!-- TweetStack Content Box Start -->
+<div class="contentcontainer">
+  
+  <div class="headings altheading">
+    <h2>Stacked Tweets</h2>
+  </div>
+  <div class="contentbox">
+  	<table width="100%">
+    	<thead>
+        <tr>
+          <th>Sending @</th>
+          <th>Tweet</th>
+          <th>Actions</th>
+          <th><input name="" type="checkbox" value="" id="checkboxall" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tweet_stack.each do |tweet| %>
+      	<tr>
+          <td>
+        	 <% if not tweet.delivered %>
+            Sending in <%= time_ago_in_words tweet.sending_at %>
+            <% if tweet.repeat %>
+              this will be repeated every <%= tweet.every.to_s %>
+             <% end %>
+            <% else %>
+              this was sent at <%= time_ago_in_words tweet.sending_at %>
+            <% end %>
+        	</td>
+          <td><%= tweet.message %></td>
+          <td>
+            <%= link_to raw('<img src="img/icons/icon_edit.png" alt="Edit" />'), edit_tweet_engine_tweet_path(:id => tweet.id) %>
+            <%= link_to raw('<img src="img/icons/icon_delete.png" alt="Delete" />'), tweet_engine_tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
+          </td>
+          <td><input type="checkbox" value="" name="checkall" /></td>
+        </tr>
         <% end %>
-        <% else %>
-        this was sent at <%= time_ago_in_words tweet.sending_at %>
-        <% end %>
-      </section>
-      <menu class="tweet-menu">
-        <%= link_to "Edit", edit_tweet_engine_tweet_path(:id => tweet.id) %>
-        <%= link_to "Cancel", tweet_engine_tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
-      </menu>
-    </li>
-  <% end %>
-  </ul>
-<% end %>
+      </tbody>
+    </table>
+      <div class="extrabottom">
+      	<ul>
+          	<li><img src="img/icons/icon_edit.png" alt="Edit" /> Edit</li>
+              <li><img src="img/icons/icon_delete.png" alt="Delete" /> Remove</li>
+          </ul>
+          <div class="bulkactions">
+          	<select>
+              	<option>Select bulk action...</option>
+              </select>
+              <input type="submit" value="Apply" class="btn" />
+          </div>
+      </div>
+      <ul class="pagination">
+      	<li class="text">Previous</li>
+          <li class="page"><a href="#" title="">1</a></li>
+          <li><a href="#" title="">2</a></li>
+          <li><a href="#" title="">3</a></li>
+          <li><a href="#" title="">4</a></li>
+          <li class="text"><a href="#" title="">Next</a></li>
+      </ul>
+      <div style="clear: both;"></div>
+  </div>
 </div>
+<!-- TweetStack Content Box End -->
+<% end %>

@@ -1,4 +1,6 @@
 class TweetEngine::EngineController < ApplicationController
+  before_filter :find_user
+  
   include ActionView::Helpers::TextHelper
   
   #
@@ -100,4 +102,11 @@ class TweetEngine::EngineController < ApplicationController
   def potential_followers
     @potential_followers = TweetEngine::SearchResult.all.to_a
   end
+  
+  protected
+  
+  def find_user
+    @user = TweetEngine.whats_my.user
+  end
+  
 end

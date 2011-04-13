@@ -1,16 +1,50 @@
 <% unless @potential_followers.empty? %>
 <h2>Potential Followers</h2>
-<ul id="potential-followers">
-  <%= form_tag(:action => "follow") do %>
-    <% @potential_followers.each_with_index do |user, index| %>
-    
-  <li>
-    <%= label_tag "followers[#{index}]", "#{user.screen_name}" %><%= check_box_tag "followers[#{index}]", user.screen_name %><br />
-  <p><%= user.tweet['text'] %></p>
-  </li>
-    <% end -%>
-    
-    <%= submit_tag "Follow tweeple", :disable_with => 'Follow tweeple...' %>
-  <% end -%>
-</ul>
+
+<!-- TweetStack Content Box Start -->
+<div class="contentcontainer">
+  
+  <div class="headings altheading">
+    <h2>People following</h2>
+  </div>
+  <div class="contentbox">
+    <%= form_tag(:action => "follow") do %>
+  	<table width="100%">
+    	<thead>
+        <tr>
+          <th>Screen name</th>
+          <th>Tweet</th>
+          <th>Followers</th>
+          <th>Following</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @potential_followers.each_with_index do |user,index| %>
+      	<tr>
+          <td><%= user.screen_name %></td>
+          <td><%= user.tweet['text'] %></td>
+          <td><%= check_box_tag "followers[#{index}]", user.screen_name %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+      <div class="extrabottom">
+          <div class="bulkactions">
+            <%= submit_tag "Follow tweeple", :disable_with => 'Follow tweeple...' %>
+          </div>
+      </div>
+    <% end %>
+      <ul class="pagination">
+      	<li class="text">Previous</li>
+          <li class="page"><a href="#" title="">1</a></li>
+          <li><a href="#" title="">2</a></li>
+          <li><a href="#" title="">3</a></li>
+          <li><a href="#" title="">4</a></li>
+          <li class="text"><a href="#" title="">Next</a></li>
+      </ul>
+      <div style="clear: both;"></div>
+  </div>
+</div>
+<!-- TweetStack Content Box End -->
 <% end %>

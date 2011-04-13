@@ -1,17 +1,26 @@
-<p>
-  <%= f.label :message, "Enter Tweet" %>
-  <%= f.text_field :message %>
-</p>
-<p>
-  <%= f.label :repeat, "Repeat" %>
-  <%= f.check_box :repeat %>
-</p>
-<p>
-  <%= f.label :every, "Every" %>
-  <%= f.text_field :every %>
-</p>
-<p>
-  <%= f.label :sending_at, "Sending At" %>
-  <%= f.text_field :sending_at, :class =>'datepicker' %>
-</p>
-<%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...' %>
+<div class="contentcontainer med left">
+ <div class="headings alt">
+   <h2>Add a tweet to the stack</h2>
+ </div>
+ <div class="contentbox">
+   <%= form_for stack, :url => tweet_engine_tweet_index_path, :method => :post do |f| %>
+    <p>
+      <%= f.label :message, "Enter Tweet" %>
+      <%= f.text_field :message, :class => "inputbox" %>
+    </p>
+    <p>
+      <%= f.label :repeat, "Repeat" %>
+      <%= f.check_box :repeat %>
+    </p>
+    <p>
+      <%= f.label :every, "Every" %>
+      <%= f.text_field :every, :class => "inputbox" %>
+    </p>
+    <p>
+      <%= f.label :sending_at, "Sending At" %>
+      <%= f.text_field :sending_at, :class =>'datepicker inputbox' %>
+    </p>
+    <%= f.submit "Stack Tweet", :disable_with => 'Stack Tweeting...', :class => "btn" %>
+   <% end %>
+ </div>
+</div>
