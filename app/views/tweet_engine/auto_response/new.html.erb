@@ -1,11 +1,11 @@
 <%= form_for @auto_response, :url => tweet_engine_auto_response_index_path, :method => :post do |f| %>
   <p>
     <%= f.label :key_phrases, "Key Phrases" %>
-    <%= f.text_field :key_phrases %>
+    <%= f.text_field :key_phrases, :class => "inputbox" %>
   </p>
   <p>
     <%= f.label :response, "Response" %>
-    <%= f.text_field :response %>
+    <%= f.text_field :response, :class => "inputbox" %>
   </p>
-  <%= f.submit "Add auto-response", :disable_with => 'Adding auto-response...' %>
+  <%= f.submit "Add auto-response", :disable_with => 'Adding auto-response...', :class => "btn" %>
 <% end %>
