@@ -33,19 +33,49 @@ You can use the latest Rails 3 gem with the latest TweetEngine gem:
 
 After the above to your Gemfile, you need to run the generator:
 
+  rails generate mongoid:config
   rails generate tweet_engine:install
+  rails g tweet_engine:assets
   
 This will create a an initializer file where you will need to add your twitter API credentials.
 
 The other file is the setting for TweetEngine itself. Here you can tell the engine whether you want it to do background searches for potentials people to follower and which keyword(s) to use for the search.
 
-As TweetEngine is a Rails Engine, views and controllers are fully customisable. Having said this we have taken the time to put together a basic interface to get you started.
+The last part of the generation is the assets for the dashboard.
 
-  rails g tweet_engine:assets
+= Customisation
+
+As TweetEngine is a Rails Engine, views and controllers are fully customisable. Having said this we have taken the time to put together a basic interface to get you started.
   
 This will generate the necessary layout, CSS and JS to give you a slick little interface (instructions on customising this will come later).
 
 Once these have been configured, all that is left is to start your engines!
+
+= Configuration
+
+tweet_engine.yml only has a few settings at the moment, all of which are as follows:
+
+keywords: "Rails, ruby"
+The keyword(s) used for searching for people to follow
+
+search: true
+Whether to search for people or not
+
+interval: 900
+The amount of time to wait between each daemon process (default: 15 minutes)
+
+You will also need to setup your Twitter API key in config/tweet_engine.rb
+
+  Twitter.configure do |config|
+    config.consumer_key = "CK"
+    config.consumer_secret = "CS"
+    config.oauth_token = "OT"
+    config.oauth_token_secret = "OTS"
+  end
+
+See http://dev.twitter.com for more information on obtaining these keys.
+
+= Start up
 
 Once the server is started you will be able to view the TweetEngine's control panel. Which will allow you to manage your twitter campaign.
 
