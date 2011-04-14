@@ -56,7 +56,8 @@ describe "Navigation" do
       find('.searchbox').set('lemons')
       # fill_in :q, :with => "lemons"
       click_button "Search"
-      page.should have_content "Tweeple talking about 'lemons':"
+      
+      page.should have_content "Tweeple talking about 'lemons'"
     end
   
     it "allows me to follow a batch of tweeples" do
@@ -74,9 +75,9 @@ describe "Navigation" do
       find('.searchbox').set('lemons')
       # fill_in :q, :with => "lemons"
       click_button "Search"
-    
+      
       #select all tweeple found
-      check "killermelons"
+      check "followers_0"
       # press follow
       click_button "Follow"
     

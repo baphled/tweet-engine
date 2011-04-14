@@ -1,16 +1,45 @@
-<div class="results">
-  <% if @results.present? %>
-    <%= form_tag(tweet_engine_follow_path) do |f| %>
-      Tweeple talking about '<%= @term %>':<br />
-      <ul>
-      <% @results.each_with_index do |tweeple, index| %>
-        <li>
-          <%= label_tag "followers[#{index}]", tweeple.from_user %><%= check_box_tag "followers[#{index}]", tweeple.from_user %><br />
-          <%= tweeple.text %>
-        </li>
-      <% end %>
-      </ul>
-      <%= submit_tag("Follow") %>
+<% if @results.present? %>
+<!-- TweetStack Content Box Start -->
+<div class="contentcontainer">
+  
+  <div class="headings altheading">
+    <h2>Tweeple talking about '<%= @term %>'</h2>
+  </div>
+  <div class="contentbox">
+    <%= form_tag(:action => "follow") do %>
+  	<table width="100%">
+    	<thead>
+        <tr>
+          <th>Screen name</th>
+          <th>Tweet</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @results.each_with_index do |user,index| %>
+      	<tr>
+          <td><%= user.from_user %></td>
+          <td><%= user.text %></td>
+          <td><%= check_box_tag "followers[#{index}]", user.from_user %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+      <div class="extrabottom">
+          <div class="bulkactions">
+            <%= submit_tag "Follow tweeple", :disable_with => 'Follow tweeple...', :class => 'btn' %>
+          </div>
+      </div>
     <% end %>
-  <% end %>
+    <%= will_paginate @results %>
+  </div>
 </div>
+<!-- TweetStack Content Box End -->
+<% else %>
+<div class="contentcontainer">
+  
+  <div class="headings altheading">
+    <h2>No Search results found</h2>
+  </div>
+</div>
+<% end %>

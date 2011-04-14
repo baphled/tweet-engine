@@ -32,7 +32,7 @@ module TweetEngine
       search = Twitter::Search.new
       tweets = search.containing(term).per_page items unless items.nil?
       tweets = search.containing(term) if items.nil?
-      tweets.each { |tweeple| names << tweeple }
+      tweets.each { |tweet| names << tweet }
       names
     end
   

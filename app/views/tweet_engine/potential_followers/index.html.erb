@@ -7,13 +7,14 @@
     <h2>Potential Followers</h2>
   </div>
   <div class="contentbox">
-    <%= form_tag(:action => "follow") do %>
+    <%= form_tag(:controller => 'engine', :action => "follow") do %>
   	<table width="100%">
     	<thead>
         <tr>
           <th>Screen name</th>
           <th>Tweet</th>
           <th>Action</th>
+          <th>Select</th>
         </tr>
       </thead>
       <tbody>
@@ -21,15 +22,21 @@
       	<tr>
           <td><%= user.screen_name %></td>
           <td><%= user.tweet['text'] %></td>
+          <td>
+            <%= link_to raw('<img src="/img/icons/icon_delete.png" alt="Delete" />'), tweet_engine_potential_follower_path(:id => user.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
+          </td>
           <td><%= check_box_tag "followers[#{index}]", user.screen_name %></td>
         </tr>
         <% end %>
       </tbody>
     </table>
       <div class="extrabottom">
-          <div class="bulkactions">
-            <%= submit_tag "Follow tweeple", :disable_with => 'Follow tweeple...' %>
-          </div>
+        <ul>
+          <li><img src="/img/icons/icon_delete.png" alt="Delete" /> Remove</li>
+        </ul>
+        <div class="bulkactions">
+          <%= submit_tag "Follow tweeple", :disable_with => 'Follow tweeple...', :class => 'btn' %>
+        </div>
       </div>
     <% end %>
     <%= will_paginate @potential_followers %>

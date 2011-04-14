@@ -23,7 +23,7 @@ class TweetEngine::EngineController < ApplicationController
   # Manually search for people to follow
   #
   def search
-    @results = TweetEngine.search params[:q]
+    @results = TweetEngine.search(params[:q]).paginate :page => params[:page], :per_page => 10
     @term = params[:q]
   end
   
@@ -95,16 +95,6 @@ class TweetEngine::EngineController < ApplicationController
     end
     flash[:notice] = "Unfollowed #{@unfollowed.count} tweeple"
     redirect_to tweet_engine_path
-  end
-  
-  #
-  # GET /tweet-engine/potential-followers
-  #
-  # Gathers a list of all the potential followers built up from
-  # doing our background searches. Here we can manually follow these users.
-  #
-  def potential_followers
-    @potential_followers = TweetEngine::SearchResult.paginate :per_page => 10, :page => params[:page]
   end
   
   protected

@@ -30,9 +30,10 @@ describe TweetEngine::EngineController do
       stub_request(:get, "https://search.twitter.com/search.json?q=lemons&rpp=100").
         with(:headers => {'Accept'=>'application/json', 'User-Agent'=>'Twitter Ruby Gem 1.1.2'}).
         to_return(:status => 200, :body => fixture('search.json'), :headers => {})
+        
     end
     it "should do a search via twitter with the search params" do
-      TweetEngine.should_receive(:search).with('lemons')
+      TweetEngine.should_receive(:search).with('lemons').and_return []
       get :search, {:q => 'lemons'}
     end
   end
@@ -71,20 +72,6 @@ describe TweetEngine::EngineController do
     it "makes a call for our follower" do
       TweetEngine.should_receive :following
       get :following
-    end
-  end
-
-  describe "GET, potential-followers" do
-    before(:each) do
-      @potential_users = []
-      3.times do |amount|
-        @potential_users << TweetEngine::SearchResult.create(:screen_name => "Screen name #{amount}")
-      end
-    end
-    
-    it "should get a list of all potential followers" do
-      TweetEngine::SearchResult.should_receive(:paginate).exactly(2).times
-      get :potential_followers, :followers => @potential_users
     end
   end
 end
