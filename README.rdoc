@@ -28,6 +28,8 @@ TweetEngine is a Rails Engine application which allows you to easily added Twitt
 
 You can use the latest Rails 3 gem with the latest TweetEngine gem:
 
+  gem 'will_paginate'
+  gem 'djinn', :git => "https://github.com/baphled/djinn.git", :branch => "without_active_resource_in_rails"
   gem 'tweet_engine'
   gem 'twitter'
 
