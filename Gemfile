@@ -7,6 +7,7 @@ gem 'mongoid', :git => "https://github.com/mongoid/mongoid.git"
 gem 'bson_ext'
 
 gem 'jquery-rails', '>= 0.2.6'
+gem 'devise', '>= 1.2.rc'
 
 gem 'will_paginate'
 gem 'delayed_job', '>= 2.1.4', :git => "https://github.com/collectiveidea/delayed_job"
