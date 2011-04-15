@@ -6,6 +6,7 @@ require "rspec/rails"
 require 'webmock/rspec'
 require 'timecop'
 require 'cover_me'
+require 'faker'
 
 ActionMailer::Base.delivery_method = :test
 ActionMailer::Base.perform_deliveries = true
@@ -29,7 +30,8 @@ RSpec.configure do |config|
   # methods or matchers
 
   config.include RSpec::Matchers
-
+  config.include Devise::TestHelpers, :type => :controller
+  
   # == Mock Framework
   config.mock_with :rspec
   

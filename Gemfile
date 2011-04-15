@@ -20,6 +20,7 @@ group :development, :test do
   gem 'cover_me'
   gem 'webmock', "~> 1.6"
   gem 'timecop', :git => "https://github.com/liveh2o/timecop.git"
+  gem 'faker'
   
   gem 'growl'
   gem 'guard'

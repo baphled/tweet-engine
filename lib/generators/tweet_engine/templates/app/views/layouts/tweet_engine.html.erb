@@ -41,8 +41,7 @@
         	<img src="<%= @user.profile_image_url %>" width="44" height="44" class="hoverimg" alt="Avatar" />
             <p>Using twitter account:</p>
             <p class="username"><%= @user.screen_name %></p>
-            <p class="userbtn"><a href="#" title="">Profile</a></p>
-            <p class="userbtn"><%= link_to "Log out", destroy_admin_session %></p>
+            <p class="userbtn"><%= link_to "Log out", destroy_admin_session_path %></p>
         </div>
         
         <div class="notifications">

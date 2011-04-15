@@ -9,6 +9,14 @@ describe "Navigation" do
     stub_request(:get, "https://api.twitter.com/1/users/show.json?screen_name=pengwynn").
       to_return(:status => 200, :body => fixture('pengwynn.json'), :headers => {})
     TweetEngine::Stack.destroy_all
+    
+    @admin = Admin.create!(:username => Faker::Name.first_name, :email => Faker::Internet.email, :password => 'foobar')
+    visit '/admins/sign_in'
+    fill_in :email, :with => @admin.email
+    fill_in :password, :with => @admin.password
+    click_button 'Sign in'
+    save_and_open_page
+    page.should have_content 'Success'
   end
   
   it "should be a valid app" do
