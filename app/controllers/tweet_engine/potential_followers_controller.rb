@@ -2,6 +2,8 @@ class TweetEngine::PotentialFollowersController < ApplicationController
   before_filter :find_user
   before_filter :find_search_results
   
+  layout 'tweet_engine'
+  
   #
   # GET /tweet-engine/potential-followers
   #

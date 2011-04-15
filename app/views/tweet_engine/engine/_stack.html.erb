@@ -14,7 +14,6 @@
           <th>Sending @</th>
           <th>Tweet</th>
           <th>Actions</th>
-          <th><input name="" type="checkbox" value="" id="checkboxall" /></th>
         </tr>
       </thead>
       <tbody>
@@ -32,27 +31,19 @@
         	</td>
           <td><%= tweet.message %></td>
           <td>
-            <%= link_to raw('<img src="img/icons/icon_edit.png" alt="Edit" />'), edit_tweet_engine_tweet_path(:id => tweet.id) %>
-            <%= link_to raw('<img src="img/icons/icon_delete.png" alt="Delete" />'), tweet_engine_tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
+            <%= link_to raw('<img src="/img/icons/icon_edit.png" alt="Edit" />'), edit_tweet_engine_tweet_path(:id => tweet.id) %>
+            <%= link_to raw('<img src="/img/icons/icon_delete.png" alt="Delete" />'), tweet_engine_tweet_path(:id => tweet.id), :method => :delete, :confirm => "Are you sure you want to delete this entry?" %>
           </td>
-          <td><input type="checkbox" value="" name="checkall" /></td>
         </tr>
         <% end %>
       </tbody>
     </table>
       <div class="extrabottom">
       	<ul>
-          	<li><img src="img/icons/icon_edit.png" alt="Edit" /> Edit</li>
-              <li><img src="img/icons/icon_delete.png" alt="Delete" /> Remove</li>
-          </ul>
-          <div class="bulkactions">
-          	<select>
-              	<option>Select bulk action...</option>
-              </select>
-              <input type="submit" value="Apply" class="btn" />
-          </div>
+        	<li><img src="/img/icons/icon_edit.png" alt="Edit" /> Edit</li>
+          <li><img src="/img/icons/icon_delete.png" alt="Delete" /> Remove</li>
+        </ul>
       </div>
-
       <%= will_paginate @tweet_stack %>
   </div>
 </div>

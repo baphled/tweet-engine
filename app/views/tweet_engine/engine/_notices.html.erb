@@ -9,8 +9,8 @@
         <div class="innernotice">
           <h4>Search information</h4>
           <p>Auto-searching for <%= TweetEngine.config['keywords'] %></p>
-          <p>You currently have <%= TweetEngine.whats_my.user.followers_count %> <%= link_to "followers", tweet_engine_followers_path %></p>
-          <p>You are <%= link_to "following", tweet_engine_following_path %> <%= @user.friends_count %> tweeple</p>
+          <p>You currently have <%= TweetEngine.whats_my.user.followers_count %> <%= link_to "followers", followers_tweet_engine_path %></p>
+          <p>You are <%= link_to "following", following_tweet_engine_path %> <%= @user.friends_count %> tweeple</p>
           <p>Number of found <%= link_to "potential followers", tweet_engine_potential_followers_path %> <%= TweetEngine::SearchResult.all.count %></p>
         </div>
       </div>
