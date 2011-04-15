@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
   <title>TweetEngine</title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults, 'jquery.wysiwyg', "visualize.jQuery", "functions" %>
@@ -16,9 +16,9 @@
 
   <%= javascript_include_tag 'jquery.ui.timepicker.js' %>
   <%= csrf_meta_tag %>
-</head>
-<body id="homepage">
-	<div id="header">
+  </head>
+  <body id="homepage">
+    <div id="header">
     	<a href="" title=""><img src="/img/cp_logo.png" alt="Control Panel" class="logo" /></a>
     	<div id="searcharea">
     	  <%= render :partial => 'shared/search', :locals => {:term => @term, :results => @results} %>
@@ -26,62 +26,59 @@
     </div>
     <!-- Right Side/Main Content Start -->
     <div id="rightside">
-	  <%= render :partial => 'shared/flash_messages' %>
-    <%= yield %>
-    <div id="footer">
-    &copy; Copyright 2011 Boodah.net
-    </div> 
-
+      <%= render :partial => 'shared/flash_messages' %>
+      <%= yield %>
+      <div id="footer">&copy; Copyright 2011 <%= link_to "Boodah.net", 'http://boodah.net'%></div>
     </div>
     <!-- Right Side/Main Content End -->
-    
+  
         <!-- Left Dark Bar Start -->
     <div id="leftside">
     	<div class="user">
-        	<img src="<%= @user.profile_image_url %>" width="44" height="44" class="hoverimg" alt="Avatar" />
-            <p>Using twitter account:</p>
-            <p class="username"><%= @user.screen_name %></p>
-            <p class="userbtn"><%= link_to "Log out", destroy_admin_session_path %></p>
-        </div>
-        
-        <div class="notifications">
-        	<p class="notifycount"><a href="" title="" class="notifypop"><%= TweetEngine::SearchResult.all.count %></a></p>
-            <p><a href="" title="" class="notifypop">Potential followers</a></p>
-            <p class="smltxt">(Click to view)</p>
-        </div>
-        
-        <ul id="nav">
-        	<li>
-                <ul class="navigation">
-                    <li class="heading"><%= link_to "Dashboard", tweet_engine_path %></li>
-                    <li class="heading"><%= link_to "Following", tweet_engine_following_path %></li>
-                    <li class="heading"><%= link_to "Followers", tweet_engine_followers_path %></li>
-                </ul>
-            </li>
-            <li>
-                <a class="expanded heading">Auto-response</a>
-                 <ul class="navigation">
-                    <li><%= link_to "New auto-response", new_tweet_engine_auto_response_path %></li>
-                    <li><%= link_to "Auto-responses", tweet_engine_auto_response_index_path %></li>
-                </ul>
-            </li>
-        </ul>
+      	<img src="<%= @user.profile_image_url %>" width="44" height="44" class="hoverimg" alt="Avatar" />
+          <p>Using twitter account:</p>
+          <p class="username"><%= @user.screen_name %></p>
+          <p class="userbtn"><%= link_to "Log out", destroy_admin_session_path %></p>
+      </div>
+      
+      <div class="notifications">
+      	<p class="notifycount"><a href="" title="" class="notifypop"><%= TweetEngine::SearchResult.all.count %></a></p>
+          <p><a href="" title="" class="notifypop">Potential followers</a></p>
+          <p class="smltxt">(Click to view)</p>
+      </div>
+      
+      <ul id="nav">
+      	<li>
+          <ul class="navigation">
+            <li class="heading"><%= link_to "Dashboard", tweet_engine_path %></li>
+            <li class="heading"><%= link_to "Following", following_tweet_engine_path %></li>
+            <li class="heading"><%= link_to "Followers", followers_tweet_engine_path %></li>
+          </ul>
+        </li>
+        <li>
+          <a class="expanded heading">Auto-response</a>
+           <ul class="navigation">
+            <li><%= link_to "New auto-response", new_tweet_engine_auto_response_path %></li>
+            <li><%= link_to "Auto-responses", tweet_engine_auto_response_index_path %></li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <!-- Left Dark Bar End --> 
-    
+  
     <!-- Notifications Box/Pop-Up Start --> 
     <div id="notificationsbox">
-        <h4>Potential Followers</h4>
-        <ul>
-          <% @latest_search_results.each do |result| %>
-            <li>
-            	<h5><a href="#" title=""><%= result.screen_name %></a></h5>
-                <p><%= result.tweet['text'] %></p>
-            </li>
-           <% end %>
-        </ul>
-        <p class="loadmore"><%= link_to "Potential Followers", tweet_engine_potential_followers_path %></p>
+      <h4>Potential Followers</h4>
+      <ul>
+        <% @latest_search_results.each do |result| %>
+        <li>
+        	<h5><a href="#" title=""><%= result.screen_name %></a></h5>
+            <p><%= result.tweet['text'] %></p>
+        </li>
+       <% end %>
+      </ul>
+      <p class="loadmore"><%= link_to "Potential Followers", tweet_engine_potential_followers_path %></p>
     </div>
     <!-- Notifications Box/Pop-Up End --> 
-</body>
+  </body>
 </html>

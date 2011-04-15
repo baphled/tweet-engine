@@ -1,8 +1,4 @@
-class TweetEngine::AutoResponseController < ApplicationController
-  before_filter :find_user
-  before_filter :find_search_results
-  
-  layout 'tweet_engine'
+class TweetEngine::AutoResponseController < TweetEngineController
   
   def index
     @auto_responses = TweetEngine::Responder.all
@@ -35,15 +31,5 @@ class TweetEngine::AutoResponseController < ApplicationController
     else
       render :edit
     end
-  end
-  
-  protected
-  
-  def find_user
-    @user = TweetEngine.whats_my.user
-  end
-  
-  def find_search_results
-    @latest_search_results = TweetEngine::SearchResult.paginate :per_page => 5, :page => 1
   end
 end

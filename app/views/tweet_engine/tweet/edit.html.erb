@@ -3,7 +3,7 @@
    <h2>Edit tweet</h2>
  </div>
  <div class="contentbox">
-   <%= form_for @stack, :url => tweet_engine_tweet_path(@stack), :method => :put do |f| %>
+   <%= form_for @tweet, :url => tweet_engine_tweet_path(@tweet), :method => :put do |f| %>
     <p>
       <%= f.label :message, "Enter Tweet" %>
       <%= f.text_field :message, :class => "inputbox" %>
