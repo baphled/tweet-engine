@@ -1,12 +1,12 @@
 
+  <% if flash[:alert] %>
 	<!-- Status Bar Start -->
-  <% if flash[:warning] %>
     <div class="status warning">
     	<p class="closestatus"><a href="" title="Close">x</a></p>
-    	<p></img src="/img/icons/icon_warning.png" alt="Warning" /><span>Attention!</span><%= flash[:warning] %></p>
+    	<p></img src="/img/icons/icon_warning.png" alt="Warning" /><span>Attention!</span><%= flash[:alert] %></p>
     </div>
-  <% end %>
     <!-- Status Bar End -->
+  <% end %>
     
   <% if flash[:success] %>
    <!-- Red Status Bar Start -->
@@ -32,5 +32,5 @@
     	<p class="closestatus"><a href="" title="Close">x</a></p>
     	<p></img src="/img/icons/icon_info.png" alt="Information" /><span>Information:</span><%= flash[:notice] %></p>
     </div>
-  <% end %>
   <!-- Blue Status Bar End -->
+  <% end %>
