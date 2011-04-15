@@ -42,7 +42,7 @@
             <p>Using twitter account:</p>
             <p class="username"><%= @user.screen_name %></p>
             <p class="userbtn"><a href="#" title="">Profile</a></p>
-            <p class="userbtn"><a href="#" title="">Log out</a></p>
+            <p class="userbtn"><%= link_to "Log out", destroy_admin_session %></p>
         </div>
         
         <div class="notifications">
