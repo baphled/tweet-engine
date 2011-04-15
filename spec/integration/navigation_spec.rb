@@ -12,11 +12,11 @@ describe "Navigation" do
     
     @admin = Admin.create!(:username => Faker::Name.first_name, :email => Faker::Internet.email, :password => 'foobar')
     visit '/admins/sign_in'
-    fill_in :email, :with => @admin.email
-    fill_in :password, :with => @admin.password
+    
+    find("input#admin_email").set @admin.email
+    find("input#admin_password").set @admin.password
+    
     click_button 'Sign in'
-    save_and_open_page
-    page.should have_content 'Success'
   end
   
   it "should be a valid app" do
