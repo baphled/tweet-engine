@@ -56,14 +56,7 @@ describe TweetEngine::EngineController do
     end
     
   end
-  
-  describe "POST, stack" do
-    it "stacks the tweet" do
-      TweetEngine.should_receive(:stack).with("This is my tweet")
-      post :stack, {:message => "This is my tweet"}
-    end
-  end
-  
+    
   describe "GET, followers" do
     before(:each) do
       stub_request(:get, "https://api.twitter.com/1/statuses/friends.json?cursor=-1").

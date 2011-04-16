@@ -8,6 +8,7 @@ module TweetEngine
     field :sent_to, :type => Array, :default => []
     
     validates_presence_of :key_phrases, :response
+    validates_length_of :response, :maximum => 140, :message => "must be less than 140 characters"
     
     class << self
       def respond
@@ -27,9 +28,9 @@ module TweetEngine
       end
       
       def send_response tweets, auto_response
-        tweets.each do |tweet|
+        tweets.each_with_index do |tweet, index|
           unless auto_response.sent_to.include? tweet.from_user
-            TweetEngine::Stack.create! :message => "@#{tweet.from_user} #{auto_response.response}"
+            TweetEngine::Stack.create! :message => "@#{tweet.from_user} #{auto_response.response}", :sending_at => Time.now + (index.to_i.minutes)
             auto_response.sent_to << tweet.from_user
           end
         end

@@ -17,7 +17,11 @@ describe TweetEngine::Stack do
   end
   
   context "validations" do
-    it "must have a message no less than 140 characters"
+    it "must have a message no more than 140 characters" do
+      stack = TweetEngine::Stack.new :message => Faker::Lorem.sentence(40), :sending_at => Time.now + 1.hour
+      stack.errors_on(:message).should == ['must be less than 140 characters']
+    end
+    
     it "must have a valid send at date"
   end
   

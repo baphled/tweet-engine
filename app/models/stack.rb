@@ -16,6 +16,9 @@ module TweetEngine
     
     after_create :deliver
     
+    validates_length_of :message, :maximum => 140, :message => "must be less than 140 characters"
+    validates :sending_at, :date => { :after_or_equal_to => Time.now }
+    
     def sendable?
       Time.now >= self.sending_at
     end

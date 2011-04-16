@@ -50,9 +50,5 @@ module TweetEngine
       end
       following
     end
-
-    def stack message
-      TweetEngine::Stack.create :message => message
-    end
   end
 end

@@ -36,5 +36,12 @@ describe TweetEngine::Responder do
       @auto_response.sent_to.should eql users
       result.should eql users
     end
+    
+    context "validations" do
+      it "must have a message no more than 140 characters" do
+        @auto_response.response = Faker::Lorem.words(141)
+        @auto_response.errors_on(:response).should == ['must be less than 140 characters']
+      end
+    end
   end
 end

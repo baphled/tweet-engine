@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/codegram/date_validator.git
+  revision: 9cdf502a80c649716dc69221000247094f7ed9de
+  specs:
+    date_validator (0.6.1)
+      activemodel (~> 3.0.0)
+
+GIT
   remote: https://github.com/baphled/djinn.git
   revision: 85c81573a42ce31bbcd801424dc9844a9af47957
   branch: without_active_resource_in_rails
@@ -213,6 +220,7 @@ DEPENDENCIES
   bson_ext
   capybara (>= 0.4.0)
   cover_me
+  date_validator!
   delayed_job (>= 2.1.4)!
   delayed_job_mongoid!
   devise (>= 1.2.rc)

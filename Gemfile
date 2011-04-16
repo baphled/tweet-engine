@@ -14,6 +14,8 @@ gem 'delayed_job', '>= 2.1.4', :git => "https://github.com/collectiveidea/delaye
 gem 'delayed_job_mongoid', :git => "https://github.com/collectiveidea/delayed_job_mongoid.git"
 gem 'djinn', :git => "https://github.com/baphled/djinn.git", :branch => "without_active_resource_in_rails"
 
+gem 'date_validator', :git => "git://github.com/codegram/date_validator.git"
+
 group :development, :test do
   gem "capybara", ">= 0.4.0"
   gem "rspec-rails", ">= 2.0.0.beta.20"

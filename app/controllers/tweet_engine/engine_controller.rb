@@ -40,17 +40,6 @@ class TweetEngine::EngineController < TweetEngineController
   end
   
   #
-  # POST /tweet-engine/stack
-  #
-  # Stack a tweet to send out now
-  #
-  def stack
-    TweetEngine.stack params[:message]
-    flash[:notice] = "Added new tweet to the stack"
-    redirect_to tweet_engine_path
-  end
-  
-  #
   # GET /tweet-engine/following
   #
   # View people we follow

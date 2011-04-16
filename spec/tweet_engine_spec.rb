@@ -75,13 +75,6 @@ describe TweetEngine do
     end
   end
   
-  describe "#stack" do
-    it "should add the tweet to the stack" do
-      TweetEngine::Stack.should_receive(:create).with(:message => "This is my tweet")
-      TweetEngine.stack("This is my tweet")
-    end
-  end
-  
   describe "#whats_my" do
     before(:each) do
       stub_request(:get, "https://api.twitter.com/1/account/verify_credentials.json").
