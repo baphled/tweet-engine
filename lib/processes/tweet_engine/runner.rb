@@ -1,5 +1,4 @@
 require 'djinn/rails'
-require 'mongoid'
 
 module TweetEngine
   
@@ -13,10 +12,9 @@ module TweetEngine
         log "Using keywords #{TweetEngine.config['keywords']}"
         log "You current have #{TweetEngine::SearchResult.all.count} potential followers"
 
-        @tweeple_search = TweetEngine::SearchJob.new
         loop do
           log "Searching for more tweeple"
-          @tweeple_search.searching
+          TweetEngine::SearchJob.searching
           log "Now have #{TweetEngine::SearchResult.all.count} potential followers"
           sleep TweetEngine.config['interval']
         end

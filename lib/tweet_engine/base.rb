@@ -1,4 +1,4 @@
-module TweetEngine::Base
+module TweetEngine
   class << self
     #
     # Wrapper for Twitter::CLient

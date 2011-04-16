@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe TweetEngine::SearchJob do
   before(:each) do
-    @search_job = TweetEngine::SearchJob.new
     TweetEngine.stub!(:search).and_return []
   end
   
@@ -13,6 +12,6 @@ describe TweetEngine::SearchJob do
   it "should do a search" do
     TweetEngine::SearchResult.all.count.should == 0
     TweetEngine.should_receive :search
-    @search_job.searching 
+    TweetEngine::SearchJob.searching 
   end
 end

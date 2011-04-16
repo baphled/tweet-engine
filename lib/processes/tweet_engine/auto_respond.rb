@@ -1,5 +1,4 @@
 require 'djinn/rails'
-require 'mongoid'
 
 module TweetEngine
   
