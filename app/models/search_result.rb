@@ -6,5 +6,7 @@ module TweetEngine
     
     field :screen_name
     field :tweet
+    
+    validates_uniqueness_of :screen_name, :tweet
   end
 end

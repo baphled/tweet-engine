@@ -296,7 +296,7 @@ describe "Navigation" do
         to_return(:status => 200, :body => "", :headers => {})
       3.times do |amount|
         search_result = fixture('search.json')
-        TweetEngine::SearchResult.create :screen_name => "Some name #{amount}", :tweet => 'Something about nothing'
+        TweetEngine::SearchResult.create! :screen_name => "Some name #{amount}", :tweet => {:text => "Something about nothing #{amount}"}
       end
       
       # pending 'Defining steps'
@@ -306,6 +306,12 @@ describe "Navigation" do
       click_link 'potential followers'
       
       page.should have_content "Potential Followers"
+      
+      # Make sure we can see each potential followers information
+      3.times do |number|
+        page.should have_content "Some name #{number}"
+        page.should have_content "Something about nothing #{number}"
+      end
       
       # we click on 3 followers
       3.times do |number|

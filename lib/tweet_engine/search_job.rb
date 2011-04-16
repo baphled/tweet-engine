@@ -28,16 +28,15 @@ module TweetEngine
       # Collects a list of potential people to follow
       #
       def gather_potentials users
-        names = []
         all_users = []
         TweetEngine::SearchResult.all.to_a.each { |u| all_users << u.screen_name }
         users.each do |user|
-          unless all_users.include? user
-            TweetEngine::SearchResult.create!(:screen_name => user.from_user, :tweet => user)
-            names << user.from_user
+          unless all_users.include? user.from_user
+            TweetEngine::SearchResult.create(:screen_name => user.from_user, :tweet => user)
+            all_users << user.from_user
           end
         end
-        names.uniq!
+        all_users
       end
     end
   end
