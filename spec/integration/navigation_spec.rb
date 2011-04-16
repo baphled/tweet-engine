@@ -418,4 +418,28 @@ describe "Navigation" do
     it "allows me to manage the amount of tweets I send out a day"
     it "allows me to set a average search time"
   end
+  
+  context "stats" do
+    context "for my own" do
+      it "tells me my average followers this week"
+      it "tells me my average amount of people that unfollowed me this week"
+      it "tells me the average amount of times I tweet a day"
+      it "tells me the average amount of times I tweet a week"
+      it "tells me the average amount of times I tweet a year"
+    end
+    
+    context "general" do
+      it "displays the most influencial people to that I follow"
+      it "displays the most influencial people to that follow me"
+      it "displays the most influencial people to that potential follower"
+    end
+    
+    context "for other person" do
+      it "displays the average followers this week"
+      it "displays the average amount of people that unfollowed me this week"
+      it "displays the average amount of times I tweet a day"
+      it "displays the average amount of times I tweet a week"
+      it "displays the average amount of times I tweet a year"
+    end
+  end
 end
