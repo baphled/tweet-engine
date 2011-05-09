@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 gem 'twitter'
 
-gem "rails", "3.0.6"
+gem "rails", ">= 3.0.6"
 gem "sqlite3"
 gem 'mongoid', :git => "https://github.com/mongoid/mongoid.git"
 gem 'bson_ext'
